@@ -26,6 +26,7 @@
         'security/ir.model.access.csv',
         'views/views.xml',
         'data/school_lunch.allergy.csv',
+        'data/school_lunch.class_name.csv',
     #     'views/templates.xml',
     ],
     # only loaded in demonstration mode
