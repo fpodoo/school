@@ -1,0 +1,16 @@
+id,code,name
+allergy_1,1,Gluten
+allergy_2,2,Crustacés
+allergy_3,3,Oeufs
+allergy_4,4,Poissons
+allergy_5,5,Arachides
+allergy_6,6,Soja
+allergy_7,7,Lactose
+allergy_8,8,Fruits à coques
+allergy_9,9,Céleri
+allergy_10,10,Moutarde
+allergy_11,11,Graines de sésame
+allergy_12,12,Sulfites
+allergy_13,13,Lupin
+allergy_14,14,Mollusques
+allergy_15,15,Lentilles
