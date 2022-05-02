@@ -1,18 +1,19 @@
 # -*- coding: utf-8 -*-
-# from odoo import http
+
+from odoo import http
+import datetime
+import time
+from dateutil.relativedelta import relativedelta
 
 
-# class SchoolLunch(http.Controller):
-#     @http.route('/school_lunch/school_lunch', auth='public')
-#     def index(self, **kw):
-#         return "Hello, world"
-
-#     @http.route('/school_lunch/school_lunch/objects', auth='public')
-#     def list(self, **kw):
-#         return http.request.render('school_lunch.listing', {
-#             'root': '/school_lunch/school_lunch',
-#             'objects': http.request.env['school_lunch.school_lunch'].search([]),
-#         })
+class SchoolLunch(http.Controller):
+    @http.route(['/menu', '/menu/<int:date>'], auth='public', type='http', website=True)
+    def list(self, date=None, **kw):
+        date = datetime.datetime.fromtimestamp(date or time.time())
+        return http.request.render('school_lunch.menu', {
+            'date': date,
+            'dmonth': relativedelta(months=1)
+        })
 
 #     @http.route('/school_lunch/school_lunch/objects/<model("school_lunch.school_lunch"):obj>', auth='public')
 #     def object(self, obj, **kw):

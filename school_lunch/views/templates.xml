@@ -1,24 +1,79 @@
 <odoo>
-    <data>
-<!--
-        <template id="listing">
-          <ul>
-            <li t-foreach="objects" t-as="object">
-              <a t-attf-href="#{ root }/objects/#{ object.id }">
-                <t t-esc="object.display_name"/>
-              </a>
-            </li>
-          </ul>
-        </template>
-        <template id="object">
-          <h1><t t-esc="object.display_name"/></h1>
-          <dl>
-            <t t-foreach="object._fields" t-as="field">
-              <dt><t t-esc="field"/></dt>
-              <dd><t t-esc="object[field]"/></dd>
-            </t>
-          </dl>
-        </template>
--->
-    </data>
+<data>
+<template id="menu">
+    <t t-call="website.layout">
+      <div id="wrap"/>
+      <div class="container">
+          <div class="row">
+              <div class="col-8">
+                  <h1 class="mb-4 mt-4">Commande des Repas: <t t-esc="date.strftime('%B %Y')"/></h1>
+              </div><div class="col-4">
+                  <a t-attf-href="/menu/#{int((date+dmonth).timestamp())}" t-esc="(date+dmonth).strftime('%B %Y')" class="btn"></a>
+                  <a t-attf-href="/menu/#{int((date+dmonth).timestamp())}" t-esc="(date-dmonth).strftime('%B %Y')" class="btn"></a>
+              </div>
+          </div>
+          <table class="table table-hover table-sm">
+              <thead class="thead-light">
+              <tr>
+                  <th></th>
+                  <th>Manech R.</th>
+                  <th>
+
+                      <select>
+                          <option>Selct a Kid</option>
+                          <option>Charlie Pinckaers</option>
+                          <option>Lena Pinckaers</option>
+                          <option>Manech Ridel</option>
+                      </select>
+
+                  </th>
+                  </tr>
+              </thead>
+              <tr>
+                  <td>
+                      <b>Lundi, 2 mai 2022</b>
+                      <span class="badge badge-pill badge-primary">Primary</span>
+                      <br/>
+                      Salade de comcombre, pâte grecques, filet de dinde<br/>
+                      Rose des sables au chocolat
+                  </td><td class="table-danger">
+                      X
+                  </td><td></td>
+              </tr>
+              <tr>
+                  <td>
+                      <b>Lundi, 3 mai 2022</b><br/>
+                      Spagetthi Bolognese <span class="badge badge-pill badge-success">Success</span>
+                  </td><td class="table-danger">
+                      X
+                  </td><td></td>
+              </tr>
+              <tr>
+                  <td>
+                      <b>Lundi, 4 mai 2022</b><br/>
+                      Spagetthi Bolognese
+                      <span class="badge badge-pill badge-success">Success</span>
+                      <span class="badge badge-pill badge-primary">Primary</span>
+                  </td><td class="table-success">
+                      V
+                  </td><td></td>
+              </tr>
+              <tr>
+                  <td>
+                      <b>Lundi, 5 mai 2022</b><br/>
+                      Spagetthi Bolognese
+                  </td><td class="table-danger">
+                      X
+                  </td><td></td>
+              </tr>
+          </table>
+
+          <div class="text-right mb128">
+              <button class="btn btn-primary">Valider</button>
+          </div>
+
+      </div>
+    </t>
+</template>
+</data>
 </odoo>

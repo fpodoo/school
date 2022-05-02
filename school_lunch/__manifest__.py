@@ -18,7 +18,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base'],
+    'depends': ['base', 'website_sale'],
     'license': 'LGPL-3',
 
     # always loaded
@@ -27,7 +27,7 @@
         'views/views.xml',
         'data/school_lunch.allergy.csv',
         'data/school_lunch.class_name.csv',
-    #     'views/templates.xml',
+        'views/templates.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
