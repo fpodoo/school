@@ -43,6 +43,43 @@
             parent="school_lunch.config"
             action="school_lunch.class_name_act"/>
 
+    <record model="ir.ui.view" id="school_lunch.kid_view_form">
+      <field name="name">Kids</field>
+      <field name="model">school_lunch.kid</field>
+      <field name="arch" type="xml">
+        <form string="Kids">
+          <group>
+            <group>
+              <field name="name"/>
+              <field name="allergy_ids" widget="many2many_tags"/>
+            </group>
+            <group>
+              <field name="class_id"/>
+              <field name="parent_id"/>
+            </group>
+          </group>
+        </form>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="school_lunch.kid_view_list">
+      <field name="name">Kids</field>
+      <field name="model">school_lunch.kid</field>
+      <field name="arch" type="xml">
+        <tree string="Kids">
+          <field name="name"/>
+          <field name="allergy_ids"/>
+          <field name="class_id"/>
+        </tree>
+      </field>
+    </record>
+    <record model="ir.actions.act_window" id="school_lunch.kid_name_act">
+      <field name="name">Kids</field>
+      <field name="res_model">school_lunch.kid</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="school_lunch.kid_name_menu"
+            parent="school_lunch.config"
+            action="school_lunch.kid_name_act"/>
 
     <menuitem name="Menu" id="school_lunch.menu" parent="school_lunch.root"/>
 

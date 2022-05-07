@@ -45,7 +45,7 @@ class order(models.Model):
     _order = "date desc, name"
 
     name = fields.Char('Kid Name', required=True)
-    kid_id = fields.Many2one('res.partner', "Kid")
+    kid_id = fields.Many2one('school_lunch.kid', 'Kid')
     menu_id = fields.Many2one('school_lunch.menu', 'Menu', required=True)
     date = fields.Date('Day', related='menu_id.date', index=True, store=True)
     meal_type = fields.Selection([('0', 'Soup'), ('1', 'Meal'), ('off', 'Day Off')], related="menu_id.meal_type", string='Meal Type')
@@ -61,3 +61,12 @@ class class_name(models.Model):
     class_type = fields.Selection([('0', 'Maternelle'), ('1', 'Primaire'), ('2', 'Secondaire'), ('3', 'Other')], string='Class Type')
 
 
+class kid(models.Model):
+    _name = 'school_lunch.kid'
+    _description = 'Kid'
+    _order = "name"
+
+    name = fields.Char('Kid Name', required=True)
+    parent_id = fields.Many2one('res.partner', "Parent")
+    allergy_ids = fields.Many2many('school_lunch.allergy', string='Allergies')
+    class_id = fields.Many2one('school_lunch.class_name', 'Class', required=True)
