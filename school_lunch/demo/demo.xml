@@ -1,30 +1,52 @@
 <odoo>
     <data>
-<!--
-          <record id="object0" model="school_lunch.school_lunch">
-            <field name="name">Object 0</field>
-            <field name="value">0</field>
-          </record>
 
-          <record id="object1" model="school_lunch.school_lunch">
-            <field name="name">Object 1</field>
-            <field name="value">10</field>
-          </record>
+        <record id="cook_1" model="res.partner">
+            <field name="name">Sandra</field>
+        </record>
+        <record id="cook_2" model="res.partner">
+            <field name="name">David</field>
+        </record>
 
-          <record id="object2" model="school_lunch.school_lunch">
-            <field name="name">Object 2</field>
-            <field name="value">20</field>
-          </record>
+        <!-- menu of the week -->
 
-          <record id="object3" model="school_lunch.school_lunch">
-            <field name="name">Object 3</field>
-            <field name="value">30</field>
-          </record>
+        <record id="menu_1" model="school_lunch.menu">
+            <field name="name">Spaghetti Bolognese</field>
+            <field name="description">Cuisine du monde</field>
+            <field name="cook_id" ref="cook_1"/>
+            <field name="date" eval="(datetime.now()-relativedelta(weekday=0)).strftime('%Y-%m-%d')"/>
+        </record>
+        <record id="menu_2" model="school_lunch.menu">
+            <field name="name">Pate carbonara</field>
+            <field name="description">Avec peufs</field>
+            <field name="color">1</field>
+            <field name="cook_id" ref="cook_2"/>
+            <field name="date" eval="(datetime.now()+relativedelta(weekday=1)).strftime('%Y-%m-%d')"/>
+            <field name="allergy_ids" eval="[(6, 0, [ref('school_lunch.allergy_1')])]"/>
+        </record>
+        <record id="menu_3" model="school_lunch.menu">
+            <field name="name">Potée Liegoise</field>
+            <field name="description">Cuisine du monde</field>
+            <field name="cook_id" ref="cook_1"/>
+            <field name="color">2</field>
+            <field name="date" eval="(datetime.now()+relativedelta(weekday=2)).strftime('%Y-%m-%d')"/>
+            <field name="allergy_ids" eval="[(6, 0, [ref('school_lunch.allergy_2')])]"/>
+        </record>
+        <record id="menu_4" model="school_lunch.menu">
+            <field name="name">Escalope Milanese</field>
+            <field name="description">Cuisine du monde</field>
+            <field name="cook_id" ref="cook_1"/>
+            <field name="date" eval="(datetime.now()+relativedelta(weekday=3)).strftime('%Y-%m-%d')"/>
+            <field name="color">3</field>
+        </record>
+        <record id="menu_5" model="school_lunch.menu">
+            <field name="name">Poisson</field>
+            <field name="description">Fish stick</field>
+            <field name="cook_id" ref="cook_1"/>
+            <field name="date" eval="(datetime.now()+relativedelta(weekday=4)).strftime('%Y-%m-%d')"/>
+            <field name="allergy_ids" eval="[(6, 0, [ref('school_lunch.allergy_2'), ref('school_lunch.allergy_5')])]"/>
+        </record>
 
-          <record id="object4" model="school_lunch.school_lunch">
-            <field name="name">Object 4</field>
-            <field name="value">40</field>
-          </record>
--->
+
     </data>
 </odoo>

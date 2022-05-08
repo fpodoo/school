@@ -50,7 +50,11 @@
         <form string="Kids">
           <group>
             <group>
-              <field name="name"/>
+              <label for="firstname"/>
+              <div class="oe_inline">
+                  <field name="firstname" placeholder="Firstname"/>
+                  <field name="lastname" placeholder="Lastname"/>
+              </div>
               <field name="allergy_ids" widget="many2many_tags"/>
             </group>
             <group>
@@ -67,6 +71,7 @@
       <field name="arch" type="xml">
         <tree string="Kids">
           <field name="name"/>
+          <field name="shortname"/>
           <field name="allergy_ids"/>
           <field name="class_id"/>
         </tree>
@@ -81,7 +86,7 @@
             parent="school_lunch.config"
             action="school_lunch.kid_name_act"/>
 
-    <menuitem name="Menu" id="school_lunch.menu" parent="school_lunch.root"/>
+    <menuitem name="Menu" id="school_lunch.menu_root" parent="school_lunch.root"/>
 
     <record model="ir.ui.view" id="school_lunch.menu_list">
       <field name="name">Menu</field>
@@ -160,7 +165,7 @@
       <field name="view_mode">tree,form,calendar</field>
     </record>
     <menuitem name="Menu" id="school_lunch.menu_menu"
-            parent="school_lunch.menu"
+            parent="school_lunch.menu_root"
             action="school_lunch.menu_act"/>
 
 
@@ -183,7 +188,7 @@
       <field name="view_mode">tree,form,pivot,graph</field>
     </record>
     <menuitem id="school_lunch.menu_order"
-            parent="school_lunch.menu"
+            parent="school_lunch.menu_root"
             action="school_lunch.order_act"/>
 
 

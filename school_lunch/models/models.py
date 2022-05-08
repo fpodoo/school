@@ -22,9 +22,9 @@ class menu(models.Model):
     order_ids = fields.One2many('school_lunch.order', 'menu_id', string='Orders')
     date = fields.Date('Day', index=True, required=True)
     color = fields.Integer()
-    meal_type = fields.Selection([('0', 'Soup'), ('1', 'Meal'), ('off', 'Day Off')], 'Meal Type')
+    meal_type = fields.Selection([('0', 'Soup'), ('1', 'Meal'), ('off', 'Day Off')], 'Meal Type', default="1")
     allergy_ids = fields.Many2many('school_lunch.allergy', string='Allergies')
-    order_count = fields.Integer('Orders', compute="_compute_count")
+    order_count = fields.Integer('# of Orders', compute="_compute_count")
 
     @api.depends('order_ids.menu_id')
     def _compute_count(self):
@@ -48,7 +48,7 @@ class order(models.Model):
     kid_id = fields.Many2one('school_lunch.kid', 'Kid')
     menu_id = fields.Many2one('school_lunch.menu', 'Menu', required=True)
     date = fields.Date('Day', related='menu_id.date', index=True, store=True)
-    meal_type = fields.Selection([('0', 'Soup'), ('1', 'Meal'), ('off', 'Day Off')], related="menu_id.meal_type", string='Meal Type')
+    meal_type = fields.Selection(related="menu_id.meal_type", string='Meal Type')
 
 
 
@@ -66,7 +66,27 @@ class kid(models.Model):
     _description = 'Kid'
     _order = "name"
 
-    name = fields.Char('Kid Name', required=True)
+    firstname = fields.Char('Firstname', required=True)
+    lastname = fields.Char('Lastname', required=True)
+    name = fields.Char('Name', compute="_fullname_get", store=True)
+    shortname = fields.Char('Short Name', compute="_shortname_get")
     parent_id = fields.Many2one('res.partner', "Parent")
     allergy_ids = fields.Many2many('school_lunch.allergy', string='Allergies')
     class_id = fields.Many2one('school_lunch.class_name', 'Class', required=True)
+
+    @api.depends('firstname', 'lastname', 'class_id')
+    def _shortname_get(self):
+        for kid in self:
+            l = 0
+            while len(self.search([('firstname','=',kid.firstname), ('class_id','=',kid.class_id.id), ('lastname', '=like', kid.lastname[:l]+'%')])) > 1:
+                if l>=len(kid.lastname):
+                    break
+                l += 1
+            kid.shortname = kid.firstname + ' ' + (l and (kid.lastname[:l] + '. ') or '')  + '(' + kid.class_id.name + ')'
+
+    @api.depends('firstname', 'lastname', 'class_id')
+    def _fullname_get(self):
+        for kid in self:
+            kid.name = kid.firstname + ' ' + kid.lastname
+
+

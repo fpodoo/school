@@ -9,7 +9,7 @@
                   <h1 class="mb-4 mt-4">Commande des Repas: <t t-esc="date.strftime('%B %Y')"/></h1>
               </div><div class="col-4">
                   <a t-attf-href="/menu/#{int((date+dmonth).timestamp())}" t-esc="(date+dmonth).strftime('%B %Y')" class="btn"></a>
-                  <a t-attf-href="/menu/#{int((date+dmonth).timestamp())}" t-esc="(date-dmonth).strftime('%B %Y')" class="btn"></a>
+                  <a t-attf-href="/menu/#{int((date-dmonth).timestamp())}" t-esc="(date-dmonth).strftime('%B %Y')" class="btn"></a>
               </div>
           </div>
           <table class="table table-hover table-sm">
@@ -29,45 +29,18 @@
                   </th>
                   </tr>
               </thead>
-              <tr>
+              <tr t-foreach="menus" t-as="menu">
                   <td>
-                      <b>Lundi, 2 mai 2022</b>
-                      <span class="badge badge-pill badge-primary">Primary</span>
-                      <br/>
-                      Salade de comcombre, pâte grecques, filet de dinde<br/>
-                      Rose des sables au chocolat
-                  </td><td class="table-danger">
-                      X
-                  </td><td></td>
-              </tr>
-              <tr>
-                  <td>
-                      <b>Lundi, 3 mai 2022</b><br/>
-                      Spagetthi Bolognese <span class="badge badge-pill badge-success">Success</span>
-                  </td><td class="table-danger">
-                      X
-                  </td><td></td>
-              </tr>
-              <tr>
-                  <td>
-                      <b>Lundi, 4 mai 2022</b><br/>
-                      Spagetthi Bolognese
-                      <span class="badge badge-pill badge-success">Success</span>
-                      <span class="badge badge-pill badge-primary">Primary</span>
-                  </td><td class="table-success">
-                      V
-                  </td><td></td>
-              </tr>
-              <tr>
-                  <td>
-                      <b>Lundi, 5 mai 2022</b><br/>
-                      Spagetthi Bolognese
+                      <b t-out="menu.date.strftime('%A, %d %b %Y')"></b><br/>
+                      <t t-out="menu.name"/>
+                      <span t-foreach="menu.allergy_ids" t-as="allergy" class="badge badge-pill badge-success">
+                          <t t-out="allergy.name"/>
+                      </span>
                   </td><td class="table-danger">
                       X
                   </td><td></td>
               </tr>
           </table>
-
           <div class="text-right mb128">
               <button class="btn btn-primary">Valider</button>
           </div>
