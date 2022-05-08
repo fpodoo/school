@@ -59,6 +59,7 @@ class class_name(models.Model):
 
     name = fields.Char('Class Name', required=True)
     class_type = fields.Selection([('0', 'Maternelle'), ('1', 'Primaire'), ('2', 'Secondaire'), ('3', 'Other')], string='Class Type')
+    active = fields.Boolean('Active', default=True)
 
 
 class kid(models.Model):

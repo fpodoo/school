@@ -1,5 +1,6 @@
 <odoo>
 <data>
+
 <template id="menu">
     <t t-call="website.layout">
       <div id="wrap"/>
@@ -12,22 +13,19 @@
                   <a t-attf-href="/menu/#{int((date-dmonth).timestamp())}" t-esc="(date-dmonth).strftime('%B %Y')" class="btn"></a>
               </div>
           </div>
+
+                  <th>
+                      <a href="/school/kids">Add a Kid</a>
+                  </th>
           <table class="table table-hover table-sm">
               <thead class="thead-light">
               <tr>
                   <th></th>
-                  <th>Manech R.</th>
-                  <th>
-
-                      <select>
-                          <option>Selct a Kid</option>
-                          <option>Charlie Pinckaers</option>
-                          <option>Lena Pinckaers</option>
-                          <option>Manech Ridel</option>
-                      </select>
-
+                  <th class="table-danger" t-foreach="kids" t-as="kid">
+                      <t t-out="kid.shortname"/>
+                      <a t-attf-href="/school/kid/remove/#{kid.id}"><span class="fa fa-times"></span></a>
                   </th>
-                  </tr>
+              </tr>
               </thead>
               <tr t-foreach="menus" t-as="menu">
                   <td>
@@ -36,9 +34,10 @@
                       <span t-foreach="menu.allergy_ids" t-as="allergy" class="badge badge-pill badge-success">
                           <t t-out="allergy.name"/>
                       </span>
-                  </td><td class="table-danger">
+                  </td>
+                  <td class="table-danger" t-foreach="kids" t-as="kid">
                       X
-                  </td><td></td>
+                  </td>
               </tr>
           </table>
           <div class="text-right mb128">
@@ -48,5 +47,48 @@
       </div>
     </t>
 </template>
+
+
+<template id="kids">
+    <t t-call="website.layout">
+      <div id="wrap"/>
+      <div class="container">
+          <h1 class="mb-4 mt-4">My Kids</h1>
+          <form method="post" action="/school/kid/add">
+              <div class="form-group row">
+                <label for="class_name" class="col-form-label col-sm-2">Class</label>
+                <div class="col-sm-4">
+                    <select class="form-control">
+                        <option t-foreach="classes" t-as="classe">
+                            <t t-att-value="classe.id" t-out="classe.name"/>
+                        </option>
+                    </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="class_name" class="col-form-label col-sm-2">Kid</label>
+                <div class="col-sm-4">
+                    <select class="form-control" name="kid_id">
+                        <option t-foreach="kids" t-as="kid" t-att-value="kid.id" >
+                            <t t-out="kid.shortname"/>
+                        </option>
+                    </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                  <div class="col-sm-4 offset-sm-2">
+                      <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+                      <button type="submit" class="btn btn-primary">Add Child</button>
+                  </div>
+              </div>
+
+          </form>
+      </div>
+    </t>
+</template>
+
+
+
+
 </data>
 </odoo>
