@@ -50,11 +50,17 @@ class LunchMenuTable extends Component {
             {
                 date: 'Wed, 04 May 2022',
                 meals: [
-                    {id: 1, meal_type: "meal", state: "active", name: "Spaggethi", allergies: [{id: 2, name: "Apple"}], kids: [2]},
-                    {id: 2, meal_type: "soup", state: "active", name: "Soup 1", allergies: [], kids: [1]}
+                    {id: 1, meal_type: "meal", state: "active", name: "Spaggethi", allergies: [{id: 2, name: "Apple"}], kids: [1]},
+                    {id: 2, meal_type: "soup", state: "active", name: "Soup 1", allergies: [], kids:[]}
                 ],
-            }
-        ])
+            },
+            {
+                date: 'Thu, 05 May 2022',
+                meals: [
+                    {id: 1, meal_type: "meal", state: "active", name: "Spaggethi", allergies: [{id: 2, name: "Apple"}], kids: [1]},
+                    {id: 2, meal_type: "soup", state: "active", name: "Soup 1", allergies: [], kids:[]}
+                ],
+            },        ])
     }
     static components = { LunchLine }
 }

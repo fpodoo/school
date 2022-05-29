@@ -12,7 +12,7 @@
     <tr>
       <td>
           <b t-esc="props.menu.date"></b><br/>
-          <div t-foreach="props.menu.meals" t-as="meal">
+          <div t-foreach="props.menu.meals" t-as="meal" t-if="meal.kids.length">
               <t t-esc="meal.name"/>
               <span t-foreach="meal.allergies" t-as="allergy" class="badge badge-pill badge-success ml-2">
                   <t t-esc="allergy.name"/>
