@@ -1,6 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates xml:space="preserve" id="template">
 
+  <t t-name="school_lunch.lunch_menu" owl="1">
+      <div class="o_choice" t-att-class="props.menu.kids.includes(props.kid.id) ? 'active' : ''" t-on-click="toggleMenu">
+          <t t-esc="props.menu.meal_type"/>
+      </div>
+  </t>
+
+
+  <t t-name="school_lunch.lunch_line" owl="1">
+    <tr>
+      <td>
+          <b t-esc="props.menu.date"></b><br/>
+          <div t-foreach="props.menu.meals" t-as="meal">
+              <t t-esc="meal.name"/>
+              <span t-foreach="meal.allergies" t-as="allergy" class="badge badge-pill badge-success ml-2">
+                  <t t-esc="allergy.name"/>
+              </span>
+          </div>
+      </td>
+      <td t-foreach="props.kids" t-as="kid" class="text-center">
+          <div class="o_lunch_choice">
+              <t t-foreach="props.menu.meals" t-as="menu">
+                  <LunchMenu menu="menu" kid="kid" meals="props.menu.meals"/>
+              </t>
+          </div>
+      </td>
+    </tr>
+  </t>
+
+
   <t t-name="school_lunch.lunch_table" owl="1">
       <div class="row">
           <div class="col-md-9">
@@ -13,25 +42,11 @@
                       </th>
                   </tr>
                   </thead>
-                  <tr t-foreach="menus" t-as="menu">
-                      <td>
-                          <b t-esc="menu.date.strftime('%A, %d %b %Y')"></b><br/>
-                          <t t-esc="menu.name"/>
-                          <span t-foreach="menu.allergy_ids" t-as="allergy" class="badge badge-pill badge-success">
-                              <t t-esc="allergy.name"/>
-                          </span>
-                      </td>
-                      <td t-foreach="kids" t-as="kid" class="text-center">
-                          <div class="o_lunch_choice">
-                              <div class="o_choice active">
-                                  Meal
-                              </div>
-                              <div class="o_choice">
-                                  Soup
-                              </div>
-                          </div>
-                      </td>
-                  </tr>
+
+                  <t t-foreach="menus" t-as="menu">
+                      <LunchLine menu="menu" kids="kids"/>
+                  </t>
+
               </table>
               <div class="mb128">
                   <button class="btn btn-primary">Valider</button>
