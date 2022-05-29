@@ -1,32 +1,52 @@
-console.log('FP: JS File Init');
-
-odoo.define('lunch_order.lunch_order', function (require) {
-"use strict";
-
+/** @odoo-module **/
 
 var ajax = require('web.ajax');
 var core = require('web.core');
-var Widget = require('web.Widget');
-var publicWidget = require('web.public.widget');
 
 var _t = core._t;
 
-publicWidget.registry.lunchOrder = publicWidget.Widget.extend({
-    selector: '#lunch_menu',
-    start: function () {
-        var self=this;
-        console.log('FP: Start Called');
-        $('.o_choice').click(function (ev) {
-            for (var el of ev.target.closest('.o_lunch_choice').children) {
-                if (el != ev.target) 
-                    el.classList.remove('active');
-                else
-                    el.classList.toggle('active');
-            };
-        });
-    },
-});
+const {Component, Store, mount, QWeb, xml} = owl;
+const {useDispatch, useStore, useGetters, useRef, useState} = owl.hooks;
+const {Router, RouteComponent} = owl.router;
+const {whenReady} = owl.utils;
+
+class LunchMenu extends Component {
+    setup() {
+        this.state = useState({ value: 1 });
+        this.kids = [
+            {id: 1, shortname: "Charlie"},
+            {id: 2, shortname: "Lena"}
+        ]
+        this.allergies = [
+            {id: 1, name: "Lentils"},
+            {id: 2, name: "Apple"}
+        ]
+        this.menus = [
+            {date: '2012-01-01'}
 
 
-return publicWidget.registry.lunchOrder;
-});
+
+        ]
+    }
+
+    increment() {
+        this.state.value++;
+    }
+}
+LunchMenu.template = "school_lunch.lunch_table"
+
+async function makeEnvironment() {
+    const env = {};
+    const services = Component.env.services;
+    const qweb = new QWeb({translateFn: _t});
+    const templates = await owl.utils.loadFile('/school_lunch/static/src/xml/lunch_menu.xml');
+    qweb.addTemplates(templates);
+    return Object.assign(env, {qweb, services});
+}
+
+async function setup() {
+    const env = await makeEnvironment();
+    mount(LunchMenu, {target: document.getElementById('LunchMenu'), env});
+}
+
+whenReady(setup);

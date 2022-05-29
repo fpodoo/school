@@ -38,7 +38,7 @@ class SchoolLunch(http.Controller):
             'my_kids': my_kids,
         })
 
-    @http.route(['/school/kid/add'], auth='public', type='http', website=True, method=["POST"])
+    @http.route(['/school/kid/add'], auth='public', type='http', website=True, methods=["POST"])
     def school_kid_add(self, kid_id, **kw):
         d = request.session.get('mykids', [])
         d.append(int(kid_id))

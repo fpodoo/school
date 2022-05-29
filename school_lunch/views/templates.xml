@@ -18,69 +18,7 @@
               To order, or check what you have ordered, <a href="/school/kids">add your children</a>.
           </div>
 
-          <div class="row">
-              <div class="col-md-9">
-                  <table class="table table-sm">
-                      <thead class="thead-light">
-                      <tr>
-                          <th></th>
-                          <th class="table-danger text-center" t-foreach="kids" t-as="kid">
-                              <t t-out="kid.shortname"/>
-                          </th>
-                      </tr>
-                      </thead>
-                      <tr t-foreach="menus" t-as="menu">
-                          <td>
-                              <b t-out="menu.date.strftime('%A, %d %b %Y')"></b><br/>
-                              <t t-out="menu.name"/>
-                              <span t-foreach="menu.allergy_ids" t-as="allergy" class="badge badge-pill badge-success">
-                                  <t t-out="allergy.name"/>
-                              </span>
-                          </td>
-                          <td t-foreach="kids" t-as="kid" class="text-center">
-                              <div class="o_lunch_choice">
-                                  <div class="o_choice active">
-                                      Meal
-                                  </div>
-                                  <div class="o_choice">
-                                      Soup
-                                  </div>
-                              </div>
-                          </td>
-                      </tr>
-                  </table>
-                  <div class="mb128">
-                      <button class="btn btn-primary">Valider</button>
-                  </div>
-              </div><div class="col-md-3 col-sm-invisible">
-                  <h3>Meal</h3>
-                  <ul class="list-unstyled mb-4">
-                      <li><a href="#" id="lunch_all">Select All</a></li>
-                      <li>Monday</li>
-                      <li>Tuesday</li>
-                      <li>Wednesday</li>
-                      <li>Thursday</li>
-                      <li>Friday</li>
-                  </ul>
-                  <h3>Soup</h3>
-                  <ul class="list-unstyled mb-4">
-                      <li><a href="#" id="lunch_all">Select All</a></li>
-                      <li>Monday</li>
-                      <li>Tuesday</li>
-                      <li>Wednesday</li>
-                      <li>Thursday</li>
-                      <li>Friday</li>
-                  </ul>
-                  <h3>Allergies</h3>
-                  <ul  class="list-unstyled">
-                      <li><b>Unselect All</b></li>
-                      <li t-foreach="allergies" t-as="allergy">
-                          <span t-out="allergy.name"/>
-                      </li>
-                  </ul>
-              </div>
-
-          </div>
+          <div class="o_menu" id="LunchMenu"/>
 
       </div>
     </t>
