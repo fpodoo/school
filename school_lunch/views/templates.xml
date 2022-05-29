@@ -5,43 +5,81 @@
     <t t-call="website.layout">
       <div id="wrap"/>
       <div class="container">
-          <div class="row">
+          <div class="row" id="lunch_menu">
               <div class="col-8">
-                  <h1 class="mb-4 mt-4">Commande des Repas: <t t-esc="date.strftime('%B %Y')"/></h1>
+                  <h1 class="mb-4 mt-4">Lunch: <t t-esc="date.strftime('%B %Y')"/></h1>
               </div><div class="col-4">
-                  <a t-attf-href="/menu/#{int((date+dmonth).timestamp())}" t-esc="(date+dmonth).strftime('%B %Y')" class="btn"></a>
-                  <a t-attf-href="/menu/#{int((date-dmonth).timestamp())}" t-esc="(date-dmonth).strftime('%B %Y')" class="btn"></a>
+                  <a t-attf-href="/menu/#{int((date+dmonth).timestamp())}" t-esc="(date+dmonth).strftime('%B %Y')" class="btn btn-primary"></a>
+                  <a t-attf-href="/menu/#{int((date-dmonth).timestamp())}" t-esc="(date-dmonth).strftime('%B %Y')" class="btn btn-primary"></a>
               </div>
           </div>
 
-                  <th>
-                      <a href="/school/kids">Add a Kid</a>
-                  </th>
-          <table class="table table-hover table-sm">
-              <thead class="thead-light">
-              <tr>
-                  <th></th>
-                  <th class="table-danger" t-foreach="kids" t-as="kid">
-                      <t t-out="kid.shortname"/>
-                      <a t-attf-href="/school/kid/remove/#{kid.id}"><span class="fa fa-times"></span></a>
-                  </th>
-              </tr>
-              </thead>
-              <tr t-foreach="menus" t-as="menu">
-                  <td>
-                      <b t-out="menu.date.strftime('%A, %d %b %Y')"></b><br/>
-                      <t t-out="menu.name"/>
-                      <span t-foreach="menu.allergy_ids" t-as="allergy" class="badge badge-pill badge-success">
-                          <t t-out="allergy.name"/>
-                      </span>
-                  </td>
-                  <td class="table-danger" t-foreach="kids" t-as="kid">
-                      X
-                  </td>
-              </tr>
-          </table>
-          <div class="text-right mb128">
-              <button class="btn btn-primary">Valider</button>
+          <div class="alert alert-warning" role="alert" t-if="not len(kids)">
+              To order, or check what you have ordered, <a href="/school/kids">add your children</a>.
+          </div>
+
+          <div class="row">
+              <div class="col-md-9">
+                  <table class="table table-sm">
+                      <thead class="thead-light">
+                      <tr>
+                          <th></th>
+                          <th class="table-danger text-center" t-foreach="kids" t-as="kid">
+                              <t t-out="kid.shortname"/>
+                          </th>
+                      </tr>
+                      </thead>
+                      <tr t-foreach="menus" t-as="menu">
+                          <td>
+                              <b t-out="menu.date.strftime('%A, %d %b %Y')"></b><br/>
+                              <t t-out="menu.name"/>
+                              <span t-foreach="menu.allergy_ids" t-as="allergy" class="badge badge-pill badge-success">
+                                  <t t-out="allergy.name"/>
+                              </span>
+                          </td>
+                          <td t-foreach="kids" t-as="kid" class="text-center">
+                              <div class="o_lunch_choice">
+                                  <div class="o_choice active">
+                                      Meal
+                                  </div>
+                                  <div class="o_choice">
+                                      Soup
+                                  </div>
+                              </div>
+                          </td>
+                      </tr>
+                  </table>
+                  <div class="mb128">
+                      <button class="btn btn-primary">Valider</button>
+                  </div>
+              </div><div class="col-md-3 col-sm-invisible">
+                  <h3>Meal</h3>
+                  <ul class="list-unstyled mb-4">
+                      <li><a href="#" id="lunch_all">Select All</a></li>
+                      <li>Monday</li>
+                      <li>Tuesday</li>
+                      <li>Wednesday</li>
+                      <li>Thursday</li>
+                      <li>Friday</li>
+                  </ul>
+                  <h3>Soup</h3>
+                  <ul class="list-unstyled mb-4">
+                      <li><a href="#" id="lunch_all">Select All</a></li>
+                      <li>Monday</li>
+                      <li>Tuesday</li>
+                      <li>Wednesday</li>
+                      <li>Thursday</li>
+                      <li>Friday</li>
+                  </ul>
+                  <h3>Allergies</h3>
+                  <ul  class="list-unstyled">
+                      <li><b>Unselect All</b></li>
+                      <li t-foreach="allergies" t-as="allergy">
+                          <span t-out="allergy.name"/>
+                      </li>
+                  </ul>
+              </div>
+
           </div>
 
       </div>
@@ -53,7 +91,7 @@
     <t t-call="website.layout">
       <div id="wrap"/>
       <div class="container">
-          <h1 class="mb-4 mt-4">My Kids</h1>
+          <h1 class="mb-4 mt-4">Add a Kid</h1>
           <form method="post" action="/school/kid/add">
               <div class="form-group row">
                 <label for="class_name" class="col-form-label col-sm-2">Class</label>
@@ -83,6 +121,17 @@
               </div>
 
           </form>
+
+          <div t-if="len(my_kids)">
+              <h1 class="mb-4 mt-4">Your Children</h1>
+              <ul>
+                  <li t-foreach="my_kids" t-as="kid">
+                      <t t-out="kid.shortname"/>
+                      <a t-attf-href="/school/kid/remove/#{kid.id}" class="text-danger"><span class="fa fa-times"></span></a>
+                  </li>
+              </ul>
+          </div>
+
       </div>
     </t>
 </template>

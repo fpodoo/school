@@ -25,6 +25,7 @@ class menu(models.Model):
     meal_type = fields.Selection([('0', 'Soup'), ('1', 'Meal'), ('off', 'Day Off')], 'Meal Type', default="1")
     allergy_ids = fields.Many2many('school_lunch.allergy', string='Allergies')
     order_count = fields.Integer('# of Orders', compute="_compute_count")
+    kid_meal_type = fields.Selection([('0', 'Soup'), ('1', 'Meal'), ('off', 'Day Off')], 'Kid Meal', compute="_get_kid_meal", default=False)
 
     @api.depends('order_ids.menu_id')
     def _compute_count(self):
@@ -38,6 +39,16 @@ class menu(models.Model):
             result.append((menu.id, menu.date.strftime('%A, %d %b %Y') + ': ' + menu.name))
         return result
 
+    @api.depends_context('kid')
+    def _get_meal(self):
+        if not self.context.get('kid'):
+            self.kid_meal_id = False
+
+        orders = self.env['school_lunch.order'].read_group([('kid_id','=',int(self.context['kid'])), ('id','in', self.ids)], ['menu_id'], ['menu_id'])
+        print(orders)
+        for menu in self:
+            menu.kid_meal_type = '1'
+
 
 class order(models.Model):
     _name = 'school_lunch.order'
@@ -49,7 +60,6 @@ class order(models.Model):
     menu_id = fields.Many2one('school_lunch.menu', 'Menu', required=True)
     date = fields.Date('Day', related='menu_id.date', index=True, store=True)
     meal_type = fields.Selection(related="menu_id.meal_type", string='Meal Type')
-
 
 
 class class_name(models.Model):
