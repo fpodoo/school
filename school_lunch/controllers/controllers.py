@@ -53,3 +53,36 @@ class SchoolLunch(http.Controller):
         return request.redirect('/menu')
 
 
+    @http.route(['/school/get_orders'], type="json", auth="public", website=True)
+    def school_orders_get(self, date=None, **kwargs):
+        print('_get_order called', date, kwargs)
+
+        date = datetime.datetime.fromtimestamp(date or time.time())
+        dt_from = date + relativedelta(day=1)
+        dt_to = date + relativedelta(day=1, months=1) - datetime.timedelta(days=1)
+        menus = request.env['school_lunch.menu'].search([('date','>=', dt_from.strftime('%Y-%m-%d')), ('date', "<=", dt_to.strftime('%Y-%m-%d'))])
+
+        kids = request.env['school_lunch.kid'].search(request.session.get('mykids', []))
+        allergies = request.env['school_lunch.allergy'].search([])
+
+        result = {
+            'kids': [{'id': kid.id, 'shortname': kid.name} for kid in kids],
+            'allergies': [{'id': al.id, 'name': al.name} for al in allergies],
+            'menus': [
+                {
+                    date: 'Wed, 04 May 2022',
+                    meals: [
+                        {id: 1, meal_type: "meal", state: "active", name: "Spaggethi", allergies: [{id: 2, name: "Apple"}], kids: [1]},
+                        {id: 2, meal_type: "soup", state: "active", name: "Soup 1", allergies: [], kids:[]}
+                    ],
+                }, {
+                    date: 'Thu, 05 May 2022',
+                    meals: [
+                        {id: 1, meal_type: "meal", state: "active", name: "Spaggethi", allergies: [{id: 2, name: "Apple"}], kids: [1]},
+                        {id: 2, meal_type: "soup", state: "active", name: "Soup 1", allergies: [], kids:[]}
+                    ],
+                }]
+        }
+
+        return result
+
