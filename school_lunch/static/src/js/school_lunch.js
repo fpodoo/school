@@ -11,7 +11,7 @@ const {useDispatch, useStore, useGetters, useRef, useState} = owl.hooks;
 const {Router, RouteComponent} = owl.router;
 const {whenReady} = owl.utils;
 
-import {useService } from "@web/core/utils/hooks";
+import env from "web.public_env";
 
 
 class LunchMenu extends Component {
@@ -21,7 +21,7 @@ class LunchMenu extends Component {
         for (var meal of this.props.meals) {
             var index = meal.kids.indexOf(kid);
             if (index > -1)
-                delete meal.kids[index];
+                meal.kids.splice(index, 1);
         };
         if (! isset)
             this.props.menu.kids.push(kid);
@@ -39,46 +39,36 @@ LunchLine.template = "school_lunch.lunch_line"
 
 
 class LunchMenuTable extends Component {
-    setup() {
-        // this.rpc = useService("rpc");
-        // this.rpc({
-        //     route: `/school/get_orders`,
-        //     params: {
-        //         date: 1
-        //     },
-        // }).then(function (data) {
-        //     this.kids = data.kids
-        //     this.allergies = data.allergies
-        //     this.menus = data.menus
-        // });
-        this.state = useState({ value: 1 });
-
+    async willStart() {
+        // const result = await this.env.services.rpc({date: 1}, `/school/get_orders`);
         this.kids = [
             {id: 1, shortname: "Charlie"},
             {id: 2, shortname: "Lena"}
-        ]
+        ];
         this.allergies = [
             {id: 1, name: "Lentils"},
             {id: 2, name: "Apple"}
-        ]
-        this.menus = useState([
-            {
+        ];
+        this.menus.push({
                 date: 'Wed, 04 May 2022',
                 day_of_week: 2,
                 meals: [
                     {id: 1, meal_type: "meal", state: "active", name: "Spaggethi", allergies: [{id: 2, name: "Apple"}], kids: [1]},
-                    {id: 2, meal_type: "soup", state: "active", name: "Soup 1", allergies: [], kids:[]}
+                    {id: 2, meal_type: "soup", state: "active", name: "Soup 1", allergies: [], kids:[2]}
                 ],
-            },
-            {
+        });
+        this.menus.push({
                 date: 'Thu, 05 May 2022',
                 day_of_week: 3,
                 meals: [
-                    {id: 1, meal_type: "meal", state: "active", name: "Spaggethi", allergies: [{id: 2, name: "Apple"}], kids: [1]},
-                    {id: 2, meal_type: "soup", state: "active", name: "Soup 1", allergies: [], kids:[]}
+                    {id: 3, meal_type: "meal", state: "active", name: "Spaggethi", allergies: [{id: 2, name: "Apple"}], kids: [1]},
+                    {id: 4, meal_type: "soup", state: "active", name: "Soup 1", allergies: [], kids:[]}
                 ],
-            },
-        ])
+        });
+    }
+
+    async setup() {
+        this.menus = useState([]);
     };
 
     unselectAllergy() {
@@ -88,12 +78,13 @@ class LunchMenuTable extends Component {
             for (var meal of menu.meals) {
                 for (var al of mean.allergies) {
                     if (al.id == allergy)
-                        meal.kids.length = 0;
+                        meal.kids = []
                 }
             }
         }
-    };
-    selectMeal() {
+    }
+
+    async selectMeal() {
         debugger;
 
         const isset = this.props.menu.kids.includes(kid);
@@ -115,16 +106,13 @@ class LunchMenuTable extends Component {
     };
     static components = { LunchLine }
 }
-LunchMenuTable.template = "school_lunch.lunch_table";
-
-
+LunchMenuTable.template = "school_lunch.lunch_table"
 
 
 async function makeEnvironment() {
-    const env = {};
     const services = Component.env.services;
     const qweb = new QWeb({translateFn: _t});
-    const templates = await owl.utils.loadFile('/school_lunch/static/src/xml/lunch_menu.xml');
+    const templates = await owl.utils.loadFile('/school_lunch/static/src/xml/lunch_menu.xml?uniq=' + Math.random());
     qweb.addTemplates(templates);
     return Object.assign(env, {qweb, services});
 }

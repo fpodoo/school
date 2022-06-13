@@ -37,8 +37,8 @@
 
     'assets': {
         'web.assets_frontend': [
-            'school_lunch/static/src/js/school_lunch.js',
-            'school_lunch/static/src/scss/school_lunch.scss',
+            'school_lunch/static/src/js/*.js',
+            'school_lunch/static/src/scss/*.scss',
         ],
         'web.assets_qweb': [
         ]

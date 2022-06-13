@@ -52,8 +52,7 @@ class SchoolLunch(http.Controller):
         request.session['mykids'] = d
         return request.redirect('/menu')
 
-
-    @http.route(['/school/get_orders'], type="json", auth="public", website=True)
+    @http.route(['/school/get_orders'], type="json", auth="public", website=True, methods=["POST"])
     def school_orders_get(self, date=None, **kwargs):
         print('_get_order called', date, kwargs)
 
