@@ -12,8 +12,10 @@
     <tr>
       <td>
           <b t-esc="props.menu.date"></b><br/>
-          <div t-foreach="props.menu.meals" t-as="meal" t-key="meal.id">
-              <t t-if="meal.kids.length || (meal.meal_type=='meal' &amp;&amp; ! props.menu.meals.reduce((prev, cur) => prev+cur.kids.length, 0))">
+          <div t-foreach="props.menu.meals" t-as="meal" t-key="meal.id"
+              t-if="meal.kids.length || (meal.meal_type=='meal' &amp;&amp; ! props.menu.meals.reduce((prev, cur) => prev+cur.kids.length, 0))"
+              t-att-class="! meal.kids.length &amp;&amp; 'text-muted'">
+              <t>
                   <t t-esc="meal.name"/>
                   <span t-foreach="meal.allergies" t-as="allergy" class="badge badge-pill badge-success ml-2" t-key="meal.id">
                       <t t-esc="allergy.name"/>
@@ -50,8 +52,9 @@
                   </t>
 
               </table>
-              <div class="mb128">
-                  <button class="btn btn-primary">Valider</button>
+              <div class="mb128 mt32">
+                  <button href="#" t-on-click="orderSet" class="btn btn-primary">Validate Order</button>
+                  <button href="#" t-on-click="unselectAllergy" data-allergy="0" class="btn btn-link">Clear Selection</button>
               </div>
           </div><div class="col-md-3 col-sm-invisible">
               <h3>Meal</h3>
@@ -82,7 +85,6 @@
                   </li>
               </ul>
           </div>
-
       </div>
   </t>
 

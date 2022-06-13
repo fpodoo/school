@@ -41,7 +41,7 @@ LunchLine.template = "school_lunch.lunch_line"
 class LunchMenuTable extends Component {
     async willStart() {
         const result = await this.env.services.rpc({
-            route: `/school/get_orders`,
+            route: `/school/order_prepare`,
             params: {date: 0}
         });
         this.kids = result.kids;
@@ -73,6 +73,21 @@ class LunchMenuTable extends Component {
                 }
             }
         }
+    }
+
+    async orderSet(ev) {
+        var orders = {};
+        for (var menu of this.menus) {
+            for (var meal of menu.meals)
+                if (meal.kids.length)
+                    orders[meal.id] = meal.kids;
+        }
+        const result = await this.env.services.rpc({
+            route: `/school/order_set`,
+            params: {orders}
+        });
+        if (result)
+            window.location.href = "/shop/checkout?express=1";
     }
 
     async selectMeal(ev) {

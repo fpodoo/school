@@ -27,6 +27,7 @@
         'views/views.xml',
         'data/school_lunch.allergy.csv',
         'data/school_lunch.class_name.csv',
+        'data/school_lunch.xml',
         'views/templates.xml',
     ],
     # only loaded in demonstration mode

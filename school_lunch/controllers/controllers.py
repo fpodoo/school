@@ -54,9 +54,40 @@ class SchoolLunch(http.Controller):
         request.session['mykids'] = d
         return request.redirect('/menu')
 
-    @http.route(['/school/get_orders'], type="json", auth="public", website=True, methods=["POST"])
-    def school_orders_get(self, date=None, **kwargs):
-        print('_get_order called', date, kwargs)
+    @http.route(['/school/order_set'], type="json", auth="public", website=True, methods=["POST"])
+    def school_order_set(self, orders, **kwargs):
+        if not orders:
+            return False
+        sale_order = request.website.sale_get_order(force_create=True)
+        if sale_order.state != 'draft':
+            request.session['sale_order_id'] = None
+            sale_order = request.website.sale_get_order(force_create=True)
+        sale_order.order_line = [(6, 0, [])]
+
+        menus = request.env['school_lunch.menu'].browse(map(int, orders.keys()))
+        meals = {}            # {meal_type: [(menu_id, kid_id)] }
+        for menu in menus:
+            for kid in orders[str(menu.id)]:
+                meals.setdefault(menu.meal_type, [])
+                meals[menu.meal_type].append((menu.id, kid))
+
+        for meal_type, orders in meals.items():
+            product_id = request.env.ref('school_lunch.product_'+meal_type)
+            line_id = sale_order._cart_update(
+                product_id=product_id.id,
+                set_qty=len(orders)
+            )['line_id']
+            for order in orders:
+                request.env['school_lunch.order'].create({
+                    'sale_line_id': line_id,
+                    'menu_id': order[0],
+                    'kid_id': order[1]
+                })
+
+        return True
+
+    @http.route(['/school/order_prepare'], type="json", auth="public", website=True, methods=["POST"])
+    def school_order_prepare(self, date=None, **kwargs):
 
         date = datetime.datetime.fromtimestamp(date or time.time())
         dt_from = date + relativedelta(day=1)
@@ -66,8 +97,6 @@ class SchoolLunch(http.Controller):
 
 
         menus = request.env['school_lunch.menu'].search([('date','>=', dt_from.strftime('%Y-%m-%d')), ('date', "<=", dt_to.strftime('%Y-%m-%d'))])
-        print('menu', menus)
-
         result = {
             'kids': [{'id': kid.id, 'shortname': kid.shortname} for kid in kids],
             'allergies': [{'id': al.id, 'name': al.name} for al in allergies],
@@ -88,10 +117,5 @@ class SchoolLunch(http.Controller):
                 'allergies': [{'id': a.id, 'name': a.name} for a in menu.allergy_ids],
                 'kids': []
             } )
-
-
-
-        pp = pprint.PrettyPrinter(indent=4)
-        pp.pprint(result)
         return result
 

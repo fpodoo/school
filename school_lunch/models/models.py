@@ -60,6 +60,9 @@ class order(models.Model):
     menu_id = fields.Many2one('school_lunch.menu', 'Menu', required=True)
     date = fields.Date('Day', related='menu_id.date', index=True, store=True)
     meal_type = fields.Selection(related="menu_id.meal_type", string='Meal Type')
+    sale_line_id = fields.Many2one('sale.order.line', 'Sale Order Line', ondelete="cascade")
+    state = fields.Selection([('draft','Draft'), ('confirmed','Confirmed')], 'State', default='draft')
+
 
     def order_create(self, data):
         pass
