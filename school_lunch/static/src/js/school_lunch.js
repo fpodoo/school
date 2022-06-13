@@ -51,15 +51,15 @@ class LunchMenuTable extends Component {
         ];
         this.menus.push({
                 date: 'Wed, 04 May 2022',
-                day_of_week: 2,
+                day_of_week: 3,
                 meals: [
-                    {id: 1, meal_type: "meal", state: "active", name: "Spaggethi", allergies: [{id: 2, name: "Apple"}], kids: [1]},
+                    {id: 1, meal_type: "meal", state: "active", name: "Spaggethi", allergies: [{id: 1, name: "Lentils"}], kids: [1]},
                     {id: 2, meal_type: "soup", state: "active", name: "Soup 1", allergies: [], kids:[2]}
                 ],
         });
         this.menus.push({
                 date: 'Thu, 05 May 2022',
-                day_of_week: 3,
+                day_of_week: 4,
                 meals: [
                     {id: 3, meal_type: "meal", state: "active", name: "Spaggethi", allergies: [{id: 2, name: "Apple"}], kids: [1]},
                     {id: 4, meal_type: "soup", state: "active", name: "Soup 1", allergies: [], kids:[]}
@@ -71,25 +71,24 @@ class LunchMenuTable extends Component {
         this.menus = useState([]);
     };
 
-    unselectAllergy() {
-        const isset = this.props.menu.kids.includes(kid);
-        const allergy = this.el.dataset.allergy;
+    unselectAllergy(ev) {
+        const allergy = parseInt(ev.srcElement.dataset.allergy);
         for (var menu of this.menus) {
             for (var meal of menu.meals) {
-                for (var al of mean.allergies) {
+                if (!allergy)
+                    meal.kids = [];
+
+                for (var al of meal.allergies) {
                     if (al.id == allergy)
-                        meal.kids = []
+                        meal.kids = [];
                 }
             }
         }
     }
 
-    async selectMeal() {
-        debugger;
-
-        const isset = this.props.menu.kids.includes(kid);
-        const meal_type = this.el.dataset.meal;
-        const meal_day = this.el.dataset.day;
+    async selectMeal(ev) {
+        const meal_type = ev.srcElement.dataset.meal;
+        const meal_day = parseInt(ev.srcElement.dataset.day);
 
         for (var menu of this.menus) {
             if (meal_day && meal_day != menu.day_of_week)
@@ -97,7 +96,7 @@ class LunchMenuTable extends Component {
             for (var meal of menu.meals) {
                 meal.kids.length = 0;
                 if (meal.meal_type == meal_type) {
-                    for (var kid in this.kids) {
+                    for (var kid of this.kids) {
                         meal.kids.push(kid.id);
                     }
                 }

@@ -66,18 +66,18 @@
               <h3>Soup</h3>
               <ul class="list-unstyled mb-4">
                   <li><a href="#" t-on-click="selectMeal" data-meal="soup" data-day="0">Select All</a></li>
-                  <li><a href="#" t-on-click="selectMeal" data-meal="meal" data-day="1">Monday</a></li>
-                  <li><a href="#" t-on-click="selectMeal" data-meal="meal" data-day="2">Tuesday</a></li>
-                  <li><a href="#" t-on-click="selectMeal" data-meal="meal" data-day="3">Wednesday</a></li>
-                  <li><a href="#" t-on-click="selectMeal" data-meal="meal" data-day="4">Thursday</a></li>
-                  <li><a href="#" t-on-click="selectMeal" data-meal="meal" data-day="5">Friday</a></li>
+                  <li><a href="#" t-on-click="selectMeal" data-meal="soup" data-day="1">Monday</a></li>
+                  <li><a href="#" t-on-click="selectMeal" data-meal="soup" data-day="2">Tuesday</a></li>
+                  <li><a href="#" t-on-click="selectMeal" data-meal="soup" data-day="3">Wednesday</a></li>
+                  <li><a href="#" t-on-click="selectMeal" data-meal="soup" data-day="4">Thursday</a></li>
+                  <li><a href="#" t-on-click="selectMeal" data-meal="soup" data-day="5">Friday</a></li>
               </ul>
               <h3>Allergies</h3>
               <ul class="list-unstyled">
-                  <li><a t-on-click="unselectAllergy" data-allergy="0">Unselect All</a></li>
+                  <li><a href="#" t-on-click="unselectAllergy" data-allergy="0">Unselect All</a></li>
                   <li t-foreach="allergies" t-as="allergy" t-key="allergy.id">
                       <a href="#" t-on-click="unselectAllergy" t-att-data-allergy="allergy.id">
-                          <span t-esc="allergy.name"/>
+                          <t t-esc="allergy.name"/>
                       </a>
                   </li>
               </ul>
