@@ -5,7 +5,9 @@ import datetime
 from odoo.http import request
 import time
 from dateutil.relativedelta import relativedelta
+import pprint
 
+FMT = '%A, %d %b %Y'
 
 class SchoolLunch(http.Controller):
     @http.route(['/menu', '/menu/<int:date>'], auth='public', type='http', website=True)
@@ -59,29 +61,37 @@ class SchoolLunch(http.Controller):
         date = datetime.datetime.fromtimestamp(date or time.time())
         dt_from = date + relativedelta(day=1)
         dt_to = date + relativedelta(day=1, months=1) - datetime.timedelta(days=1)
-        menus = request.env['school_lunch.menu'].search([('date','>=', dt_from.strftime('%Y-%m-%d')), ('date', "<=", dt_to.strftime('%Y-%m-%d'))])
-
-        kids = request.env['school_lunch.kid'].search(request.session.get('mykids', []))
+        kids = request.env['school_lunch.kid'].browse(request.session.get('mykids', []))
         allergies = request.env['school_lunch.allergy'].search([])
 
-        result = {
-            'kids': [{'id': kid.id, 'shortname': kid.name} for kid in kids],
-            'allergies': [{'id': al.id, 'name': al.name} for al in allergies],
-            'menus': [
-                {
-                    date: 'Wed, 04 May 2022',
-                    meals: [
-                        {id: 1, meal_type: "meal", state: "active", name: "Spaggethi", allergies: [{id: 2, name: "Apple"}], kids: [1]},
-                        {id: 2, meal_type: "soup", state: "active", name: "Soup 1", allergies: [], kids:[]}
-                    ],
-                }, {
-                    date: 'Thu, 05 May 2022',
-                    meals: [
-                        {id: 1, meal_type: "meal", state: "active", name: "Spaggethi", allergies: [{id: 2, name: "Apple"}], kids: [1]},
-                        {id: 2, meal_type: "soup", state: "active", name: "Soup 1", allergies: [], kids:[]}
-                    ],
-                }]
-        }
 
+        menus = request.env['school_lunch.menu'].search([('date','>=', dt_from.strftime('%Y-%m-%d')), ('date', "<=", dt_to.strftime('%Y-%m-%d'))])
+        print('menu', menus)
+
+        result = {
+            'kids': [{'id': kid.id, 'shortname': kid.shortname} for kid in kids],
+            'allergies': [{'id': al.id, 'name': al.name} for al in allergies],
+            'menus': []
+        }
+        for menu in menus:
+            if (not len(result['menus'])) or (result['menus'][-1]['date'] != menu.date.strftime(FMT)):
+                result['menus'].append({
+                    'date': menu.date.strftime(FMT),
+                    'day_of_week': menu.date.weekday()+1,
+                    'meals': []
+                })
+            result['menus'][-1]['meals'].append({
+                'id': menu.id,
+                'meal_type': menu.meal_type,
+                'state': 'active',
+                'name': menu.name,
+                'allergies': [{'id': a.id, 'name': a.name} for a in menu.allergy_ids],
+                'kids': []
+            } )
+
+
+
+        pp = pprint.PrettyPrinter(indent=4)
+        pp.pprint(result)
         return result
 

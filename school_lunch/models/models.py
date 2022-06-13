@@ -22,7 +22,7 @@ class menu(models.Model):
     order_ids = fields.One2many('school_lunch.order', 'menu_id', string='Orders')
     date = fields.Date('Day', index=True, required=True)
     color = fields.Integer()
-    meal_type = fields.Selection([('0', 'Soup'), ('1', 'Meal'), ('off', 'Day Off')], 'Meal Type', default="1")
+    meal_type = fields.Selection([('soup', 'Soup'), ('meal', 'Meal'), ('off', 'Day Off')], 'Meal Type', default="meal")
     allergy_ids = fields.Many2many('school_lunch.allergy', string='Allergies')
     order_count = fields.Integer('# of Orders', compute="_compute_count")
     kid_meal_type = fields.Selection([('0', 'Soup'), ('1', 'Meal'), ('off', 'Day Off')], 'Kid Meal', compute="_get_kid_meal", default=False)

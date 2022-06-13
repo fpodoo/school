@@ -40,36 +40,25 @@ LunchLine.template = "school_lunch.lunch_line"
 
 class LunchMenuTable extends Component {
     async willStart() {
-        // const result = await this.env.services.rpc({date: 1}, `/school/get_orders`);
-        this.kids = [
-            {id: 1, shortname: "Charlie"},
-            {id: 2, shortname: "Lena"}
-        ];
-        this.allergies = [
-            {id: 1, name: "Lentils"},
-            {id: 2, name: "Apple"}
-        ];
-        this.menus.push({
-                date: 'Wed, 04 May 2022',
-                day_of_week: 3,
-                meals: [
-                    {id: 1, meal_type: "meal", state: "active", name: "Spaggethi", allergies: [{id: 1, name: "Lentils"}], kids: [1]},
-                    {id: 2, meal_type: "soup", state: "active", name: "Soup 1", allergies: [], kids:[2]}
-                ],
+        const result = await this.env.services.rpc({
+            route: `/school/get_orders`,
+            params: {date: 0}
         });
-        this.menus.push({
-                date: 'Thu, 05 May 2022',
-                day_of_week: 4,
-                meals: [
-                    {id: 3, meal_type: "meal", state: "active", name: "Spaggethi", allergies: [{id: 2, name: "Apple"}], kids: [1]},
-                    {id: 4, meal_type: "soup", state: "active", name: "Soup 1", allergies: [], kids:[]}
-                ],
-        });
+        this.kids = result.kids;
+        this.allergies = result.allergies;
+        for (var menu of result.menus) {
+            this.menus.push(menu);
+        }
     }
 
     async setup() {
         this.menus = useState([]);
     };
+
+    mealDisplay(menu, meal) {
+        console.log(menu);
+        return meal.kids.length;
+    }
 
     unselectAllergy(ev) {
         const allergy = parseInt(ev.srcElement.dataset.allergy);

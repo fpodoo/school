@@ -24,14 +24,6 @@
             <field name="date" eval="(datetime.now()+relativedelta(weekday=1)).strftime('%Y-%m-%d')"/>
             <field name="allergy_ids" eval="[(6, 0, [ref('school_lunch.allergy_1')])]"/>
         </record>
-        <record id="menu_3" model="school_lunch.menu">
-            <field name="name">Potée Liegoise</field>
-            <field name="description">Cuisine du monde</field>
-            <field name="cook_id" ref="cook_1"/>
-            <field name="color">2</field>
-            <field name="date" eval="(datetime.now()+relativedelta(weekday=2)).strftime('%Y-%m-%d')"/>
-            <field name="allergy_ids" eval="[(6, 0, [ref('school_lunch.allergy_2')])]"/>
-        </record>
         <record id="menu_4" model="school_lunch.menu">
             <field name="name">Escalope Milanese</field>
             <field name="description">Cuisine du monde</field>
@@ -45,6 +37,45 @@
             <field name="cook_id" ref="cook_1"/>
             <field name="date" eval="(datetime.now()+relativedelta(weekday=4)).strftime('%Y-%m-%d')"/>
             <field name="allergy_ids" eval="[(6, 0, [ref('school_lunch.allergy_2'), ref('school_lunch.allergy_5')])]"/>
+        </record>
+
+        <record id="menu_1s" model="school_lunch.menu">
+            <field name="name">Soupe Carottes</field>
+            <field name="cook_id" ref="cook_1"/>
+            <field name="meal_type">soup</field>
+            <field name="date" eval="(datetime.now()-relativedelta(weekday=0)).strftime('%Y-%m-%d')"/>
+            <field name="allergy_ids" eval="[(6, 0, [ref('school_lunch.allergy_2')])]"/>
+        </record>
+        <record id="menu_2s" model="school_lunch.menu">
+            <field name="name">Potage du Jour</field>
+            <field name="description">Avec peufs</field>
+            <field name="color">1</field>
+            <field name="meal_type">soup</field>
+            <field name="cook_id" ref="cook_2"/>
+            <field name="date" eval="(datetime.now()+relativedelta(weekday=1)).strftime('%Y-%m-%d')"/>
+        </record>
+        <record id="menu_3s" model="school_lunch.menu">
+            <field name="name">Soupe Letille</field>
+            <field name="description">Cuisine du monde</field>
+            <field name="cook_id" ref="cook_1"/>
+            <field name="color">2</field>
+            <field name="date" eval="(datetime.now()+relativedelta(weekday=2)).strftime('%Y-%m-%d')"/>
+            <field name="meal_type">soup</field>
+            <field name="allergy_ids" eval="[(6, 0, [ref('school_lunch.allergy_3')])]"/>
+        </record>
+        <record id="menu_4s" model="school_lunch.menu">
+            <field name="name">Soupe Oignons</field>
+            <field name="meal_type">soup</field>
+            <field name="cook_id" ref="cook_1"/>
+            <field name="date" eval="(datetime.now()+relativedelta(weekday=3)).strftime('%Y-%m-%d')"/>
+            <field name="color">3</field>
+        </record>
+        <record id="menu_5s" model="school_lunch.menu">
+            <field name="name">Potage Tomates</field>
+            <field name="cook_id" ref="cook_1"/>
+            <field name="meal_type">soup</field>
+            <field name="date" eval="(datetime.now()+relativedelta(weekday=4)).strftime('%Y-%m-%d')"/>
+            <field name="allergy_ids" eval="[(6, 0, [ref('school_lunch.allergy_4')])]"/>
         </record>
 
 

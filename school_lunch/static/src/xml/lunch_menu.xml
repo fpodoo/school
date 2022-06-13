@@ -13,7 +13,7 @@
       <td>
           <b t-esc="props.menu.date"></b><br/>
           <div t-foreach="props.menu.meals" t-as="meal" t-key="meal.id">
-              <t t-if="meal.kids.length">
+              <t t-if="meal.kids.length || (meal.meal_type=='meal' &amp;&amp; ! props.menu.meals.reduce((prev, cur) => prev+cur.kids.length, 0))">
                   <t t-esc="meal.name"/>
                   <span t-foreach="meal.allergies" t-as="allergy" class="badge badge-pill badge-success ml-2" t-key="meal.id">
                       <t t-esc="allergy.name"/>
