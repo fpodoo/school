@@ -1,0 +1,14 @@
+<odoo>
+    <data>
+
+        <record id="product_meal" model="product.product">
+            <field name="name">Lunch Meal</field>
+        </record>
+
+        <record id="product_soup" model="product.product">
+            <field name="name">Soup</field>
+        </record>
+
+    </data>
+</odoo>
+

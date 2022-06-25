@@ -41,9 +41,13 @@ class SchoolLunch(http.Controller):
         })
 
     @http.route(['/school/kid/add'], auth='public', type='http', website=True, methods=["POST"])
-    def school_kid_add(self, kid_id, **kw):
+    def school_kid_add(self, kid_id=None, **kw):
+        if not kid_id:
+            return request.redirect('/school/kids')
+        kid_id = int(kid_id)
         d = request.session.get('mykids', [])
-        d.append(int(kid_id))
+        if kid_id not in d:
+            d.append(int(kid_id))
         request.session['mykids'] = d
         return request.redirect('/menu')
 
@@ -93,10 +97,12 @@ class SchoolLunch(http.Controller):
         dt_from = date + relativedelta(day=1)
         dt_to = date + relativedelta(day=1, months=1) - datetime.timedelta(days=1)
         kids = request.env['school_lunch.kid'].browse(request.session.get('mykids', []))
-        allergies = request.env['school_lunch.allergy'].search([])
+        kid_ids = kids.ids
 
 
         menus = request.env['school_lunch.menu'].search([('date','>=', dt_from.strftime('%Y-%m-%d')), ('date', "<=", dt_to.strftime('%Y-%m-%d'))])
+        allergy_ids = set([al.id for m in menus for al in m.allergy_ids])
+        allergies = request.env['school_lunch.allergy'].search([('id', 'in', list(allergy_ids))])
         result = {
             'kids': [{'id': kid.id, 'shortname': kid.shortname} for kid in kids],
             'allergies': [{'id': al.id, 'name': al.name} for al in allergies],
@@ -109,13 +115,28 @@ class SchoolLunch(http.Controller):
                     'day_of_week': menu.date.weekday()+1,
                     'meals': []
                 })
+            orders = menu.order_ids.filtered(lambda order: order.kid_id.id in kid_ids)
+            menu_kids = orders.filtered(lambda order: order.state=='draft').mapped('kid_id.id')
+            ordered_kids = orders.filtered(lambda order: order.state=='confirmed').mapped('kid_id.id')
             result['menus'][-1]['meals'].append({
                 'id': menu.id,
                 'meal_type': menu.meal_type,
                 'state': 'active',
                 'name': menu.name,
                 'allergies': [{'id': a.id, 'name': a.name} for a in menu.allergy_ids],
-                'kids': []
+                'kids': menu_kids,
+                'kids_ordered': ordered_kids
             } )
         return result
 
+    @http.route(['/school/classes_get'], type="json", auth="public", website=True, methods=["POST"])
+    def school_classes_get(self, class_id=None, **kwargs):
+        classes = request.env['school_lunch.class_name'].search([])
+        if not class_id:
+            class_id = classes[0].id
+        kids = request.env['school_lunch.kid'].search([('class_id','=',int(class_id))])
+        result = {
+            'classes': [{'id': c.id, 'name': c.name} for c in classes],
+            'kids': [{'id': k.id, 'shortname': k.shortname} for k in kids]
+        }
+        return result

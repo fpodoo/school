@@ -1,10 +1,49 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates xml:space="preserve" id="template">
 
-  <t t-name="school_lunch.lunch_menu" owl="1">
-      <div class="o_choice" t-att-class="props.menu.kids.includes(props.kid.id) ? 'active' : ''" t-on-click="toggleMenu">
-          <t t-esc="props.menu.meal_type"/>
+  <t t-name="school_lunch.lunch_kids_form" owl="1">
+      <div>
+          <div class="form-group row">
+            <label for="class_name" class="col-form-label col-sm-2">Class</label>
+            <div class="col-sm-4">
+                <select class="form-control" id="o-class-select" t-on-change="classChange" required="1">
+                    <option t-foreach="classes" t-as="classe" t-att-value="classe.id">
+                        <t t-esc="classe.name"/>
+                    </option>
+                </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="class_name" class="col-form-label col-sm-2">Kid</label>
+            <div class="col-sm-4">
+                <select class="form-control" name="kid_id" id="o-kid" required="1">
+                    <option value=""></option>
+                    <option t-foreach="kids" t-as="kid" t-att-value="kid.id">
+                        <t t-esc="kid.shortname"/>
+                    </option>
+                </select>
+            </div>
+          </div>
+          <div class="form-group row">
+              <div class="col-sm-4 offset-sm-2">
+                  <button type="submit" class="btn btn-primary">Add Child</button>
+              </div>
+          </div>
       </div>
+  </t>
+
+
+  <t t-name="school_lunch.lunch_menu" owl="1">
+      <t t-if="props.menu.kids_ordered.includes(props.kid.id)">
+          <div class="o_choice o_ordered">
+              <t t-esc="props.menu.meal_type"/>
+          </div>
+      </t>
+      <t t-else="">
+          <div class="o_choice" t-att-class="props.menu.kids.includes(props.kid.id) ? 'active' : ''" t-on-click="toggleMenu">
+              <t t-esc="props.menu.meal_type"/>
+          </div>
+      </t>
   </t>
 
 
@@ -57,7 +96,7 @@
                   <button href="#" t-on-click="unselectAllergy" data-allergy="0" class="btn btn-link">Clear Selection</button>
               </div>
           </div><div class="col-md-3 col-sm-invisible">
-              <h3>Meal</h3>
+              <h4>Select Meals</h4>
               <ul class="list-unstyled mb-4">
                   <li><a href="#" t-on-click="selectMeal" data-meal="meal" data-day="0">Select All</a></li>
                   <li><a href="#" t-on-click="selectMeal" data-meal="meal" data-day="1">Monday</a></li>
@@ -66,7 +105,7 @@
                   <li><a href="#" t-on-click="selectMeal" data-meal="meal" data-day="4">Thursday</a></li>
                   <li><a href="#" t-on-click="selectMeal" data-meal="meal" data-day="5">Friday</a></li>
               </ul>
-              <h3>Soup</h3>
+              <h4>Select Soups</h4>
               <ul class="list-unstyled mb-4">
                   <li><a href="#" t-on-click="selectMeal" data-meal="soup" data-day="0">Select All</a></li>
                   <li><a href="#" t-on-click="selectMeal" data-meal="soup" data-day="1">Monday</a></li>
@@ -75,9 +114,8 @@
                   <li><a href="#" t-on-click="selectMeal" data-meal="soup" data-day="4">Thursday</a></li>
                   <li><a href="#" t-on-click="selectMeal" data-meal="soup" data-day="5">Friday</a></li>
               </ul>
-              <h3>Allergies</h3>
+              <h4>Allergies</h4>
               <ul class="list-unstyled">
-                  <li><a href="#" t-on-click="unselectAllergy" data-allergy="0">Unselect All</a></li>
                   <li t-foreach="allergies" t-as="allergy" t-key="allergy.id">
                       <a href="#" t-on-click="unselectAllergy" t-att-data-allergy="allergy.id">
                           <t t-esc="allergy.name"/>

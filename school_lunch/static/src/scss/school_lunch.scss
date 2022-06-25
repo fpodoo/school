@@ -7,6 +7,10 @@
         margin-left: 2px;
     }
     .o_choice {
+        &.o_ordered {
+            background-color: #1d749d !important;
+            color: white !important;
+        }
         &.active {
             background-color: lightblue !important;
         }

@@ -13,6 +13,9 @@
                   <a t-attf-href="/menu/#{int((date-dmonth).timestamp())}" t-esc="(date-dmonth).strftime('%B %Y')" class="btn btn-primary"></a>
               </div>
           </div>
+          <p>
+              You can <a href="/school/kids">manage your kids</a>.
+          </p>
 
           <div class="alert alert-warning" role="alert" t-if="not len(kids)">
               To order, or check what you have ordered, <a href="/school/kids">add your children</a>.
@@ -31,32 +34,9 @@
       <div class="container">
           <h1 class="mb-4 mt-4">Add a Kid</h1>
           <form method="post" action="/school/kid/add">
-              <div class="form-group row">
-                <label for="class_name" class="col-form-label col-sm-2">Class</label>
-                <div class="col-sm-4">
-                    <select class="form-control">
-                        <option t-foreach="classes" t-as="classe">
-                            <t t-att-value="classe.id" t-out="classe.name"/>
-                        </option>
-                    </select>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label for="class_name" class="col-form-label col-sm-2">Kid</label>
-                <div class="col-sm-4">
-                    <select class="form-control" name="kid_id">
-                        <option t-foreach="kids" t-as="kid" t-att-value="kid.id" >
-                            <t t-out="kid.shortname"/>
-                        </option>
-                    </select>
-                </div>
-              </div>
-              <div class="form-group row">
-                  <div class="col-sm-4 offset-sm-2">
-                      <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
-                      <button type="submit" class="btn btn-primary">Add Child</button>
-                  </div>
-              </div>
+              <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+
+              <div class="o_kid_form" id="LunchKids"/>
 
           </form>
 

@@ -13,6 +13,26 @@ const {whenReady} = owl.utils;
 
 import env from "web.public_env";
 
+class LunchKids extends Component {
+    async classChange() {
+        const el = document.getElementById('o-class-select');
+        const result = await this.env.services.rpc({
+            route: `/school/classes_get`,
+            params: {class_id: el && el.value}
+        });
+        this.classes = result.classes;
+        this.kids.length = 0;
+        for (var kid of result.kids)
+            this.kids.push(kid);
+    }
+    async willStart() {
+        this.classes = [];
+        this.kids = useState([]);
+        await this.classChange();
+    }
+}
+LunchKids.template = "school_lunch.lunch_kids_form"
+
 
 class LunchMenu extends Component {
     toggleMenu() {
@@ -101,7 +121,8 @@ class LunchMenuTable extends Component {
                 meal.kids.length = 0;
                 if (meal.meal_type == meal_type) {
                     for (var kid of this.kids) {
-                        meal.kids.push(kid.id);
+                        if (! meal.kids_ordered.includes(kid.id))
+                            meal.kids.push(kid.id);
                     }
                 }
             }
@@ -121,8 +142,14 @@ async function makeEnvironment() {
 }
 
 async function setup() {
-    const env = await makeEnvironment();
-    mount(LunchMenuTable, {target: document.getElementById('LunchMenu'), env});
+    const elTable = document.getElementById('LunchMenu');
+    const elKids = document.getElementById('LunchKids');
+    if (elTable) {
+        mount(LunchMenuTable, {target: elTable, env: await makeEnvironment()});
+    }
+    if (elKids) {
+        mount(LunchKids, {target: elKids, env: await makeEnvironment()});
+    }
 }
 
 whenReady(setup);

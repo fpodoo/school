@@ -59,10 +59,20 @@ class order(models.Model):
     kid_id = fields.Many2one('school_lunch.kid', 'Kid', required=True)
     menu_id = fields.Many2one('school_lunch.menu', 'Menu', required=True)
     date = fields.Date('Day', related='menu_id.date', index=True, store=True)
-    meal_type = fields.Selection(related="menu_id.meal_type", string='Meal Type')
+    meal_type = fields.Selection(related="menu_id.meal_type", string='Meal Type', store=True)
+    color = fields.Integer('Color', compute="_get_color")
     sale_line_id = fields.Many2one('sale.order.line', 'Sale Order Line', ondelete="cascade")
     state = fields.Selection([('draft','Draft'), ('confirmed','Confirmed')], 'State', default='draft')
 
+
+    @api.depends('meal_type')
+    def _get_color(self):
+        for order in self:
+            order.color = {
+                'meal': 2,
+                'soup': 3,
+                'off': 4,
+            }.get(order.meal_type, 1)
 
     def order_create(self, data):
         pass
