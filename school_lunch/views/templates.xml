@@ -35,11 +35,8 @@
           <h1 class="mb-4 mt-4">Add a Kid</h1>
           <form method="post" action="/school/kid/add">
               <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
-
               <div class="o_kid_form" id="LunchKids"/>
-
           </form>
-
           <div t-if="len(my_kids)">
               <h1 class="mb-4 mt-4">Your Children</h1>
               <ul>
@@ -49,7 +46,9 @@
                   </li>
               </ul>
           </div>
-
+          <div class="mb128 mt64">
+              <a href="/menu" class="btn btn-secondary"><i class="fa fa-arrow-right"></i> &amp;nbsp; Go to Menu</a>
+          </div>
       </div>
     </t>
 </template>

@@ -1,6 +1,10 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_school_lunch_allergy,school_lunch.allergy,model_school_lunch_allergy,base.group_user,1,1,1,1
 access_school_lunch_menu,school_lunch.menu,model_school_lunch_menu,base.group_user,1,1,1,1
-access_school_lunch_order,school_lunch.order,model_school_lunch_order,base.group_user,1,1,1,1
 access_school_lunch_class_name,school_lunch.class_name,model_school_lunch_class_name,base.group_user,1,1,1,1
+access_school_lunch_order,school_lunch.order,model_school_lunch_order,base.group_user,1,1,1,1
 access_school_lunch_kid,school_lunch.kid,model_school_lunch_kid,base.group_user,1,1,1,1
+access_school_lunch_allergy_anon,school_lunch.allergy,model_school_lunch_allergy,,1,0,0,0
+access_school_lunch_menu_anon,school_lunch.menu,model_school_lunch_menu,,1,0,0,0
+access_school_lunch_class_name_anon,school_lunch.class_name,model_school_lunch_class_name,,1,0,0,0
+access_school_lunch_kid_anon,school_lunch.kid,model_school_lunch_kid,,1,0,0,0

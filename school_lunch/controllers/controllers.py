@@ -76,13 +76,14 @@ class SchoolLunch(http.Controller):
                 meals[menu.meal_type].append((menu.id, kid))
 
         for meal_type, orders in meals.items():
-            product_id = request.env.ref('school_lunch.product_'+meal_type)
-            line_id = sale_order._cart_update(
+            product_id = request.env.ref('school_lunch.product_'+meal_type).sudo()
+            so = sale_order.sudo()
+            line_id = so._cart_update(
                 product_id=product_id.id,
                 set_qty=len(orders)
             )['line_id']
             for order in orders:
-                request.env['school_lunch.order'].create({
+                request.env['school_lunch.order'].sudo().create({
                     'sale_line_id': line_id,
                     'menu_id': order[0],
                     'kid_id': order[1]
@@ -115,6 +116,7 @@ class SchoolLunch(http.Controller):
                     'day_of_week': menu.date.weekday()+1,
                     'meals': []
                 })
+            menu = menu.sudo()
             orders = menu.order_ids.filtered(lambda order: order.kid_id.id in kid_ids)
             menu_kids = orders.filtered(lambda order: order.state=='draft').mapped('kid_id.id')
             ordered_kids = orders.filtered(lambda order: order.state=='confirmed').mapped('kid_id.id')

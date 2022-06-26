@@ -130,7 +130,8 @@
                 <field name="name" string="Menu" filter_domain="['|', ('name', 'ilike', self), ('description', 'ilike', self)]"/>
                 <field name="cook_id"/>
                 <field name="meal_type"/>
-                <field name="date"/>
+                <separator/>
+                <filter string="Date" name="filter_date" date="date" default_period="this_month"/>
                 <group expand="0" string="Group By">
                     <filter string="Meal Type" name="group_meal_type" domain="[]" context="{'group_by': 'meal_type'}"/>
                     <filter name="group_cook_id" string="Cook" domain="[]" context="{'group_by': 'cook_id'}"/>
@@ -229,6 +230,7 @@
         <field name="arch" type="xml">
             <search string="Search Lunch Orders">
                 <field name="name" string="Kid" filter_domain="['|', ('name', 'ilike', self), ('kid_id', 'ilike', self)]"/>
+                <field name="class_id"/>
                 <field name="menu_id"/>
                 <field name="meal_type"/>
                 <field name="date"/>
@@ -262,6 +264,7 @@
       <field name="name">Orders</field>
       <field name="res_model">school_lunch.order</field>
       <field name="view_mode">tree,form,pivot,graph,kanban,gantt</field>
+      <field name="context">{'search_default_order_confirm': 1}</field>
     </record>
     <menuitem id="school_lunch.menu_order"
             parent="school_lunch.menu_root"
@@ -271,10 +274,48 @@
       <field name="name">Weekly Orders</field>
       <field name="res_model">school_lunch.order</field>
       <field name="view_mode">gantt,tree,form,pivot,graph,kanban</field>
+      <field name="context">{'search_default_order_confirm': 1}</field>
     </record>
     <menuitem id="school_lunch.menu_order_gantt"
             parent="school_lunch.menu_root"
             action="school_lunch.order_gantt_act"/>
+
+    <menuitem id="school_lunch.menu_reporting"
+            name="Reporting"
+            parent="school_lunch.root"/>
+
+    <record model="ir.ui.view" id="view_lunch_order_pivot">
+        <field name="name">school_lunch.order.pivot</field>
+        <field name="model">school_lunch.order</field>
+        <field name="arch" type="xml">
+            <pivot string="Lunch Orders" sample="1">
+                <field name="meal_type" type="row"/>
+                <field name="date" type="col"/>
+            </pivot>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_lunch_order_graph">
+        <field name="name">school_lunch.order.graph</field>
+        <field name="model">school_lunch.order</field>
+        <field name="arch" type="xml">
+            <graph string="Lunch Orders" sample="1">
+                <field name="date" interval="day"/>
+                <field name="meal_type"/>
+            </graph>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="school_lunch.order_pivot_act">
+      <field name="name">Orders</field>
+      <field name="res_model">school_lunch.order</field>
+      <field name="view_mode">graph,pivot,gantt,tree,form,kanban</field>
+      <field name="domain">[]</field>
+      <field name="context">{'search_default_order_confirm': 1}</field>
+    </record>
+    <menuitem id="school_lunch.menu_order_pivot"
+            parent="school_lunch.menu_reporting"
+            action="school_lunch.order_pivot_act"/>
+
+
 
     </data>
 </odoo>
