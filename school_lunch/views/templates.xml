@@ -5,24 +5,21 @@
     <t t-call="website.layout">
       <div id="wrap"/>
       <div class="container">
-          <div class="row" id="lunch_menu">
-              <div class="col-8">
-                  <h1 class="mb-4 mt-4">Lunch: <t t-esc="date.strftime('%B %Y')"/></h1>
-              </div><div class="col-4">
-                  <a t-attf-href="/menu/#{int((date+dmonth).timestamp())}" t-esc="(date+dmonth).strftime('%B %Y')" class="btn btn-primary"></a>
-                  <a t-attf-href="/menu/#{int((date-dmonth).timestamp())}" t-esc="(date-dmonth).strftime('%B %Y')" class="btn btn-primary"></a>
-              </div>
-          </div>
+          <h1 class="mt-4">
+              Lunch: <t t-esc="date.strftime('%B %Y')"/>
+              <a t-attf-href="/menu/#{int((date-dmonth).timestamp())}" class="btn btn-outline-secondary">
+                  <i class="fa fa-arrow-left"/>
+                  <t t-esc="(date-dmonth).strftime('%B %Y')"/>
+              </a>
+              <a t-attf-href="/menu/#{int((date+dmonth).timestamp())}" class="btn btn-outline-secondary">
+                  <i class="fa fa-arrow-right"/>
+                  <t t-esc="(date+dmonth).strftime('%B %Y')"/>
+              </a>
+          </h1>
           <p>
-              You can <a href="/school/kids">manage your kids</a>.
+              Need to add or remove children? <a href="/school/kids">Manage your kids</a>.
           </p>
-
-          <div class="alert alert-warning" role="alert" t-if="not len(kids)">
-              To order, or check what you have ordered, <a href="/school/kids">add your children</a>.
-          </div>
-
-          <div class="o_menu" id="LunchMenu"/>
-
+          <div class="o_menu" id="LunchMenu" t-att-data-date="timestamp"/>
       </div>
     </t>
 </template>

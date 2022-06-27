@@ -12,21 +12,12 @@ FMT = '%A, %d %b %Y'
 class SchoolLunch(http.Controller):
     @http.route(['/menu', '/menu/<int:date>'], auth='public', type='http', website=True)
     def menu(self, date=None, **kw):
-        date = datetime.datetime.fromtimestamp(date or time.time())
-
-        dt_from = date + relativedelta(day=1)
-        dt_to = date + relativedelta(day=1, months=1) - datetime.timedelta(days=1)
-
-        menus = request.env['school_lunch.menu'].search([('date','>=', dt_from.strftime('%Y-%m-%d')), ('date', "<=", dt_to.strftime('%Y-%m-%d'))])
-        allergies = request.env['school_lunch.menu'].read_group([('date','>=', dt_from.strftime('%Y-%m-%d')), ('date', "<=", dt_to.strftime('%Y-%m-%d'))], ['allergy_ids'], ['allergy_ids'])
-        allergies = filter(None, list(map(lambda x: x['allergy_ids'], allergies)))
-        allergies = request.env['school_lunch.allergy'].browse(map(lambda x: x[0], allergies))
+        dt = datetime.datetime.fromtimestamp(date or time.time())
         return http.request.render('school_lunch.menu', {
-            'date': date,
-            'menus': menus,
+            'date': dt,
+            'timestamp': date,
             'dmonth': relativedelta(months=1),
             'kids': request.env['school_lunch.kid'].browse(request.session.get('mykids', [])),
-            'allergies': allergies
         })
 
     @http.route(['/school/kids'], auth='public', type='http', website=True)
@@ -49,7 +40,7 @@ class SchoolLunch(http.Controller):
         if kid_id not in d:
             d.append(int(kid_id))
         request.session['mykids'] = d
-        return request.redirect('/menu')
+        return request.redirect('/school/kids')
 
     @http.route(['/school/kid/remove/<int:kid_id>'], auth='public', type='http', website=True)
     def school_kid_remove(self, kid_id, **kw):
@@ -93,8 +84,8 @@ class SchoolLunch(http.Controller):
 
     @http.route(['/school/order_prepare'], type="json", auth="public", website=True, methods=["POST"])
     def school_order_prepare(self, date=None, **kwargs):
-
-        date = datetime.datetime.fromtimestamp(date or time.time())
+        print('*** date:', date)
+        date = datetime.datetime.fromtimestamp(date and int(date) or time.time())
         dt_from = date + relativedelta(day=1)
         dt_to = date + relativedelta(day=1, months=1) - datetime.timedelta(days=1)
         kids = request.env['school_lunch.kid'].browse(request.session.get('mykids', []))

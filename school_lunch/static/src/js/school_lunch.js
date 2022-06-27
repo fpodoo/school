@@ -62,7 +62,7 @@ class LunchMenuTable extends Component {
     async willStart() {
         const result = await this.env.services.rpc({
             route: `/school/order_prepare`,
-            params: {date: 0}
+            params: {date: this.props.date}
         });
         this.kids = result.kids;
         this.allergies = result.allergies;
@@ -145,7 +145,7 @@ async function setup() {
     const elTable = document.getElementById('LunchMenu');
     const elKids = document.getElementById('LunchKids');
     if (elTable) {
-        mount(LunchMenuTable, {target: elTable, env: await makeEnvironment()});
+        mount(LunchMenuTable, {target: elTable, env: await makeEnvironment(), props: {date: elTable.dataset.date}});
     }
     if (elKids) {
         mount(LunchKids, {target: elKids, env: await makeEnvironment()});

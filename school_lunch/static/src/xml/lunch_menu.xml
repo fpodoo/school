@@ -74,8 +74,11 @@
 
 
   <t t-name="school_lunch.lunch_table" owl="1">
-      <div class="row">
+      <div class="row" t-if="menus.length">
           <div class="col-md-9">
+              <div class="alert alert-warning" role="alert" t-if="! kids.length">
+                  To order, start by <a href="/school/kids">adding your children</a>.
+              </div>
               <table class="table table-sm">
                   <thead class="thead-light">
                   <tr>
@@ -91,11 +94,11 @@
                   </t>
 
               </table>
-              <div class="mb128 mt32">
+              <div class="mb128 mt32" t-if="kids.length">
                   <button href="#" t-on-click="orderSet" class="btn btn-primary">Validate Order</button>
                   <button href="#" t-on-click="unselectAllergy" data-allergy="0" class="btn btn-link">Clear Selection</button>
               </div>
-          </div><div class="col-md-3 col-sm-invisible">
+          </div><div class="col-md-3 col-sm-invisible" t-if="kids.length">
               <h4>Select Meals</h4>
               <ul class="list-unstyled mb-4">
                   <li><a href="#" t-on-click="selectMeal" data-meal="meal" data-day="0">Select All</a></li>
@@ -122,6 +125,17 @@
                       </a>
                   </li>
               </ul>
+          </div>
+      </div>
+      <div t-if="! menus.length">
+          <div class="alert alert-warning mb128 mt64" role="alert">
+              <h4 class="alert-heading">Menu not available!</h4>
+              <p>
+                  Next month's menu is <b>published on the 20th of the month</b>,
+                  and you have up to the 26th to order.
+              </p>
+              <hr/>
+              <p class="mb0">Come back in a few days.</p>
           </div>
       </div>
   </t>
