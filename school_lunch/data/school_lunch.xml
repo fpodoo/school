@@ -3,10 +3,14 @@
 
         <record id="product_meal" model="product.product">
             <field name="name">Lunch Meal</field>
+            <field name="type">service</field>
+            <field name="list_price">4.50</field>
         </record>
 
         <record id="product_soup" model="product.product">
             <field name="name">Soup</field>
+            <field name="type">service</field>
+            <field name="list_price">0.50</field>
         </record>
 
     </data>
