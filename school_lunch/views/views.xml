@@ -1,7 +1,7 @@
 <odoo>
     <data>
     <!-- Top menu item -->
-    <menuitem name="Lunch" id="school_lunch.root"/>
+    <menuitem name="Lunch" id="school_lunch.root" web_icon="school_lunch,static/description/icon.png"/>
     <menuitem name="Configuration" id="school_lunch.config" parent="school_lunch.root" sequence="32"/>
 
     <record model="ir.ui.view" id="school_lunch.allergy_list">
@@ -111,7 +111,7 @@
       <field name="name">Menu</field>
       <field name="model">school_lunch.menu</field>
       <field name="arch" type="xml">
-        <tree string="Menu">
+        <tree string="Menu" multi_edit="1">
           <field name="date"/>
           <field name="cook_id"/>
           <field name="meal_type"/>
@@ -147,7 +147,7 @@
       <field name="name">Menu</field>
       <field name="model">school_lunch.menu</field>
       <field name="arch" type="xml">
-        <calendar string="Menu" date_start="date" color="color">
+        <calendar string="Menu" date_start="date" color="color" mode="month">
           <field name="name"/>
           <field name="description"/>
           <field name="cook_id" filters="1"/>

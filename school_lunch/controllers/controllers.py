@@ -57,7 +57,7 @@ class SchoolLunch(http.Controller):
         if sale_order.state != 'draft':
             request.session['sale_order_id'] = None
             sale_order = request.website.sale_get_order(force_create=True)
-        sale_order.order_line = [(6, 0, [])]
+        sale_order.order_line = sale_order.order_line.filtered(lambda line: not line.lunch_ids)
 
         menus = request.env['school_lunch.menu'].browse(map(int, orders.keys()))
         meals = {}            # {meal_type: [(menu_id, kid_id)] }
