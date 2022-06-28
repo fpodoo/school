@@ -21,7 +21,7 @@ class sale_order(models.Model):
 
     def _action_cancel(self):
         for order in self:
-            for line in order:
+            for line in order.order_line:
                 line.lunch_ids.unlink()
 
     def _cart_update(self, product_id=None, line_id=None, add_qty=0, set_qty=0, *args, **kwargs):
