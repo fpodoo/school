@@ -220,7 +220,7 @@
             color="color"
             default_group_by="kid_id"
             default_scale="month"
-            precision='{"week":"day:full"}'
+            precision='{"week":"day:full", "month": "day:full"}'
             total_row="true">
         </gantt>
       </field>
