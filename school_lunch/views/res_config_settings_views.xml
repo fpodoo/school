@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_config_settings_school_lunch_form" model="ir.ui.view">
+        <field name="name">res.config.settings.school_lunch.form.inherit.crm</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('settings')]" position="inside">
+                <div class="app_settings_block" data-string="Lunch" string="Lunch" data-key="lunch">
+                    <h2>School Lunch</h2>
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Deadline to Order</span>
+                                <div class="text-muted">
+                                    Last day to order for next month
+                                </div>
+                                <div class="text-muted">
+                                    <field name="lunch_block" class="oe_inline"/>
+                                    th
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Reminder Date</span>
+                                <div class="text-muted">
+                                    Day of the month for reminder
+                                </div>
+                                <div class="text-muted">
+                                    <field name="lunch_reminder" class="oe_inline"/>
+                                    th
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Reminder Template</span>
+                                <div class="text-muted">
+                                    eMail template to remind to order lunch
+                                </div>
+                                <div class="text-muted">
+                                    <field name="lunch_reminder_template_id"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="lunch_config_settings_action" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_id" ref="res_config_settings_school_lunch_form"/>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+        <field name="context">{'module' : 'lunch', 'bin_size': False}</field>
+    </record>
+    <menuitem name="Settings" id="school_lunch.config_settings" parent="school_lunch.config" action="lunch_config_settings_action"/>
+
+</odoo>
