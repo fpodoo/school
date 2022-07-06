@@ -64,7 +64,10 @@ class LunchMenuTable extends Component {
             route: `/school/order_prepare`,
             params: {date: this.props.date}
         });
+        this.dt_block = result.dt_block;
+        this.dt_alert = result.dt_alert;
         this.kids = result.kids;
+        this.readonly = result.readonly;
         this.allergies = result.allergies;
         for (var menu of result.menus) {
             this.menus.push(menu);
@@ -73,6 +76,9 @@ class LunchMenuTable extends Component {
 
     async setup() {
         this.menus = useState([]);
+        this.dt_block = useState(26);
+        this.dt_alert = useState(20);
+        this.readonly = useState(true);
     };
 
     mealDisplay(menu, meal) {

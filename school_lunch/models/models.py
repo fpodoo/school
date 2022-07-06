@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
 
 class allergy(models.Model):
     _name = 'school_lunch.allergy'
@@ -14,18 +16,34 @@ class allergy(models.Model):
 class menu(models.Model):
     _name = 'school_lunch.menu'
     _description = 'Daily Menu'
-    _order = "date, meal_type"
+    _order = "date desc, meal_type"
 
     name = fields.Char("Meal Title", required=True)
     description = fields.Char()
     cook_id = fields.Many2one('res.partner', 'Cuisinier')
     order_ids = fields.One2many('school_lunch.order', 'menu_id', string='Orders')
-    date = fields.Date('Day', index=True, required=True)
+    date = fields.Date('Day', index=True, required=True, default=lambda self: self._default_date())
     color = fields.Integer()
-    meal_type = fields.Selection([('soup', 'Soup'), ('meal', 'Meal'), ('off', 'Day Off')], 'Meal Type', default="meal")
+    meal_type = fields.Selection([('soup', 'Soup'), ('meal', 'Meal'), ('off', 'Day Off')], 'Meal Type', default=lambda self: self._default_meal())
     allergy_ids = fields.Many2many('school_lunch.allergy', string='Allergies')
     order_count = fields.Integer('# of Orders', compute="_compute_count")
     kid_meal_type = fields.Selection([('0', 'Soup'), ('1', 'Meal'), ('off', 'Day Off')], 'Kid Meal', compute="_get_kid_meal", default=False)
+
+    def _default_date(self):
+        latest = self.search([], limit=1)
+        if latest.meal_type=='meal':
+            skip = {1: 2, 4: 3}.get(latest.date.weekday(), 1)
+            rt = relativedelta(days=skip)
+            return latest.date+rt
+        else:
+            return latest.date
+
+    def _default_meal(self):
+        latest = self.search([], limit=1)
+        if latest.meal_type=='meal':
+            return 'soup'
+        else:
+            return 'meal'
 
     @api.depends('order_ids.menu_id')
     def _compute_count(self):
@@ -87,6 +105,7 @@ class class_name(models.Model):
     name = fields.Char('Class Name', required=True)
     class_type = fields.Selection([('0', 'Maternelle'), ('1', 'Primaire'), ('2', 'Secondaire'), ('3', 'Other')], string='Class Type')
     active = fields.Boolean('Active', default=True)
+    pricelist_id = fields.Many2one('product.pricelist', string="Pricelist")
 
 
 class kid(models.Model):
@@ -101,6 +120,7 @@ class kid(models.Model):
     parent_id = fields.Many2one('res.partner', "Parent")
     allergy_ids = fields.Many2many('school_lunch.allergy', string='Allergies')
     class_id = fields.Many2one('school_lunch.class_name', 'Class', required=True)
+    unblock_date = fields.Date('Allow Order Until')
 
     @api.depends('firstname', 'lastname', 'class_id')
     def _shortname_get(self):

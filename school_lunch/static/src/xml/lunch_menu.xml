@@ -34,8 +34,8 @@
 
 
   <t t-name="school_lunch.lunch_menu" owl="1">
-      <t t-if="props.menu.kids_ordered.includes(props.kid.id)">
-          <div class="o_choice o_ordered">
+      <t t-if="props.menu.kids_ordered.includes(props.kid.id) || ! props.menu.readonly">
+          <div class="o_choice" t-att-class="props.menu.kids_ordered.includes(props.kid.id) ? 'o_ordered' : ''">
               <t t-esc="props.menu.meal_type"/>
           </div>
       </t>
@@ -94,11 +94,11 @@
                   </t>
 
               </table>
-              <div class="mb128 mt32" t-if="kids.length">
+              <div class="mb128 mt32" t-if="kids.length and ! readonly">
                   <button href="#" t-on-click="orderSet" class="btn btn-primary">Validate Order</button>
                   <button href="#" t-on-click="unselectAllergy" data-allergy="0" class="btn btn-link">Clear Selection</button>
               </div>
-          </div><div class="col-md-3 col-sm-invisible" t-if="kids.length">
+          </div><div class="col-md-3 col-sm-invisible" t-if="kids.length and ! readonly">
               <h4>Select Meals</h4>
               <ul class="list-unstyled mb-4">
                   <li><a href="#" t-on-click="selectMeal" data-meal="meal" data-day="0">Select All</a></li>
@@ -131,8 +131,8 @@
           <div class="alert alert-warning mb128 mt64" role="alert">
               <h4 class="alert-heading">Menu not available!</h4>
               <p>
-                  Next month's menu is <b>published on the 20th of the month</b>,
-                  and you have up to the 26th to order.
+                  Next month's menu is <b>published on the <span t-esc="dt_alert"/>th of the month</b>,
+                  and you have up to the <span t-esc="dt_block"/>th to order.
               </p>
               <hr/>
               <p class="mb0">Come back in a few days.</p>

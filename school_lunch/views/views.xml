@@ -31,6 +31,7 @@
         <tree string="Class Name" editable="bottom">
           <field name="name"/>
           <field name="class_type"/>
+          <field name="pricelist_id" optional="hidden"/>
           <field name="active"/>
         </tree>
       </field>
@@ -70,7 +71,7 @@
           <group>
             <group>
               <label for="firstname"/>
-              <div class="oe_inline">
+              <div class="o_row">
                   <field name="firstname" placeholder="Firstname"/>
                   <field name="lastname" placeholder="Lastname"/>
               </div>
@@ -79,6 +80,7 @@
             <group>
               <field name="class_id"/>
               <field name="parent_id"/>
+              <field name="unblock_date"/>
             </group>
           </group>
         </form>
@@ -113,7 +115,7 @@
       <field name="arch" type="xml">
         <tree string="Menu" multi_edit="1">
           <field name="date"/>
-          <field name="cook_id"/>
+          <field name="cook_id" optional="hidden"/>
           <field name="meal_type"/>
           <field name="name"/>
           <field name="allergy_ids" widget="many2many_tags"/>
@@ -179,15 +181,15 @@
               </div>
               <group>
                   <group>
-                      <field name="date"/>
-                      <field name="cook_id"/>
-                      <field name="meal_type"/>
-                  </group>
-                  <group>
                       <field name="name"/>
                       <field name="description"/>
                       <field name="allergy_ids" widget="many2many_tags"/>
                       <field name="color" widget="color_picker"/>
+                  </group>
+                  <group>
+                      <field name="date"/>
+                      <field name="cook_id"/>
+                      <field name="meal_type"/>
                   </group>
               </group>
           </sheet>
@@ -217,7 +219,7 @@
             date_start="date" date_stop="date"
             color="color"
             default_group_by="kid_id"
-            default_scale="week"
+            default_scale="month"
             precision='{"week":"day:full"}'
             total_row="true">
         </gantt>
@@ -271,7 +273,7 @@
             action="school_lunch.order_act"/>
 
     <record model="ir.actions.act_window" id="school_lunch.order_gantt_act">
-      <field name="name">Weekly Orders</field>
+      <field name="name">Monthly Orders</field>
       <field name="res_model">school_lunch.order</field>
       <field name="view_mode">gantt,tree,form,pivot,graph,kanban</field>
       <field name="context">{'search_default_order_confirm': 1}</field>

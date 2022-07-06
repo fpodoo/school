@@ -25,6 +25,7 @@
     'data': [
         'security/ir.model.access.csv',
         'views/views.xml',
+        'views/res_config_settings_views.xml',
         'data/school_lunch.allergy.csv',
         'data/school_lunch.class_name.csv',
         'data/school_lunch.xml',

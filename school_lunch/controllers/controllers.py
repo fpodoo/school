@@ -84,20 +84,31 @@ class SchoolLunch(http.Controller):
 
     @http.route(['/school/order_prepare'], type="json", auth="public", website=True, methods=["POST"])
     def school_order_prepare(self, date=None, **kwargs):
-        print('*** date:', date)
-        date = datetime.datetime.fromtimestamp(date and int(date) or time.time())
+        max_day = int(request.env["ir.config_parameter"].sudo().get_param("school_lunch.lunch_block") or 26)
+        alert_day = int(request.env["ir.config_parameter"].sudo().get_param("school_lunch.lunch_reminder") or 20)
+        now = datetime.datetime.now()
+        max_date = now + relativedelta(months = (now.day <= max_day) and 1 or 2, day=1)
+
+        date = datetime.datetime.fromtimestamp(date and int(date) or max_date.timestamp())
         dt_from = date + relativedelta(day=1)
         dt_to = date + relativedelta(day=1, months=1) - datetime.timedelta(days=1)
         kids = request.env['school_lunch.kid'].browse(request.session.get('mykids', []))
         kid_ids = kids.ids
 
-
         menus = request.env['school_lunch.menu'].search([('date','>=', dt_from.strftime('%Y-%m-%d')), ('date', "<=", dt_to.strftime('%Y-%m-%d'))])
         allergy_ids = set([al.id for m in menus for al in m.allergy_ids])
         allergies = request.env['school_lunch.allergy'].search([('id', 'in', list(allergy_ids))])
+
+        unblock = False
+        for kid in kids:
+            if kid.unblock_date and kid.unblock_date >= datetime.date.today():
+                unblock = True
         result = {
             'kids': [{'id': kid.id, 'shortname': kid.shortname} for kid in kids],
             'allergies': [{'id': al.id, 'name': al.name} for al in allergies],
+            'readonly': (date<=max_date) and not unblock,
+            'dt_block': max_day,
+            'dt_alert': alert_day,
             'menus': []
         }
         for menu in menus:
