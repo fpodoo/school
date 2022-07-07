@@ -34,7 +34,7 @@
 
 
   <t t-name="school_lunch.lunch_menu" owl="1">
-      <t t-if="props.menu.kids_ordered.includes(props.kid.id) || ! props.menu.readonly">
+      <t t-if="props.menu.kids_ordered.includes(props.kid.id)">
           <div class="o_choice" t-att-class="props.menu.kids_ordered.includes(props.kid.id) ? 'o_ordered' : ''">
               <t t-esc="props.menu.meal_type"/>
           </div>

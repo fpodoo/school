@@ -63,19 +63,30 @@ class SchoolLunch(http.Controller):
         meals = {}            # {meal_type: [(menu_id, kid_id)] }
         for menu in menus:
             for kid in orders[str(menu.id)]:
-                meals.setdefault(menu.meal_type, [])
-                meals[menu.meal_type].append((menu.id, kid))
+                product = request.env.ref('school_lunch.product_'+menu.meal_type).sudo()
+                price = product.lst_price
+                kid_o = request.env['school_lunch.kid'].browse(kid)
+                if kid_o.class_id.pricelist_id:
+                    result = kid_o.class_id.pricelist_id.get_product_price(product, 1, False)
+                    price = result
+                key = (menu.meal_type, product, price)
+                meals.setdefault(key, [])
+                meals[key].append((menu.id, kid))
 
-        for meal_type, orders in meals.items():
-            product_id = request.env.ref('school_lunch.product_'+meal_type).sudo()
+        for (meal_type, product, price), orders in meals.items():
             so = sale_order.sudo()
-            line_id = so._cart_update(
-                product_id=product_id.id,
-                set_qty=len(orders)
-            )['line_id']
+            line_id = request.env['sale.order.line'].create({
+                'product_id': product.id,
+                'tax_id': product.taxes_id,
+                'name': product.name,
+                'product_uom_qty': len(orders),
+                'product_uom': product.uom_id.id,
+                'price_unit': price,
+                'order_id': so.id
+            })
             for order in orders:
                 request.env['school_lunch.order'].sudo().create({
-                    'sale_line_id': line_id,
+                    'sale_line_id': line_id.id,
                     'menu_id': order[0],
                     'kid_id': order[1]
                 })
