@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
-from datetime import datetime
+from datetime import datetime, date
 from dateutil.relativedelta import relativedelta
+import uuid
 
 class allergy(models.Model):
     _name = 'school_lunch.allergy'
@@ -117,10 +118,12 @@ class kid(models.Model):
     lastname = fields.Char('Lastname', required=True)
     name = fields.Char('Name', compute="_fullname_get", store=True)
     shortname = fields.Char('Short Name', compute="_shortname_get")
-    parent_id = fields.Many2one('res.partner', "Parent")
+    parent_ids = fields.Many2many('res.partner', 'school_lunch_kid_partner_rel', 'kid_id', 'partner_id', "Parents")
     allergy_ids = fields.Many2many('school_lunch.allergy', string='Allergies')
     class_id = fields.Many2one('school_lunch.class_name', 'Class', required=True)
     unblock_date = fields.Date('Allow Order Until')
+    uuid = fields.Char('UUID', default=lambda x: str(uuid.uuid4()) )
+    active = fields.Boolean('Active', default=True)
 
     @api.depends('firstname', 'lastname', 'class_id')
     def _shortname_get(self):
@@ -137,4 +140,10 @@ class kid(models.Model):
         for kid in self:
             kid.name = kid.firstname + ' ' + kid.lastname
 
+
+
+class partner(models.Model):
+    _inherit = 'res.partner'
+
+    kid_ids = fields.Many2many('school_lunch.kid', 'school_lunch_kid_partner_rel', 'partner_id', 'kid_id', 'Kids')
 
