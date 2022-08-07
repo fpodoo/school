@@ -77,7 +77,11 @@
       <div class="row" t-if="menus.length">
           <div class="col-md-9">
               <div class="alert alert-warning" role="alert" t-if="! kids.length">
-                  To order, start by <a href="/school/kids">adding your children</a>.
+                  <t t-if="signin">
+                      To order, use the link provided by email. Or, if you registered previously, you can <a href="/web/login">sign in</a>.
+                  </t><t t-else="">
+                      To order, start by <a href="/school/kids">adding your children</a>.
+                  </t>
               </div>
               <table class="table table-sm">
                   <thead class="thead-light">

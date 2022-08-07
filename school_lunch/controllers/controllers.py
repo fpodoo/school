@@ -93,7 +93,7 @@ class SchoolLunch(http.Controller):
 
         for (meal_type, product, price), orders in meals.items():
             so = sale_order.sudo()
-            line_id = request.env['sale.order.line'].create({
+            line_id = request.env['sale.order.line'].sudo().create({
                 'product_id': product.id,
                 'tax_id': product.taxes_id,
                 'name': product.name,
@@ -132,11 +132,13 @@ class SchoolLunch(http.Controller):
         for kid in kids:
             if kid.unblock_date and kid.unblock_date >= datetime.date.today():
                 unblock = True
+        signin = request.env.company.lunch_signin
         result = {
             'kids': [{'id': kid.id, 'shortname': kid.shortname} for kid in kids],
             'allergies': [{'id': al.id, 'name': al.name} for al in allergies],
             'readonly': (date<=max_date) and not unblock,
             'dt_block': max_day,
+            'signin': signin,
             'dt_alert': alert_day,
             'menus': []
         }

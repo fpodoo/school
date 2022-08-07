@@ -67,6 +67,7 @@ class LunchMenuTable extends Component {
         this.dt_block = result.dt_block;
         this.dt_alert = result.dt_alert;
         this.kids = result.kids;
+        this.signin = result.signin;
         this.readonly = result.readonly;
         this.allergies = result.allergies;
         for (var menu of result.menus) {
