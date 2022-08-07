@@ -113,7 +113,7 @@ class SchoolLunch(http.Controller):
 
     @http.route(['/school/order_prepare'], type="json", auth="public", website=True, methods=["POST"])
     def school_order_prepare(self, date=None, **kwargs):
-        max_day = int(request.env["ir.config_parameter"].sudo().get_param("school_lunch.lunch_block") or 26)
+        max_day = request.env.company.lunch_block
         alert_day = int(request.env["ir.config_parameter"].sudo().get_param("school_lunch.lunch_reminder") or 20)
         now = datetime.datetime.now()
         max_date = now + relativedelta(months = (now.day <= max_day) and 1 or 2, day=1)
