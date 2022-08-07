@@ -12,7 +12,13 @@ class SchoolLunch(http.Controller):
     @http.route(['/menu', '/menu/<int:date>'], auth='public', type='http', website=True)
     def menu(self, date=None, **kw):
         dt = datetime.datetime.fromtimestamp(date or time.time())
-        print('DT', dt)
+        if not date:
+            try:
+                cron = request.env.ref('school_lunch.school_menu_reminder')
+                if dt.day >= (cron.active and cron.nextcall.day or 1):
+                    dt += relativedelta(months=1)
+            except:
+                pass
         return http.request.render('school_lunch.menu', {
             'date': dt,
             'timestamp': int(dt.timestamp()),
