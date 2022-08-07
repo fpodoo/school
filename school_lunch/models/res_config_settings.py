@@ -23,13 +23,12 @@ class ResConfigSettings(models.TransientModel):
     _inherit = 'res.config.settings'
 
     lunch_block = fields.Integer(string="Deadline to Order", config_parameter='school_lunch.lunch_block', default=26, help="Day of the month to order for next month. 0 for no deadline")
-    lunch_reminder = fields.Integer(string="Lunch Reminder", compute='_get_lunch_reminder', inverse='_set_lunch_reminder', default=20)
+    lunch_reminder = fields.Integer(string="Lunch Reminder", default=lambda self: self._get_lunch_reminder(), inverse='_set_lunch_reminder')
     lunch_reminder_template_id = fields.Many2one('mail.template', related="company_id.lunch_reminder_template_id", string="Email Template")
 
     def _get_lunch_reminder(self):
         cron = self.env.ref('school_lunch.school_menu_reminder')
-        for setting in self:
-            setting.lunch_reminder = cron.active and cron.nextcall.day or 0
+        return cron.active and cron.nextcall.day or 0
 
     def _set_lunch_reminder(self):
         cron = self.env.ref('school_lunch.school_menu_reminder')
