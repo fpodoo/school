@@ -12,9 +12,10 @@ class SchoolLunch(http.Controller):
     @http.route(['/menu', '/menu/<int:date>'], auth='public', type='http', website=True)
     def menu(self, date=None, **kw):
         dt = datetime.datetime.fromtimestamp(date or time.time())
+        print('DT', dt)
         return http.request.render('school_lunch.menu', {
             'date': dt,
-            'timestamp': date,
+            'timestamp': int(dt.timestamp()),
             'dmonth': relativedelta(months=1),
             'kids': request.env['school_lunch.kid'].browse(request.session.get('mykids', [])),
         })

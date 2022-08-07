@@ -7,13 +7,13 @@
       <div class="container">
           <h1 class="mt-4">
               Lunch: <t t-esc="date.strftime('%B %Y')"/>
-              <a t-attf-href="/menu/#{int((date-dmonth).timestamp())}" class="btn btn-outline-secondary">
-                  <i class="fa fa-arrow-left"/>
-                  <t t-esc="(date-dmonth).strftime('%B %Y')"/>
-              </a>
-              <a t-attf-href="/menu/#{int((date+dmonth).timestamp())}" class="btn btn-outline-secondary">
+              <a t-attf-href="/menu/#{int((date+dmonth).timestamp())}" class="btn btn-outline-secondary float-right">
                   <i class="fa fa-arrow-right"/>
                   <t t-esc="(date+dmonth).strftime('%B %Y')"/>
+              </a>
+              <a t-attf-href="/menu/#{int((date-dmonth).timestamp())}" class="btn btn-outline-secondary float-right">
+                  <i class="fa fa-arrow-left"/>
+                  <t t-esc="(date-dmonth).strftime('%B %Y')"/>
               </a>
           </h1>
           <div class="o_menu" id="LunchMenu" t-att-data-date="timestamp"/>
