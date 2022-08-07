@@ -155,10 +155,10 @@
       <field name="name">Menu</field>
       <field name="model">school_lunch.menu</field>
       <field name="arch" type="xml">
-          <calendar string="Menu" date_start="date" color="color" mode="month">
+          <calendar string="Menu" date_start="date" color="color" mode="month" class="school_lunch_menu_cal">
               <field name="name"/>
               <field name="description"/>
-              <field name="cook_id" filters="1"/>
+              <field name="meal_type" filters="1"/>
               <field name="allergy_ids" widget="many2many_tags"/>
           </calendar>
       </field>
@@ -193,7 +193,13 @@
                       <field name="color" widget="color_picker"/>
                   </group>
                   <group>
-                      <field name="date"/>
+                      <label for="date"/>
+                      <div>
+                          <field name="date"/>
+                          <div>
+                              <field name="weekday"/>, week <field name="weekyear"/>
+                          </div>
+                      </div>
                       <field name="cook_id"/>
                       <field name="meal_type"/>
                   </group>
@@ -207,23 +213,27 @@
 
     <!-- actions opening views on models -->
     <record model="ir.actions.act_window" id="school_lunch.menu_act">
-      <field name="name">List of Meals</field>
+      <field name="name">Menu List</field>
       <field name="res_model">school_lunch.menu</field>
       <field name="view_mode">tree,form,calendar</field>
-      <field name="context">{'display': "simple"}</field>
+      <field name="context">{'display': "description"}</field>
     </record>
     <menuitem id="school_lunch.menu_menu"
-            parent="school_lunch.menu_root"
+            name="Menu"
+            parent="school_lunch.menu_root"/>
+
+    <menuitem id="school_lunch.menu_menu_list"
+            parent="school_lunch.menu_menu"
             action="school_lunch.menu_act"/>
 
     <record model="ir.actions.act_window" id="school_lunch.menu_cal_act">
-      <field name="name">Calendar of Meals</field>
+      <field name="name">Menu Calendar</field>
       <field name="res_model">school_lunch.menu</field>
       <field name="view_mode">calendar,tree,form</field>
-      <field name="context">{'display': "simple"}</field>
+      <field name="context">{'display': "description"}</field>
     </record>
-    <menuitem id="school_lunch.menu_cal_menu"
-            parent="school_lunch.menu_root"
+    <menuitem id="school_lunch.menu_menu_calendar"
+            parent="school_lunch.menu_menu"
             action="school_lunch.menu_cal_act"/>
 
 

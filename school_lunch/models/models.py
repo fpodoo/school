@@ -22,6 +22,8 @@ class menu(models.Model):
     name = fields.Char("Meal Title", required=True)
     description = fields.Char()
     cook_id = fields.Many2one('res.partner', 'Cuisinier')
+    weekday = fields.Selection([('0', 'Monday'), ('1', 'Tuesday'), ('2', 'Wednesday'), ('3', 'Thursday'), ('4', 'Friday'), ('5', 'Saturday'), ('6', 'Sunday')], compute="_get_weekday")
+    weekyear = fields.Integer('Week of Year', compute="_get_weekday")
     order_ids = fields.One2many('school_lunch.order', 'menu_id', string='Orders')
     date = fields.Date('Day', index=True, required=True, default=lambda self: self._default_date())
     color = fields.Integer()
@@ -55,19 +57,28 @@ class menu(models.Model):
     def name_get(self):
         result = []
         for menu in self:
-            if self.env.context.get('display', 'full') == 'simple':
+            if self.env.context.get('display', 'date') == 'simple':
                 result.append((menu.id, menu.name))
+            elif self.env.context.get('display', 'date') == 'description':
+                result.append((menu.id, menu.name + (menu.description and (' - ' + menu.description) or '')))
             else:
                 result.append((menu.id, menu.date.strftime('%A, %d %b %Y') + ': ' + menu.name))
         return result
+
+    @api.depends('date')
+    def _get_weekday(self):
+        if not self.date:
+            self.weekday = False
+            self.weekyear = False
+            return True
+        self.weekday = str(self.date.weekday() + 1)
+        self.weekyear = self.date.isocalendar()[1]
 
     @api.depends_context('kid')
     def _get_meal(self):
         if not self.context.get('kid'):
             self.kid_meal_id = False
-
         orders = self.env['school_lunch.order'].read_group([('kid_id','=',int(self.context['kid'])), ('id','in', self.ids)], ['menu_id'], ['menu_id'])
-        print(orders)
         for menu in self:
             menu.kid_meal_type = '1'
 

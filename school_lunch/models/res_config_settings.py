@@ -27,12 +27,12 @@ class ResConfigSettings(models.TransientModel):
     lunch_reminder_template_id = fields.Many2one('mail.template', related="company_id.lunch_reminder_template_id", string="Email Template")
 
     def _get_lunch_reminder(self):
-        cron = self.env.ref('school_menu.crm_school_menu_reminder')
+        cron = self.env.ref('school_menu.school_menu_reminder')
         for setting in self:
             setting.lunch_reminder = cron.active and cron.nextcall.day or 0
 
     def _set_lunch_reminder(self):
-        cron = self.env.ref('school_menu.crm_school_menu_reminder')
+        cron = self.env.ref('school_menu.school_menu_reminder')
         for setting in self:
             day = setting.lunch_reminder
             cron.active = bool(day)

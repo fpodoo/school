@@ -2,7 +2,7 @@
 <odoo>
     <data>
     <!-- Email Reminder Cron -->
-    <record id="crm_school_menu_reminder" model="ir.cron" forcecreate="True">
+    <record id="school_menu_reminder" model="ir.cron" forcecreate="True">
         <field name="name">School Lunch Reminder</field>
         <field name="model_id" ref="base.model_res_company"/>
         <field name="state">code</field>

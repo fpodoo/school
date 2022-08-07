@@ -15,7 +15,7 @@
     # Check https://github.com/odoo/odoo/blob/14.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
     'category': 'Uncategorized',
-    'version': '0.5',
+    'version': '0.6',
 
     # any module necessary for this one to work correctly
     'depends': [ 'website_sale'],
@@ -25,11 +25,11 @@
     'data': [
         'security/ir.model.access.csv',
         'views/views.xml',
+        'data/school_lunch_email.xml',
         'views/res_config_settings_views.xml',
         'data/school_lunch.allergy.csv',
         'data/school_lunch.class_name.csv',
         'data/school_lunch.xml',
-        'data/school_lunch_email.xml',
         'views/templates.xml',
     ],
     # only loaded in demonstration mode
@@ -39,9 +39,13 @@
     ],
 
     'assets': {
+        'web.assets_backend': [
+            'school_lunch/static/src/scss/school_lunch_backend.scss',
+
+        ],
         'web.assets_frontend': [
             'school_lunch/static/src/js/*.js',
-            'school_lunch/static/src/scss/*.scss',
+            'school_lunch/static/src/scss/school_lunch.scss',
         ],
         'web.assets_qweb': [
         ]
