@@ -1,5 +1,5 @@
 <odoo>
-    <data>
+    <data noupdate="1">
 
         <record id="product_meal" model="product.product">
             <field name="name">Lunch Meal</field>
