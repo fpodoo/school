@@ -20,7 +20,7 @@
         <field name="name">Lunch: Parent Reminder</field>
         <field name="model_id" ref="base.model_res_partner"/>
         <field name="subject">Commande de repas pour {{ ', '.join(object.mapped('kid_ids.firstname')) }}</field>
-        <field name="email_from">{{ (object.company_id.partner_id.email_formatted or user.email_formatted) }}</field>
+        <field name="email_from">{{ (user.company_id.partner_id.email_formatted or user.email_formatted) }}</field>
         <field name="email_to">{{ object.email }}</field>
         <field name="body_html" type="html">
 <table border="0" cellpadding="0" cellspacing="0" style="padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
@@ -34,7 +34,7 @@
                     <span style="font-size: 10px;">Commande de Repas</span><br/>
                     <span style="font-size: 20px; font-weight: bold;" t-out="', '.join(object.mapped('kid_ids.firstname')) or ''">Lena, Charlie</span>
                 </td><td valign="middle" align="right">
-                    <img t-attf-src="/logo.png?company={{ object.company_id.id }}" style="padding: 0px; margin: 0px; height: auto; width: 80px;" t-att-alt="object.company_id.name"/>
+                    <img t-attf-src="/logo.png?company={{ user.company_id.id }}" style="padding: 0px; margin: 0px; height: auto; width: 80px;" t-att-alt="user.company_id.name"/>
                 </td></tr>
                 <tr><td colspan="2" style="text-align:center;">
                   <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
@@ -53,14 +53,12 @@
                         Bonjour,
                         <br/>
                         <br/>
-                        Le menu du mois suivant est disponible en ligne, pour que vos enfants
-                        puissent commander nos délicieux repas.
-                        <t t-if="object.company_id.lunch_block">
-                            Merci de commander le repas de vos enfants avant le
-                            <t t-out="object.company_id.lunch_block"/> du mois.
-                        </t>
-
-                        <div style="margin: 16px 0px 16px 0px;">
+                        Le menu du mois prochain est disponible en ligne, pour que vos enfants
+                            puissent profiter de nos <a t-att-href="object.lunch_url">délicieux repas</a>.
+                        <p t-if="user.company_id.lunch_block"><br/>
+                            La date limite pour commander est le <t t-out="user.company_id.lunch_block"/> du mois.
+                        </p>
+                        <div style="margin: 32px 0px 16px 0px;">
                             <a t-att-href="object.lunch_url" style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size: 13px;">
                                 Commander en ligne
                             </a>
@@ -69,7 +67,7 @@
                         --<br/>
                         La direction<br/>
                         <br/>
-                        <i>PS: en cas de problème, ou de retard, n'hésitez pas à nous contacter en répondant à cet email.</i>
+                        <i>PS: en cas de problèmes, n'hésitez pas à nous contacter en répondant à cet email.</i>
                     </div>
                 </td></tr>
                 <tr><td style="text-align:center;">
@@ -83,15 +81,15 @@
         <td align="center" style="min-width: 590px;">
             <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;">
                 <tr><td valign="middle" align="left">
-                    <t t-out="object.company_id.name or ''">YourCompany</t>
+                    <t t-out="user.company_id.name or ''">YourCompany</t>
                 </td></tr>
                 <tr><td valign="middle" align="left" style="opacity: 0.7;">
-                    <t t-out="object.company_id.phone or ''">+1 650-123-4567</t>
-                    <t t-if="object.company_id.email">
-                        | <a t-attf-href="'mailto:%s' % {{ object.company_id.email }}" style="text-decoration:none; color: #454748;" t-out="object.company_id.email or ''">info@yourcompany.com</a>
+                    <t t-out="user.company_id.phone or ''">+1 650-123-4567</t>
+                    <t t-if="user.company_id.email">
+                        | <a t-attf-href="'mailto:%s' % {{ user.company_id.email }}" style="text-decoration:none; color: #454748;" t-out="user.company_id.email or ''">info@yourcompany.com</a>
                     </t>
-                    <t t-if="object.company_id.website">
-                        | <a t-attf-href="'%s' % {{ object.company_id.website }}" style="text-decoration:none; color: #454748;" t-out="object.company_id.website or ''">http://www.example.com</a>
+                    <t t-if="user.company_id.website">
+                        | <a t-attf-href="'%s' % {{ user.company_id.website }}" style="text-decoration:none; color: #454748;" t-out="user.company_id.website or ''">http://www.example.com</a>
                     </t>
                 </td></tr>
             </table>
