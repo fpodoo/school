@@ -22,7 +22,7 @@ class menu(models.Model):
     name = fields.Char("Meal Title", required=True)
     description = fields.Char()
     cook_id = fields.Many2one('res.partner', 'Cuisinier')
-    weekday = fields.Selection([('0', 'Monday'), ('1', 'Tuesday'), ('2', 'Wednesday'), ('3', 'Thursday'), ('4', 'Friday'), ('5', 'Saturday'), ('6', 'Sunday')], compute="_get_weekday")
+    weekday = fields.Selection([('0', 'Sunday'), ('1', 'Monday'), ('2', 'Tuesday'), ('3', 'Wednesday'), ('4', 'Thursday'), ('5', 'Friday'), ('6', 'Saturday')], compute="_get_weekday")
     weekyear = fields.Integer('Week of Year', compute="_get_weekday")
     order_ids = fields.One2many('school_lunch.order', 'menu_id', string='Orders')
     date = fields.Date('Day', index=True, required=True, default=lambda self: self._default_date())
