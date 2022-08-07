@@ -60,7 +60,7 @@
                         </t>
 
                         <div style="margin: 16px 0px 16px 0px;">
-                            <a t-att-href="'/shool/kids/add/' + ', '.join(object.mapped('kid_ids.uuid'))" style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size: 13px;">
+                            <a t-att-href="'/shool/kids/add/' + object.lunch_url" style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size: 13px;">
                                 Commander en ligne
                             </a>
                         </div>
