@@ -155,7 +155,7 @@
       <field name="name">Menu</field>
       <field name="model">school_lunch.menu</field>
       <field name="arch" type="xml">
-          <calendar string="Menu" date_start="date" color="color" mode="month" class="school_lunch_menu_cal">
+          <calendar string="Menu" date_start="date" color="color" mode="month">
               <field name="name"/>
               <field name="description"/>
               <field name="meal_type" filters="1"/>

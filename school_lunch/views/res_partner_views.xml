@@ -10,6 +10,11 @@
                 <field name="category_id" position="after">
                     <field name="lunch_url" widget="url"/>
                 </field>
+                <notebook position="inside">
+                    <page string="Kids">
+                        <field name="kid_ids" widget="many2many_list" colspan="2"/>
+                    </page>
+                </notebook>
             </data>
         </field>
     </record>
