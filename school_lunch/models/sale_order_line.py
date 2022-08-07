@@ -25,7 +25,7 @@ class sale_order(models.Model):
                 line.lunch_ids.unlink()
 
     def _cart_update(self, product_id=None, line_id=None, add_qty=0, set_qty=0, *args, **kwargs):
-        if line_id and add_qty:
+        if line_id:
             line = self.env['sale.order.line'].browse(line_id)
             if line.lunch_ids:
                 return {'line_id': line.id, 'quantity': line.product_uom_qty, 'option_ids': []}
