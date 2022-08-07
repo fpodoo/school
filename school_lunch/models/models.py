@@ -90,7 +90,7 @@ class order(models.Model):
 
     name = fields.Char('Kid Name', related='kid_id.name', store=True)
     kid_id = fields.Many2one('school_lunch.kid', 'Kid', required=True)
-    class_id = fields.Many2one('school_lunch.class_name', string='Class', related="kid_id.class_id")
+    class_id = fields.Many2one('school_lunch.class_name', string='Class', related="kid_id.class_id", store=True)
     menu_id = fields.Many2one('school_lunch.menu', 'Menu', required=True)
     date = fields.Date('Day', related='menu_id.date', index=True, store=True)
     meal_type = fields.Selection(related="menu_id.meal_type", string='Meal Type', store=True)
