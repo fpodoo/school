@@ -5,7 +5,6 @@ import datetime
 from odoo.http import request
 import time
 from dateutil.relativedelta import relativedelta
-import pprint
 
 FMT = '%A, %d %b %Y'
 
@@ -22,7 +21,7 @@ class SchoolLunch(http.Controller):
 
     @http.route(['/school/kids'], auth='public', type='http', website=True)
     def school_kids(self, date=None, **kw):
-        if request.env.company.signin:
+        if request.env.company.lunch_signin:
             return request.redirect('/menu')
         request.env['school_lunch.class_name'].search([])
         classes = request.env['school_lunch.class_name'].search([])
@@ -36,7 +35,7 @@ class SchoolLunch(http.Controller):
 
     @http.route(['/school/kid/add'], auth='public', type='http', website=True, methods=["POST"])
     def school_kid_add(self, kid_id=None, **kw):
-        if request.env.company.signin:
+        if request.env.company.lunch_signin:
             return request.redirect('/menu')
         if not kid_id:
             return request.redirect('/school/kids')
@@ -47,9 +46,9 @@ class SchoolLunch(http.Controller):
         request.session['mykids'] = d
         return request.redirect('/school/kids')
 
-    @http.route(['/school/kid/add/<string:uuids>'], auth='public', type='http', website=True, methods=["POST"])
+    @http.route(['/school/kid/add/<string:uuids>'], auth='public', type='http', website=True)
     def school_kid_add(self, uuids, **kw):
-        kids = request.env['school_lunch.kid'].browse([('uuid', 'in', uuids.split(','))]).mapped('id')
+        kids = request.env['school_lunch.kid'].search([('uuid', 'in', uuids.split(','))]).mapped('id')
         request.session['mykids'] = kids
         return request.redirect('/menu')
 

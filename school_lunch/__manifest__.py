@@ -31,6 +31,7 @@
         'data/school_lunch.class_name.csv',
         'data/school_lunch.xml',
         'views/templates.xml',
+        'views/res_partner_views.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
