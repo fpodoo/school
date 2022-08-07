@@ -53,14 +53,15 @@
                         Bonjour,
                         <br/>
                         <br/>
-                        Le menu du mois suivant est disponible en ligne.
+                        Le menu du mois suivant est disponible en ligne, pour que vos enfants
+                        puissent commander nos délicieux repas.
                         <t t-if="object.company_id.lunch_block">
                             Merci de commander le repas de vos enfants avant le
                             <t t-out="object.company_id.lunch_block"/> du mois.
                         </t>
 
                         <div style="margin: 16px 0px 16px 0px;">
-                            <a t-att-href="'/shool/kids/add/' + object.lunch_url" style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size: 13px;">
+                            <a t-att-href="object.lunch_url" style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size: 13px;">
                                 Commander en ligne
                             </a>
                         </div>
@@ -68,7 +69,7 @@
                         --<br/>
                         La direction<br/>
                         <br/>
-                        PS: en cas de problème, ou de retard, écrivez-nous en répondant à cet email.
+                        <i>PS: en cas de problème, ou de retard, n'hésitez pas à nous contacter en répondant à cet email.</i>
                     </div>
                 </td></tr>
                 <tr><td style="text-align:center;">
