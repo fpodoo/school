@@ -8,14 +8,14 @@
     'description': """
         Module to order lunch at school.
     """,
-    'author': "Lena Pinckaers",
+    'author': "Fabien Pinckaers",
     'website': "http://www.yourcompany.com",
 
     # Categories can be used to filter modules in modules listing
     # Check https://github.com/odoo/odoo/blob/14.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
     'category': 'Uncategorized',
-    'version': '0.2',
+    'version': '0.3',
 
     # any module necessary for this one to work correctly
     'depends': [ 'website_sale'],
@@ -29,6 +29,7 @@
         'data/school_lunch.allergy.csv',
         'data/school_lunch.class_name.csv',
         'data/school_lunch.xml',
+        'data/school_lunch_email.xml',
         'views/templates.xml',
     ],
     # only loaded in demonstration mode

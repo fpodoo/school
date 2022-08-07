@@ -122,8 +122,12 @@ class kid(models.Model):
     allergy_ids = fields.Many2many('school_lunch.allergy', string='Allergies')
     class_id = fields.Many2one('school_lunch.class_name', 'Class', required=True)
     unblock_date = fields.Date('Allow Order Until')
-    uuid = fields.Char('UUID', default=lambda x: str(uuid.uuid4()) )
+    uuid = fields.Char('UUID', default=lambda x: str(uuid.uuid4()), copy=False)
     active = fields.Boolean('Active', default=True)
+
+    _sql_constraints = [
+        ('uuid_uniq', 'unique(uuid)', 'UUID field must be unique per kid!'),
+    ]
 
     @api.depends('firstname', 'lastname', 'class_id')
     def _shortname_get(self):
@@ -140,10 +144,15 @@ class kid(models.Model):
         for kid in self:
             kid.name = kid.firstname + ' ' + kid.lastname
 
-
-
 class partner(models.Model):
     _inherit = 'res.partner'
 
     kid_ids = fields.Many2many('school_lunch.kid', 'school_lunch_kid_partner_rel', 'partner_id', 'kid_id', 'Kids')
+
+    def _school_lunch_mail(self):
+        for partner in self:
+            template = self.env.ref("school_lunch.mail_template_school_lunch")
+            template.send_mail(partner.id)
+        return True
+
 

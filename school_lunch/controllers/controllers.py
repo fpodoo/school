@@ -22,6 +22,9 @@ class SchoolLunch(http.Controller):
 
     @http.route(['/school/kids'], auth='public', type='http', website=True)
     def school_kids(self, date=None, **kw):
+        if request.env.company.signin:
+            return request.redirect('/menu')
+        request.env['school_lunch.class_name'].search([])
         classes = request.env['school_lunch.class_name'].search([])
         kids = request.env['school_lunch.kid'].search([])
         my_kids = request.env['school_lunch.kid'].browse(request.session.get('mykids', []))
@@ -33,6 +36,8 @@ class SchoolLunch(http.Controller):
 
     @http.route(['/school/kid/add'], auth='public', type='http', website=True, methods=["POST"])
     def school_kid_add(self, kid_id=None, **kw):
+        if request.env.company.signin:
+            return request.redirect('/menu')
         if not kid_id:
             return request.redirect('/school/kids')
         kid_id = int(kid_id)
@@ -41,6 +46,12 @@ class SchoolLunch(http.Controller):
             d.append(int(kid_id))
         request.session['mykids'] = d
         return request.redirect('/school/kids')
+
+    @http.route(['/school/kid/add/<char:uuids>'], auth='public', type='http', website=True, methods=["POST"])
+    def school_kid_add(self, uuids, **kw):
+        kids = request.env['school_lunch.kid'].browse([('uuid', 'in', uuids.split(','))]).mapped('id')
+        request.session['mykids'] = kids
+        return request.redirect('/menu')
 
     @http.route(['/school/kid/remove/<int:kid_id>'], auth='public', type='http', website=True)
     def school_kid_remove(self, kid_id, **kw):
