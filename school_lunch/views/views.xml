@@ -75,11 +75,12 @@
                   <field name="firstname" placeholder="Firstname"/>
                   <field name="lastname" placeholder="Lastname"/>
               </div>
+              <field name="class_id"/>
               <field name="allergy_ids" widget="many2many_tags"/>
             </group>
             <group>
-              <field name="class_id"/>
               <field name="unblock_date"/>
+              <field name="pricelist_id"/>
               <field name="active"/>
             </group>
           </group>
@@ -154,12 +155,12 @@
       <field name="name">Menu</field>
       <field name="model">school_lunch.menu</field>
       <field name="arch" type="xml">
-        <calendar string="Menu" date_start="date" color="color" mode="month">
-          <field name="name"/>
-          <field name="description"/>
-          <field name="cook_id" filters="1"/>
-          <field name="allergy_ids" widget="many2many_tags"/>
-        </calendar>
+          <calendar string="Menu" date_start="date" color="color" mode="month">
+              <field name="name"/>
+              <field name="description"/>
+              <field name="cook_id" filters="1"/>
+              <field name="allergy_ids" widget="many2many_tags"/>
+          </calendar>
       </field>
     </record>
 
@@ -206,13 +207,24 @@
 
     <!-- actions opening views on models -->
     <record model="ir.actions.act_window" id="school_lunch.menu_act">
-      <field name="name">Menu</field>
+      <field name="name">List of Meals</field>
       <field name="res_model">school_lunch.menu</field>
       <field name="view_mode">tree,form,calendar</field>
+      <field name="context">{'display': "simple"}</field>
     </record>
-    <menuitem name="Menu" id="school_lunch.menu_menu"
+    <menuitem id="school_lunch.menu_menu"
             parent="school_lunch.menu_root"
             action="school_lunch.menu_act"/>
+
+    <record model="ir.actions.act_window" id="school_lunch.menu_cal_act">
+      <field name="name">Calendar of Meals</field>
+      <field name="res_model">school_lunch.menu</field>
+      <field name="view_mode">calendar,tree,form</field>
+      <field name="context">{'display': "simple"}</field>
+    </record>
+    <menuitem id="school_lunch.menu_cal_menu"
+            parent="school_lunch.menu_root"
+            action="school_lunch.menu_cal_act"/>
 
 
     <!-- actions opening views on models -->
@@ -252,6 +264,38 @@
                 </group>
            </search>
         </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="school_lunch.order_form">
+      <field name="name">Orders</field>
+      <field name="model">school_lunch.order</field>
+      <field name="arch" type="xml">
+        <form string="Orders">
+            <header>
+                <field name="state" widget="statusbar" statusbar_visible="draft,confirmed"/>
+            </header>
+            <sheet>
+                <div class="oe_title">
+                    <h1>
+                        <field name="name" readonly="1"/>
+                    </h1>
+                </div>
+                <group>
+                    <group>
+                        <field name="kid_id"/>
+                        <field name="menu_id"/>
+                        <field name="sale_line_id"/>
+                    </group>
+                    <group>
+                        <field name="date"/>
+                        <field name="class_id"/>
+                        <field name="meal_type"/>
+                    </group>
+                </group>
+            </sheet>
+        </form>
+      </field>
     </record>
 
 

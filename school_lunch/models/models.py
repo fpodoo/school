@@ -55,7 +55,10 @@ class menu(models.Model):
     def name_get(self):
         result = []
         for menu in self:
-            result.append((menu.id, menu.date.strftime('%A, %d %b %Y') + ': ' + menu.name))
+            if self.env.context.get('display', 'full') == 'simple':
+                result.append((menu.id, menu.name))
+            else:
+                result.append((menu.id, menu.date.strftime('%A, %d %b %Y') + ': ' + menu.name))
         return result
 
     @api.depends_context('kid')
@@ -123,6 +126,7 @@ class kid(models.Model):
     class_id = fields.Many2one('school_lunch.class_name', 'Class', required=True)
     unblock_date = fields.Date('Allow Order Until')
     uuid = fields.Char('UUID', default=lambda x: str(uuid.uuid4()), copy=False)
+    pricelist_id = fields.Many2one('product.pricelist', string="Pricelist")
     active = fields.Boolean('Active', default=True)
 
     _sql_constraints = [

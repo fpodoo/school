@@ -47,7 +47,7 @@ class SchoolLunch(http.Controller):
         request.session['mykids'] = d
         return request.redirect('/school/kids')
 
-    @http.route(['/school/kid/add/<char:uuids>'], auth='public', type='http', website=True, methods=["POST"])
+    @http.route(['/school/kid/add/<string:uuids>'], auth='public', type='http', website=True, methods=["POST"])
     def school_kid_add(self, uuids, **kw):
         kids = request.env['school_lunch.kid'].browse([('uuid', 'in', uuids.split(','))]).mapped('id')
         request.session['mykids'] = kids
@@ -77,8 +77,9 @@ class SchoolLunch(http.Controller):
                 product = request.env.ref('school_lunch.product_'+menu.meal_type).sudo()
                 price = product.lst_price
                 kid_o = request.env['school_lunch.kid'].browse(kid)
-                if kid_o.class_id.pricelist_id:
-                    result = kid_o.class_id.pricelist_id.get_product_price(product, 1, False)
+                pricelist = kid_o.pricelist_id or kid_o.class_id.pricelist_id
+                if pricelist:
+                    result = pricelist.get_product_price(product, 1, False)
                     price = result
                 key = (menu.meal_type, product, price)
                 meals.setdefault(key, [])
