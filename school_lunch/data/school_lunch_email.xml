@@ -54,7 +54,7 @@
                         <br/>
                         <br/>
                         Le menu du mois prochain est disponible en ligne, pour que vos enfants
-                            puissent profiter de nos <a t-att-href="object.lunch_url">délicieux repas</a>.
+                        puissent profiter de nos <a t-att-href="object.lunch_url">délicieux repas</a>.
                         <p t-if="user.company_id.lunch_block"><br/>
                             La date limite pour commander est le <t t-out="user.company_id.lunch_block"/> du mois.
                         </p>
