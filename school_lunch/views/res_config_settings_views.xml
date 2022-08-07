@@ -28,11 +28,14 @@
                             <div class="o_setting_right_pane">
                                 <span class="o_form_label">Reminder Date</span>
                                 <div class="text-muted">
-                                    Day of the month for reminder
+                                    Day of the month for reminder (0 to desactivate)
                                 </div>
                                 <div class="text-muted">
                                     <field name="lunch_reminder" class="oe_inline"/>
                                     th
+                                </div>
+                                <div class="text-muted">
+                                    <button type="object" name="send_lunch_email" string="Send Now"/>
                                 </div>
                             </div>
                         </div>

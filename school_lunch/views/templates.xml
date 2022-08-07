@@ -16,9 +16,6 @@
                   <t t-esc="(date+dmonth).strftime('%B %Y')"/>
               </a>
           </h1>
-          <p>
-              Need to add or remove children? <a href="/school/kids">Manage your kids</a>.
-          </p>
           <div class="o_menu" id="LunchMenu" t-att-data-date="timestamp"/>
       </div>
     </t>
