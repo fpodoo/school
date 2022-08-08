@@ -96,7 +96,7 @@
       <field name="name">Kids</field>
       <field name="model">school_lunch.kid</field>
       <field name="arch" type="xml">
-        <tree string="Kids">
+        <tree string="Kids" multi_edit="1">
           <field name="name"/>
           <field name="shortname"/>
           <field name="allergy_ids"/>
