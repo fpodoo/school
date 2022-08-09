@@ -115,7 +115,7 @@ class SchoolLunch(http.Controller):
     def school_order_prepare(self, date=None, **kwargs):
         max_day = request.env.company.lunch_block
         cron = request.env.ref('school_lunch.school_menu_reminder')
-        alert_day = cron.active and cron.nextcall.day or 20
+        alert_day = cron.sudo().active and cron.sudo().nextcall.day or 20
 
         now = datetime.datetime.now()
         max_date = now + relativedelta(months = (now.day <= max_day) and 1 or 2, day=1)
