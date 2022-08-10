@@ -28,13 +28,13 @@
         'data/school_lunch_email.xml',
         'views/res_config_settings_views.xml',
         'data/school_lunch.allergy.csv',
-        'data/school_lunch.class_name.csv',
         'data/school_lunch.xml',
         'views/templates.xml',
         'views/res_partner_views.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
+        'data/school_lunch.class_name.csv',
         'demo/demo.xml',
         'demo/school_lunch.kid.csv',
     ],
