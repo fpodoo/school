@@ -27,6 +27,9 @@
       <div class="container">
           <h1 class="mt-4">
               Lunch: <t t-esc="date.strftime('%B %Y')"/>
+              <a href="/menu" class="btn btn-link">
+                      Order Now <i class="fa fa-arrow-right"/>
+              </a>
               <a t-attf-href="/menu/agenda/#{int((date+dmonth).timestamp())}" class="btn btn-outline-secondary float-right">
                   <i class="fa fa-arrow-right"/>
                   <t t-esc="(date+dmonth).strftime('%B %Y')"/>
