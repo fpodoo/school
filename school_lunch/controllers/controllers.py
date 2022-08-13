@@ -5,6 +5,7 @@ import datetime
 from odoo.http import request
 import time
 from dateutil.relativedelta import relativedelta
+from collections import defaultdict
 
 FMT = '%A, %d %b %Y'
 
@@ -24,6 +25,33 @@ class SchoolLunch(http.Controller):
             'timestamp': int(dt.timestamp()),
             'dmonth': relativedelta(months=1),
             'kids': request.env['school_lunch.kid'].browse(request.session.get('mykids', [])),
+        })
+
+    @http.route(['/menu/agenda', '/menu/agenda/<int:date>'], auth='public', type='http', website=True)
+    def menu_agenda(self, date=None, **kw):
+        dt = datetime.datetime.fromtimestamp(date or time.time())
+        dt_from = dt + relativedelta(day=1)
+        dt_to = dt + relativedelta(day=1, months=1) - datetime.timedelta(days=1)
+
+
+        menus = request.env['school_lunch.menu'].search([('date','>=', dt_from.strftime('%Y-%m-%d')), ('date', "<=", dt_to.strftime('%Y-%m-%d'))], order="date asc, meal_type desc")
+        allergy_ids = set([al.id for m in menus for al in m.allergy_ids])
+        allergies = request.env['school_lunch.allergy'].browse(list(allergy_ids))
+
+        calendar = defaultdict(lambda : defaultdict(list))
+        weekdays = list(set([menu.date.weekday() for menu in menus]))
+        latest = None
+        weekdays.sort()
+        for menu in menus:
+            calendar[menu.date.isocalendar()[1]][menu.date.weekday()].append( menu )
+            latest = menu.date.day
+        return http.request.render('school_lunch.website_menu_calendar', {
+            'allergies': allergies,
+            'calendar': calendar,
+            'dmonth': relativedelta(months=1),
+            'weekdays': weekdays,
+            'latest_day': latest,
+            'date': dt
         })
 
     @http.route(['/school/kids'], auth='public', type='http', website=True)

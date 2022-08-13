@@ -21,6 +21,70 @@
     </t>
 </template>
 
+<template id="website_menu_calendar">
+    <t t-call="website.layout">
+      <div id="wrap"/>
+      <div class="container">
+          <h1 class="mt-4">
+              Lunch: <t t-esc="date.strftime('%B %Y')"/>
+              <a t-attf-href="/menu/agenda/#{int((date+dmonth).timestamp())}" class="btn btn-outline-secondary float-right">
+                  <i class="fa fa-arrow-right"/>
+                  <t t-esc="(date+dmonth).strftime('%B %Y')"/>
+              </a>
+              <a t-attf-href="/menu/agenda/#{int((date-dmonth).timestamp())}" class="btn btn-outline-secondary float-right">
+                  <i class="fa fa-arrow-left"/>
+                  <t t-esc="(date-dmonth).strftime('%B %Y')"/>
+              </a>
+          </h1>
+          <t t-set="number" t-value="0"/>
+          <div class="row mb-5 mt-5">
+              <div class="col-md-9">
+                  <table class="o_lunch_agenda">
+                      <tr t-foreach="calendar.keys()" t-as="week">
+                          <td t-foreach="weekdays" t-as="weekday" align="center">
+                              <t t-set="menus" t-value="calendar[week][weekday]"/>
+                              <div class="o_agenda_head">
+                                  <t t-if="menus">
+                                      <t t-set="number" t-value="menus[0].date.day"/>
+                                  </t><t t-else="">
+                                      <t t-set="number" t-value="number and number+1"/>
+                                  </t>
+                                  <b t-if="number and number &lt;= latest_day">
+                                      <t t-out="{0: 'Lundi', 1: 'Mardi', 2: 'Mercredi', 3: 'Jeudi', 4: 'Vendredi', 5: 'Samedi', 6: 'Dimanche'}[weekday]"/>
+                                      <t t-out="number"/>
+                                  </b>
+                              </div>
+                              <div t-foreach="menus" t-as="menu" t-att-class="'mb8 o_cal_col_'+str(menu.color)">
+                                  <span t-out="menu.name"/>
+                                  <br t-if="menu.description"/>
+                                  <i t-out="menu.description"/>
+                                  <t t-foreach="menu.allergy_ids" t-as="allergy">
+                                      <span class="badge badge-light" t-out="allergy.code"/>
+                                  </t>
+                              </div>
+                              <div t-if="number and number &lt;= latest_day and not menus" class="o_no_meal">
+                                  <div>
+                                      Pas de repas
+                                  </div>
+                              </div>
+                          </td>
+                      </tr>
+                  </table>
+
+              </div>
+              <div class="col-md-3">
+                  <h3 class="mt-0">Allergies</h3>
+                  <div t-foreach="allergies" t-as="allergy">
+                      <span class="badge badge-light" t-out="allergy.code"/> <t t-out="allergy.name"/>
+                  </div>
+              </div>
+          </div>
+
+      </div>
+    </t>
+</template>
+
+
 
 <template id="kids">
     <t t-call="website.layout">

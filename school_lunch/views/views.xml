@@ -236,6 +236,15 @@
             parent="school_lunch.menu_menu"
             action="school_lunch.menu_cal_act"/>
 
+    <record id="menu_act_url" model="ir.actions.act_url">
+        <field name="name">Menu to Print</field>
+        <field name="url">/menu/agenda</field>
+        <field name="target">self</field>
+    </record>
+    <menuitem id="school_lunch.menu_menu_calendar_print"
+            parent="school_lunch.menu_menu"
+            action="school_lunch.menu_act_url"/>
+
 
     <!-- actions opening views on models -->
     <record model="ir.ui.view" id="school_lunch.order_gantt">

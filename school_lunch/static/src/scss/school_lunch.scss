@@ -22,3 +22,37 @@
         }
     }
 }
+table.o_lunch_agenda {
+    width: 100%;
+    td {
+        vertical-align: top;
+    }
+    .o_agenda_head {
+        width: 100%;
+        background: #E8E8E8;
+
+    }
+    .o_no_meal {
+        height: 85px;
+        width: 100%;
+        color: red;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+    }
+    .o_cal_col_1  { background: #F0605060; }
+    .o_cal_col_2  { background: #F4A46060; }
+    .o_cal_col_3  { background: #F7CD1F60; }
+    .o_cal_col_4  { background: #6CC1ED60; }
+    .o_cal_col_5  { background: #81496860; }
+    .o_cal_col_6  { background: #EB7E7F60; }
+    .o_cal_col_7  { background: #2C839760; }
+    .o_cal_col_8  { background: #47557760; }
+    .o_cal_col_9  { background: #D6145F60; }
+    .o_cal_col_10 { background: #30C38160; }
+    .o_cal_col_11 { background: #9365B860; }
+
+
+
+}

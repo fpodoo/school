@@ -67,12 +67,13 @@ class menu(models.Model):
 
     @api.depends('date')
     def _get_weekday(self):
-        if not self.date:
-            self.weekday = False
-            self.weekyear = False
-            return True
-        self.weekday = str(self.date.weekday())
-        self.weekyear = self.date.isocalendar()[1]
+        for record in self:
+            if not record.date:
+                record.weekday = False
+                record.weekyear = False
+                return True
+            record.weekday = str(record.date.weekday())
+            record.weekyear = record.date.isocalendar()[1]
 
     @api.depends_context('kid')
     def _get_meal(self):
