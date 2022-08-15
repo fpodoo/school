@@ -1,19 +1,38 @@
 <odoo>
 <data>
 
+<template id="website_month_display">
+    <t t-if="month == 1">Janvier</t>
+    <t t-if="month == 2">Février</t>
+    <t t-if="month == 3">Mars</t>
+    <t t-if="month == 4">Avril</t>
+    <t t-if="month == 5">Mai</t>
+    <t t-if="month == 6">Juin</t>
+    <t t-if="month == 7">Juillet</t>
+    <t t-if="month == 8">Août</t>
+    <t t-if="month == 9">Septembre</t>
+    <t t-if="month == 10">Octobre</t>
+    <t t-if="month == 11">Novembre</t>
+    <t t-if="month == 12">Décembre</t>
+</template>
+
+
 <template id="menu">
     <t t-call="website.layout">
       <div id="wrap"/>
       <div class="container">
           <h1 class="mt-4">
-              Lunch: <t t-esc="date.strftime('%B %Y')"/>
+              Lunch: <t t-call="school_lunch.website_month_display"><t t-set="month" t-value="date.month"/></t>
+              <t t-esc="date.strftime('%Y')"/>
               <a t-attf-href="/menu/#{int((date+dmonth).timestamp())}" class="btn btn-outline-secondary float-right">
                   <i class="fa fa-arrow-right"/>
-                  <t t-esc="(date+dmonth).strftime('%B %Y')"/>
+                  <t t-call="school_lunch.website_month_display"><t t-set="month" t-value="(date+dmonth).month"/></t>
+                  <t t-esc="(date+dmonth).strftime('%Y')"/>
               </a>
               <a t-attf-href="/menu/#{int((date-dmonth).timestamp())}" class="btn btn-outline-secondary float-right">
                   <i class="fa fa-arrow-left"/>
-                  <t t-esc="(date-dmonth).strftime('%B %Y')"/>
+                  <t t-call="school_lunch.website_month_display"><t t-set="month" t-value="(date-dmonth).month"/></t>
+                  <t t-esc="(date-dmonth).strftime('%Y')"/>
               </a>
           </h1>
           <div class="o_menu" id="LunchMenu" t-att-data-date="timestamp"/>
@@ -26,25 +45,20 @@
       <div id="wrap"/>
       <div class="container">
           <h1 class="mt-4">
-              Lunch: <t t-esc="date.strftime('%B %Y')"/>
+              Lunch: <t t-call="school_lunch.website_month_display"><t t-set="month" t-value="date.month"/></t>
+              <t t-esc="(date+dmonth).strftime('%Y')"/>
               <a href="/menu" class="btn btn-link">
                       Order Now <i class="fa fa-arrow-right"/>
               </a>
               <a t-attf-href="/menu/agenda/#{int((date+dmonth).timestamp())}" class="btn btn-outline-secondary float-right">
                   <i class="fa fa-arrow-right"/>
-                  <t t-set="month" t-value="(date+dmonth).month"/>
-                  <t t-if="month == 8">
-                      Aout
-                  </t><t t-else="month == 9">
-                      Septembre
-                  </t><t t-else="">
-                      <t t-esc="(date+dmonth).strftime('%B')"/>
-                  </t>
+                  <t t-call="school_lunch.website_month_display"><t t-set="month" t-value="(date+dmonth).month"/></t>
                   <t t-esc="(date+dmonth).strftime('%Y')"/>
               </a>
               <a t-attf-href="/menu/agenda/#{int((date-dmonth).timestamp())}" class="btn btn-outline-secondary float-right">
                   <i class="fa fa-arrow-left"/>
-                  <t t-esc="(date-dmonth).strftime('%B %Y')"/>
+                  <t t-call="school_lunch.website_month_display"><t t-set="month" t-value="(date-dmonth).month"/></t>
+                  <t t-esc="(date-dmonth).strftime('%Y')"/>
               </a>
           </h1>
           <t t-set="number" t-value="0"/>
