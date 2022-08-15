@@ -1,13 +1,22 @@
 # -*- coding: utf-8 -*-
 
-from odoo import http
+from odoo import http, _
 import datetime
 from odoo.http import request
 import time
 from dateutil.relativedelta import relativedelta
 from collections import defaultdict
 
-FMT = '%A, %d %b %Y'
+WEEKDAYS = {
+    '0': _('Monday'),
+    '1': _('Tuesday'),
+    '2': _('Wednesday'),
+    '3': _('Thursday'),
+    '4': _('Friday'),
+    '5': _('Saturday'),
+    '6': _('Sunday')
+}
+FMT = lambda menu: WEEKDAYS.get(menu.weekday, '') + ' ' + menu.date.strftime('%Y')
 
 class SchoolLunch(http.Controller):
     @http.route(['/menu', '/menu/<int:date>'], auth='public', type='http', website=True)
@@ -173,9 +182,9 @@ class SchoolLunch(http.Controller):
             'menus': []
         }
         for menu in menus:
-            if (not len(result['menus'])) or (result['menus'][-1]['date'] != menu.date.strftime(FMT)):
+            if (not len(result['menus'])) or (result['menus'][-1]['date'] != FMT(menu)):
                 result['menus'].append({
-                    'date': menu.date.strftime(FMT),
+                    'date': FMT(menu),
                     'day_of_week': menu.date.weekday()+1,
                     'meals': []
                 })
