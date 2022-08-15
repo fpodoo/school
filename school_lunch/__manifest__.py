@@ -18,7 +18,7 @@
     'version': '0.19',
 
     # any module necessary for this one to work correctly
-    'depends': [ 'website_sale'],
+    'depends': ['website_sale', 'website_sale_gift_card'],
     'license': 'LGPL-3',
 
     # always loaded
@@ -31,6 +31,7 @@
         'data/school_lunch.xml',
         'views/templates.xml',
         'views/res_partner_views.xml',
+        'views/gift_card_view.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
