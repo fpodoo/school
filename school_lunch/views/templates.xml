@@ -32,7 +32,15 @@
               </a>
               <a t-attf-href="/menu/agenda/#{int((date+dmonth).timestamp())}" class="btn btn-outline-secondary float-right">
                   <i class="fa fa-arrow-right"/>
-                  <t t-esc="(date+dmonth).strftime('%B %Y')"/>
+                  <t t-set="month" t-value="(date+dmonth).month"/>
+                  <t t-if="month == 8">
+                      Aout
+                  </t><t t-else="month == 9">
+                      Septembre
+                  </t><t t-else="">
+                      <t t-esc="(date+dmonth).strftime('%B')"/>
+                  </t>
+                  <t t-esc="(date+dmonth).strftime('%Y')"/>
               </a>
               <a t-attf-href="/menu/agenda/#{int((date-dmonth).timestamp())}" class="btn btn-outline-secondary float-right">
                   <i class="fa fa-arrow-left"/>
