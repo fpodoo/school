@@ -16,7 +16,7 @@ WEEKDAYS = {
     '5': _('Saturday'),
     '6': _('Sunday')
 }
-FMT = lambda menu: WEEKDAYS.get(menu.weekday, '') + ' ' + menu.date.strftime('%Y')
+FMT = lambda menu: WEEKDAYS.get(menu.weekday, '') + ' ' + menu.date.strftime('%d')
 
 class SchoolLunch(http.Controller):
     @http.route(['/menu', '/menu/<int:date>'], auth='public', type='http', website=True)
@@ -163,7 +163,7 @@ class SchoolLunch(http.Controller):
         kids = request.env['school_lunch.kid'].browse(request.session.get('mykids', []))
         kid_ids = kids.ids
 
-        menus = request.env['school_lunch.menu'].search([('date','>=', dt_from.strftime('%Y-%m-%d')), ('date', "<=", dt_to.strftime('%Y-%m-%d'))])
+        menus = request.env['school_lunch.menu'].search([('date','>=', dt_from.strftime('%Y-%m-%d')), ('date', "<=", dt_to.strftime('%Y-%m-%d'))], order="date, meal_type")
         allergy_ids = set([al.id for m in menus for al in m.allergy_ids])
         allergies = request.env['school_lunch.allergy'].search([('id', 'in', list(allergy_ids))])
 
