@@ -35,7 +35,6 @@
     ],
     # only loaded in demonstration mode
     'demo': [
-        'data/school_lunch.class_name.csv',
         'demo/demo.xml',
         'demo/school_lunch.kid.csv',
     ],

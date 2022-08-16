@@ -13,6 +13,45 @@
             <field name="list_price">0.50</field>
         </record>
 
+        <!-- Classes -->
+
+        <record id="class_name_p1" model="school_lunch.class_name">
+            <field name="class_type">1</field>
+            <field name="name">P1A</field>
+        </record>
+        <record id="class_name_p2" model="school_lunch.class_name">
+            <field name="class_type">1</field>
+            <field name="name">P2A</field>
+        </record>
+        <record id="class_name_p3" model="school_lunch.class_name">
+            <field name="class_type">1</field>
+            <field name="name">P3A</field>
+        </record>
+        <record id="class_name_p4" model="school_lunch.class_name">
+            <field name="class_type">1</field>
+            <field name="name">P4A</field>
+        </record>
+        <record id="class_name_p5" model="school_lunch.class_name">
+            <field name="class_type">1</field>
+            <field name="name">P5A</field>
+        </record>
+        <record id="class_name_p6" model="school_lunch.class_name">
+            <field name="class_type">1</field>
+            <field name="name">P6A</field>
+        </record>
+        <record id="class_name_m1" model="school_lunch.class_name">
+            <field name="class_type">0</field>
+            <field name="name">M1</field>
+        </record>
+        <record id="class_name_m2" model="school_lunch.class_name">
+            <field name="class_type">0</field>
+            <field name="name">M2</field>
+        </record>
+        <record id="class_name_m3" model="school_lunch.class_name">
+            <field name="class_type">0</field>
+            <field name="name">M3</field>
+        </record>
+
     </data>
 </odoo>
 
