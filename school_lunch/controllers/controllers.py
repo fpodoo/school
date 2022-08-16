@@ -174,7 +174,7 @@ class SchoolLunch(http.Controller):
         signin = request.env.company.lunch_signin
         result = {
             'kids': [{'id': kid.id, 'shortname': kid.shortname} for kid in kids],
-            'allergies': [{'id': al.id, 'name': al.name} for al in allergies],
+            'allergies': [{'id': al.id, 'name': al.name, 'code': al.code} for al in allergies],
             'readonly': (date<=max_date) and not unblock,
             'dt_block': max_day,
             'signin': signin,
@@ -197,7 +197,8 @@ class SchoolLunch(http.Controller):
                 'meal_type': menu.meal_type,
                 'state': 'active',
                 'name': menu.name,
-                'allergies': [{'id': a.id, 'name': a.name} for a in menu.allergy_ids],
+                'description': menu.description,
+                'allergies': [{'id': a.id, 'name': a.name, 'code': a.code} for a in menu.allergy_ids],
                 'kids': menu_kids,
                 'kids_ordered': ordered_kids
             } )
