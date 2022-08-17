@@ -143,8 +143,7 @@
           <div class="alert alert-warning mb128 mt64" role="alert">
               <h4 class="alert-heading">Menu not available!</h4>
               <p>
-                  Next month's menu is <b>published on the <span t-esc="dt_alert or 20"/>th of the month</b>,
-                  and you have up to the <span t-esc="dt_block"/>th to order.
+                  Next month's menu is <b>published on the <span t-esc="dt_alert or 20"/>th of the month</b>, and you have up to the <span t-esc="dt_block"/>th to order.
               </p>
               <hr/>
               <p class="mb0">Come back in a few days.</p>

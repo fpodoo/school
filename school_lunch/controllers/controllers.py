@@ -16,7 +16,6 @@ WEEKDAYS = {
     '5': _('Saturday'),
     '6': _('Sunday')
 }
-FMT = lambda menu: WEEKDAYS.get(menu.weekday, '') + ' ' + menu.date.strftime('%d')
 
 class SchoolLunch(http.Controller):
     @http.route(['/menu', '/menu/<int:date>'], auth='public', type='http', website=True)
@@ -189,6 +188,7 @@ class SchoolLunch(http.Controller):
             'dt_alert': alert_day,
             'menus': []
         }
+        FMT = lambda menu: WEEKDAYS.get(menu.weekday, '') + ' ' + menu.date.strftime('%d')
         for menu in menus:
             if (not len(result['menus'])) or (result['menus'][-1]['date'] != FMT(menu)):
                 result['menus'].append({
