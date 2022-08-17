@@ -11,7 +11,7 @@ const {useDispatch, useStore, useGetters, useRef, useState} = owl.hooks;
 const {Router, RouteComponent} = owl.router;
 const {whenReady} = owl.utils;
 
-import env from "web.public_env";
+import { env } from "root.widget";
 
 class LunchKids extends Component {
     async classChange() {
@@ -140,22 +140,20 @@ class LunchMenuTable extends Component {
 LunchMenuTable.template = "school_lunch.lunch_table"
 
 
-async function makeEnvironment() {
-    const services = Component.env.services;
-    const qweb = new QWeb({translateFn: _t});
+async function loadTemplates() {
     const templates = await owl.utils.loadFile('/school_lunch/static/src/xml/lunch_menu.xml?uniq=' + Math.random());
-    qweb.addTemplates(templates);
-    return Object.assign(env, {qweb, services});
+    env.qweb.addTemplates(templates);
 }
 
 async function setup() {
     const elTable = document.getElementById('LunchMenu');
     const elKids = document.getElementById('LunchKids');
+    await loadTemplates();
     if (elTable) {
-        mount(LunchMenuTable, {target: elTable, env: await makeEnvironment(), props: {date: elTable.dataset.date}});
+        mount(LunchMenuTable, {target: elTable, env, props: {date: elTable.dataset.date}});
     }
     if (elKids) {
-        mount(LunchKids, {target: elKids, env: await makeEnvironment()});
+        mount(LunchKids, {target: elKids, env});
     }
 }
 
