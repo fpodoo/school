@@ -90,10 +90,14 @@ class SchoolLunch(http.Controller):
         request.session['mykids'] = d
         return request.redirect('/school/kids')
 
-    @http.route(['/school/kid/add/<string:uuids>'], auth='public', type='http', website=True)
-    def school_kid_add(self, uuids, **kw):
-        kids = request.env['school_lunch.kid'].search([('uuid', 'in', uuids.split(','))]).mapped('id')
-        request.session['mykids'] = kids
+    @http.route(['/school/kid/add/<string:uuids>', '/school/kid/add/<string:uuids>/<int:partner_id>'], auth='public', type='http', website=True)
+    def school_kid_add(self, uuids, partner_id=None, **kw):
+        kids = request.env['school_lunch.kid'].search([('uuid', 'in', uuids.split(','))]).sudo()
+        request.session['mykids'] = kids.mapped('id')
+        for k in kids:
+            for parent in k.parent_ids:
+                if parent.id == partner_id:
+                    request.session['school_partner_id'] = partner_id
         return request.redirect('/menu')
 
     @http.route(['/school/kid/remove/<int:kid_id>'], auth='public', type='http', website=True)
@@ -108,6 +112,10 @@ class SchoolLunch(http.Controller):
         if not orders:
             return False
         sale_order = request.website.sale_get_order(force_create=True)
+        if request.session.get('school_partner_id'):
+            sale_order.partner_id = request.session['school_partner_id']
+            sale_order.partner_invoice_id = request.session['school_partner_id']
+            sale_order.partner_shipping_id = request.session['school_partner_id']
         if sale_order.state != 'draft':
             request.session['sale_order_id'] = None
             sale_order = request.website.sale_get_order(force_create=True)
