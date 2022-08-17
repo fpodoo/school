@@ -173,7 +173,7 @@ class partner(models.Model):
                 partner.lunch_url = False
                 continue
             base = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
-            partner.lunch_url = base + '/school/kid/add/' + ','.join(partner.kid_ids.mapped('uuid') + '/' + str(partner.id))
+            partner.lunch_url = base + '/school/kid/add/' + ','.join(partner.kid_ids.mapped('uuid')) + '/' + str(partner.id)
 
     def _school_lunch_mail(self):
         for partner in self:
