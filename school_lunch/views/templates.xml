@@ -79,7 +79,7 @@
                                       <t t-out="number"/>
                                   </b>
                               </div>
-                              <div t-foreach="menus" t-as="menu" t-att-class="'mb8 o_cal_col_'+str(menu.color)">
+                              <div t-foreach="menus" t-as="menu" t-att-class="'mb8 o_cal_col_'+str(menu.color) + (menu.meal_type=='off' and ' o_day_off' or '')">
                                   <span t-out="menu.name"/>
                                   <br t-if="menu.description"/>
                                   <i t-out="menu.description"/>

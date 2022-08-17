@@ -160,7 +160,7 @@ class SchoolLunch(http.Controller):
         kids = request.env['school_lunch.kid'].browse(request.session.get('mykids', []))
         kid_ids = kids.ids
 
-        menus = request.env['school_lunch.menu'].search([('date','>=', dt_from.strftime('%Y-%m-%d')), ('date', "<=", dt_to.strftime('%Y-%m-%d'))], order="date, meal_type")
+        menus = request.env['school_lunch.menu'].search([('date','>=', dt_from.strftime('%Y-%m-%d')), ('date', "<=", dt_to.strftime('%Y-%m-%d')), ('meal_type', '!=', 'off')], order="date, meal_type")
         allergy_ids = set([al.id for m in menus for al in m.allergy_ids])
         allergies = request.env['school_lunch.allergy'].search([('id', 'in', list(allergy_ids))])
 
@@ -179,8 +179,6 @@ class SchoolLunch(http.Controller):
             'menus': []
         }
         for menu in menus:
-            if menu.meal_type == 'off':
-                continue
             WEEKDAYS = {
                 '0': _('Monday'),
                 '1': _('Tuesday'),
