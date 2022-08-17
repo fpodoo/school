@@ -36,16 +36,23 @@
   <t t-name="school_lunch.lunch_menu" owl="1">
       <t t-if="props.menu.kids_ordered.includes(props.kid.id)">
           <div class="o_choice" t-att-class="props.menu.kids_ordered.includes(props.kid.id) ? 'o_ordered' : ''">
-              <t t-esc="props.menu.meal_type"/>
+              <t t-if="props.menu.meal_type == 'meal'">Meal</t>
+              <t t-else="">
+                  <t t-if="props.menu.meal_type == 'soup'">Soup</t>
+                  <t t-else="" t-esc="props.menu.meal_type"/>
+              </t>
           </div>
       </t>
       <t t-else="">
           <div class="o_choice" t-att-class="props.menu.kids.includes(props.kid.id) ? 'active' : ''" t-on-click="toggleMenu">
-              <t t-esc="props.menu.meal_type"/>
+              <t t-if="props.menu.meal_type == 'meal'">Meal</t>
+              <t t-else="">
+                  <t t-if="props.menu.meal_type == 'soup'">Soup</t>
+                  <t t-else="" t-esc="props.menu.meal_type"/>
+              </t>
           </div>
       </t>
   </t>
-
 
   <t t-name="school_lunch.lunch_line" owl="1">
     <tr>
