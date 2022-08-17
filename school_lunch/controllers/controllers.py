@@ -7,16 +7,6 @@ import time
 from dateutil.relativedelta import relativedelta
 from collections import defaultdict
 
-WEEKDAYS = {
-    '0': _('Monday'),
-    '1': _('Tuesday'),
-    '2': _('Wednesday'),
-    '3': _('Thursday'),
-    '4': _('Friday'),
-    '5': _('Saturday'),
-    '6': _('Sunday')
-}
-
 class SchoolLunch(http.Controller):
     @http.route(['/menu', '/menu/<int:date>'], auth='public', type='http', website=True)
     def menu(self, date=None, **kw):
@@ -188,11 +178,20 @@ class SchoolLunch(http.Controller):
             'dt_alert': alert_day,
             'menus': []
         }
-        FMT = lambda menu: WEEKDAYS.get(menu.weekday, '') + ' ' + menu.date.strftime('%d')
         for menu in menus:
-            if (not len(result['menus'])) or (result['menus'][-1]['date'] != FMT(menu)):
+            WEEKDAYS = {
+                '0': _('Monday'),
+                '1': _('Tuesday'),
+                '2': _('Wednesday'),
+                '3': _('Thursday'),
+                '4': _('Friday'),
+                '5': _('Saturday'),
+                '6': _('Sunday')
+            }
+            FMT = WEEKDAYS.get(menu.weekday, '') + ' ' + menu.date.strftime('%d')
+            if (not len(result['menus'])) or (result['menus'][-1]['date'] != FMT):
                 result['menus'].append({
-                    'date': FMT(menu),
+                    'date': FMT,
                     'day_of_week': menu.date.weekday()+1,
                     'meals': []
                 })
