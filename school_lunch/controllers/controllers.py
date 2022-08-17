@@ -179,6 +179,8 @@ class SchoolLunch(http.Controller):
             'menus': []
         }
         for menu in menus:
+            if menu.meal_type == 'off':
+                continue
             WEEKDAYS = {
                 '0': _('Monday'),
                 '1': _('Tuesday'),
