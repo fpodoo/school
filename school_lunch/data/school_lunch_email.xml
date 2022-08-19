@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data>
+    <data noupdate="1">
     <!-- Email Reminder Cron -->
     <record id="school_menu_reminder" model="ir.cron" forcecreate="True">
         <field name="name">School Lunch Reminder</field>
