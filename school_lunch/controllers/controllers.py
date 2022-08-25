@@ -13,9 +13,10 @@ class SchoolLunch(http.Controller):
         dt = datetime.datetime.fromtimestamp(date or time.time())
         if not date:
             try:
-                cron = request.env.ref('school_lunch.school_menu_reminder')
-                if dt.day >= (cron.active and cron.nextcall.day or 1):
-                    dt += relativedelta(months=1)
+                dt += relativedelta(months=1)
+                # cron = request.env.ref('school_lunch.school_menu_reminder')
+                # if dt.day >= (cron.active and cron.nextcall.day or 1):
+                #     dt += relativedelta(months=1)
             except:
                 pass
         return http.request.render('school_lunch.menu', {
