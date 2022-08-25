@@ -203,7 +203,7 @@ class SchoolLunch(http.Controller):
                 'name': menu.name,
                 'description': menu.description,
                 'allergies': [{'id': a.id, 'name': a.name, 'code': a.code} for a in menu.allergy_ids],
-                'kids': menu_kids,
+                'kids': list(set(menu_kids) - set(ordered_kids)),
                 'kids_ordered': ordered_kids
             } )
         return result
