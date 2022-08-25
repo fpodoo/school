@@ -18,7 +18,8 @@ class resCompany(models.Model):
         menu = self.env['school_lunch.menu']
         if not menu.search_count([('date', ">=", date.today() + relativedelta(months=1, day=1)), ('date', "<", date.today() + relativedelta(months=2, day=1))]):
             return False
-        return self.env['res.partner'].search([('kid_ids', '!=', False), ('email','ilike','%')])._school_lunch_mail()
+        partners = self.env['res.partner'].search([('kid_ids', '!=', False), ('email','ilike','%')]).filtered(lambda p: any(p.mapped('kid_ids.active')))
+        return partners._school_lunch_mail()
 
 class ResConfigSettings(models.TransientModel):
     _inherit = 'res.config.settings'
