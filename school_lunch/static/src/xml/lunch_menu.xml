@@ -84,6 +84,7 @@
 
 
   <t t-name="school_lunch.lunch_table" owl="1">
+      <div class="clearfix mb16"/>
       <div class="row" t-if="menus.length">
           <div class="col-md-9">
               <div class="alert alert-warning" role="alert" t-if="! kids.length">
