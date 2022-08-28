@@ -38,7 +38,9 @@
         'demo/demo.xml',
         'demo/school_lunch.kid.csv',
     ],
-
+    'cloc_exclude': [
+        'data/*', 'views/*'
+    ],
     'assets': {
         'web.assets_backend': [
             'school_lunch/static/src/scss/school_lunch_backend.scss',

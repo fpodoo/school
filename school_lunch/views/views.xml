@@ -276,10 +276,10 @@
                 <filter string="Draft Orders" domain="[('state', '=', 'draft')]" name="order_draft"/>
                 <filter string="Confirmed Orders" domain="[('state', '=', 'confirmed')]" name="order_confirm"/>
                 <group expand="0" string="Group By">
-                    <filter string="Meal Type" name="group_meal_type" domain="[]" context="{'group_by': 'meal_type'}"/>
-                    <filter name="group_kid_id" string="Kid" domain="[]" context="{'group_by': 'kid_id'}"/>
-                    <filter string="Order Date" name="group_month" domain="[]" context="{'group_by': 'date'}"/>
                     <filter name="class_id" string="Class" domain="[]" context="{'group_by': 'class_id'}"/>
+                    <filter string="Meal Type" name="group_meal_type" domain="[]" context="{'group_by': 'meal_type'}"/>
+                    <filter string="Order Date" name="group_month" domain="[]" context="{'group_by': 'date'}"/>
+                    <filter name="group_kid_id" string="Kid" domain="[]" context="{'group_by': 'kid_id'}"/>
                 </group>
            </search>
         </field>
@@ -345,7 +345,8 @@
       <field name="name">Monthly Orders</field>
       <field name="res_model">school_lunch.order</field>
       <field name="view_mode">gantt,tree,form,pivot,graph,kanban</field>
-      <field name="context">{'search_default_order_confirm': 1, 'search_default_group_meal_type': 1, 'search_default_group_kid_id': 1}</field>
+      <field name="domain">[('state', '=', 'confirmed')]</field>
+      <field name="context">{'search_default_class_id': 1, 'search_default_group_meal_type': 1, 'search_default_group_kid_id': 1}</field>
     </record>
     <menuitem id="school_lunch.menu_order_gantt"
             parent="school_lunch.menu_root"
