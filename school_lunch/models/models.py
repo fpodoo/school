@@ -98,6 +98,7 @@ class order(models.Model):
     color = fields.Integer('Color', compute="_get_color")
     sale_line_id = fields.Many2one('sale.order.line', 'Sale Order Line', ondelete="cascade")
     state = fields.Selection([('draft','Draft'), ('confirmed','Confirmed')], 'State', default='draft')
+    class_type = fields.Selection(related='class_id.class_type', string='Class Type', store=True)
 
 
     @api.depends('meal_type')
