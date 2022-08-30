@@ -277,6 +277,7 @@
                 <filter string="Confirmed Orders" domain="[('state', '=', 'confirmed')]" name="order_confirm"/>
                 <group expand="0" string="Group By">
                     <filter name="class_id" string="Class" domain="[]" context="{'group_by': 'class_id'}"/>
+                    <filter name="class_type" string="Class Type" domain="[]" context="{'group_by': 'class_type'}"/>
                     <filter string="Meal Type" name="group_meal_type" domain="[]" context="{'group_by': 'meal_type'}"/>
                     <filter string="Order Date" name="group_month" domain="[]" context="{'group_by': 'date'}"/>
                     <filter name="group_kid_id" string="Kid" domain="[]" context="{'group_by': 'kid_id'}"/>
@@ -361,6 +362,7 @@
         <field name="model">school_lunch.order</field>
         <field name="arch" type="xml">
             <pivot string="Lunch Orders" sample="1">
+                <field name="class_type" type="row"/>
                 <field name="meal_type" type="row"/>
                 <field name="date" type="col"/>
             </pivot>
@@ -386,6 +388,18 @@
     <menuitem id="school_lunch.menu_order_pivot"
             parent="school_lunch.menu_reporting"
             action="school_lunch.order_pivot_act"/>
+
+    <record model="ir.actions.act_window" id="school_lunch.order_pivot_class_act">
+      <field name="name">Orders</field>
+      <field name="res_model">school_lunch.order</field>
+      <field name="view_mode">pivot,graph,gantt,tree,form,kanban</field>
+      <field name="domain">[]</field>
+      <field name="context">{'search_default_order_confirm': 1}</field>
+    </record>
+    <menuitem id="school_lunch.menu_order_pivot_class"
+            parent="school_lunch.menu_reporting"
+            action="school_lunch.order_pivot_class_act"/>
+
 
 
 
