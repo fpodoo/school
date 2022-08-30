@@ -271,7 +271,7 @@
                 <field name="class_id"/>
                 <field name="menu_id"/>
                 <field name="meal_type"/>
-                <field name="date"/>
+	        <filter string="Date" name="date" date="date"/>
                 <separator/>
                 <filter string="Draft Orders" domain="[('state', '=', 'draft')]" name="order_draft"/>
                 <filter string="Confirmed Orders" domain="[('state', '=', 'confirmed')]" name="order_confirm"/>
