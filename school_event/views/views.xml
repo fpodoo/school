@@ -1,0 +1,30 @@
+<odoo>
+    <data>
+
+    <record model="ir.ui.view" id="school_event.registration_attendee_details_inherit">
+      <field name="name">Registration Attendees</field>
+      <field name="inherit_id" ref="website_event.registration_attendee_details"/>
+      <field name="arch" type="xml">
+          <xpath expr="//form//div[hasclass('row')]/div[2]/label" position="replace">
+              <label>Email <small>(Optional)</small></label>
+          </xpath>
+          <xpath expr="//form//div[hasclass('row')]/div[2]/input" position="replace">
+                <input class="form-control" type="email" t-attf-name="#{counter}-email"
+                    t-att-value="default_first_attendee.get('email', '') if counter == 1 else ''"/>
+          </xpath>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="school_event.registration_attendee_tree_inherit">
+      <field name="name">Questions on Attendees</field>
+      <field name="inherit_id" ref="event.view_event_registration_tree"/>
+      <field name="model">event.registration</field>
+      <field name="arch" type="xml">
+          <tree position="inside">
+              <field name="registration_answer_ids"/>
+          </tree>
+      </field>
+    </record>
+
+    </data>
+</odoo>
