@@ -113,7 +113,7 @@ class SchoolLunch(http.Controller):
             for kid in orders[str(menu.id)]:
                 product = request.env.ref('school_lunch.product_'+menu.meal_type).sudo()
                 price = product.lst_price
-                kid_o = request.env['school_lunch.kid'].browse(kid)
+                kid_o = request.env['school_lunch.kid'].browse(kid).sudo()
                 pricelist = kid_o.pricelist_id or kid_o.class_id.pricelist_id
                 if pricelist:
                     result = pricelist.get_product_price(product, 1, False)
