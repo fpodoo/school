@@ -27,8 +27,8 @@ class sale_order(models.Model):
     def _cart_update(self, product_id=None, line_id=None, add_qty=0, set_qty=0, *args, **kwargs):
         if line_id:
             line = self.env['sale.order.line'].browse(line_id)
-            if line.lunch_ids and (set_qty or add_qty):
-                if set_qty or bool(add_qty):
+            if line.lunch_ids:
+                if set_qty or (add_qty is not None):
                     return {'line_id': line.id, 'quantity': line.product_uom_qty, 'option_ids': []}
         return super(sale_order, self)._cart_update(product_id, line_id, add_qty, set_qty, *args, **kwargs)
 

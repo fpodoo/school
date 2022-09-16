@@ -182,4 +182,3 @@ class partner(models.Model):
             template.send_mail(partner.id)
         return True
 
-
