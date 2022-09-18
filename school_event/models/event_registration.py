@@ -7,6 +7,6 @@ from odoo import fields, models
 
 class EventRegistrationAnswer(models.Model):
     _inherit = 'event.registration.answer'
-    _rec_name = 'value_text_box'
+    _rec_name = 'value_answer_id'
 
 
