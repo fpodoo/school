@@ -18,11 +18,13 @@ class sale_order(models.Model):
                     qty = int(line.product_uom_qty)
                     line.lunch_ids[:qty].write({'state': 'confirmed'})
                     line.lunch_ids[qty:].write({'sale_line_id': False})
+        return super(sale_order, self)._action_confirm()
 
     def _action_cancel(self):
         for order in self:
             for line in order.order_line:
                 line.lunch_ids.unlink()
+        return super(sale_order, self)._action_cancel()
 
     def _cart_update(self, product_id=None, line_id=None, add_qty=0, set_qty=0, *args, **kwargs):
         if line_id:
