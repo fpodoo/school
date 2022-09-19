@@ -10,6 +10,9 @@ from collections import defaultdict
 class SchoolLunch(http.Controller):
     @http.route(['/menu', '/menu/<int:date>'], auth='public', type='http', website=True)
     def menu(self, date=None, **kw):
+        kids = request.session.get('mykids', [])
+        if not kids and request.env.user.sudo().partner_id.kid_ids:
+            request.session['mykids'] = request.env.user.sudo().partner_id.kid_ids.mapped('id')
         dt = datetime.datetime.fromtimestamp(date or time.time())
         if not date:
             cron = request.env.ref('school_lunch.school_menu_reminder').sudo()
