@@ -176,6 +176,9 @@ class partner(models.Model):
             base = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
             partner.lunch_url = base + '/school/kid/add/' + ','.join(partner.kid_ids.mapped('uuid')) + '/' + str(partner.id)
 
+    def school_lunch_mail(self):
+        return self._school_lunch_mail()
+
     def _school_lunch_mail(self):
         for partner in self:
             template = self.env.ref("school_lunch.mail_template_school_lunch")

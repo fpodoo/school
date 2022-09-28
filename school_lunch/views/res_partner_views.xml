@@ -9,6 +9,7 @@
             <data>
                 <field name="category_id" position="after">
                     <field name="lunch_url" widget="url"/>
+                    <button type="object" name="school_lunch_mail" string="Envoi"/>
                 </field>
                 <notebook position="inside">
                     <page string="Kids">
