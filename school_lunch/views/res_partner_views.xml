@@ -8,11 +8,8 @@
         <field name="arch" type="xml">
             <data>
                 <field name="category_id" position="after">
-                    <label for="lunch_url">
-                    <div>
-                        <field name="lunch_url" widget="url"/>
-                        <button type="object" name="school_lunch_mail" string="Envoi"/>
-                    </div>
+                    <field name="lunch_url" widget="url"/>
+                    <button type="object" name="school_lunch_mail" string="Envoi" groups="base.group_no_one"/>
                 </field>
                 <notebook position="inside">
                     <page string="Kids">
