@@ -177,11 +177,11 @@ class partner(models.Model):
             partner.lunch_url = base + '/school/kid/add/' + ','.join(partner.kid_ids.mapped('uuid')) + '/' + str(partner.id)
 
     def school_lunch_mail(self):
-        return self._school_lunch_mail()
+        return self._school_lunch_mail(force_send=True)
 
-    def _school_lunch_mail(self):
+    def _school_lunch_mail(self, force_send=False):
         for partner in self:
             template = self.env.ref("school_lunch.mail_template_school_lunch")
-            template.send_mail(partner.id)
+            template.send_mail(partner.id, force_send=force_send)
         return True
 
