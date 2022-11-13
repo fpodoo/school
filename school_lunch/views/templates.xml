@@ -35,6 +35,7 @@
                   <t t-esc="(date-dmonth).strftime('%Y')"/>
               </a>
           </h1>
+          <div style="clear: both"/>
           <div class="o_menu" id="LunchMenu" t-att-data-date="timestamp"/>
       </div>
     </t>
