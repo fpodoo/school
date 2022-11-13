@@ -86,7 +86,10 @@ class SchoolLunch(http.Controller):
         for k in kids:
             for parent in k.parent_ids:
                 if parent.id == partner_id:
-                    request.session['school_partner_id'] = partner_id
+                    sale_order = request.website.sale_get_order(force_create=True)
+                    sale_order.partner_id = partner_id
+                    sale_order.partner_invoice_id = partner_id
+                    sale_order.partner_shipping_id = partner_id
         return request.redirect('/menu')
 
     @http.route(['/school/kid/remove/<int:kid_id>'], auth='public', type='http', website=True)
@@ -101,10 +104,6 @@ class SchoolLunch(http.Controller):
         if not orders:
             return False
         sale_order = request.website.sale_get_order(force_create=True)
-        if request.session.get('school_partner_id'):
-            sale_order.partner_id = request.session['school_partner_id']
-            sale_order.partner_invoice_id = request.session['school_partner_id']
-            sale_order.partner_shipping_id = request.session['school_partner_id']
         if sale_order.state != 'draft':
             request.session['sale_order_id'] = None
             sale_order = request.website.sale_get_order(force_create=True)

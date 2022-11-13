@@ -4,6 +4,42 @@
     <menuitem name="Lunch" id="school_lunch.root" web_icon="school_lunch,static/description/icon.png"/>
     <menuitem name="Configuration" id="school_lunch.config" parent="school_lunch.root" sequence="32"/>
 
+    <record id="view_quotation_kid_order_tree" model="ir.ui.view">
+      <field name="name">sale.order.kid.tree</field>
+      <field name="model">sale.order</field>
+      <field name="inherit_id" ref="sale.view_quotation_tree"/>
+      <field name="arch" type="xml">
+          <field name="company_id" position="after">
+              <field name="kid_id" optional="show"/>
+              <field name="kid_ids" optional="hidden" widget="many2many_tags"/>
+          </field>
+      </field>
+    </record>
+
+    <record id="view_quotation_kid_tree" model="ir.ui.view">
+      <field name="name">sale.order.kid.tree</field>
+      <field name="model">sale.order</field>
+      <field name="inherit_id" ref="sale.view_order_tree"/>
+      <field name="arch" type="xml">
+          <field name="company_id" position="after">
+              <field name="kid_id" optional="show"/>
+              <field name="kid_ids" optional="hidden" widget="many2many_tags"/>
+          </field>
+      </field>
+    </record>
+
+    <record id="view_quotation_kid_form" model="ir.ui.view">
+      <field name="name">sale.order.kid.form</field>
+      <field name="model">sale.order</field>
+      <field name="inherit_id" ref="sale.view_order_form"/>
+      <field name="arch" type="xml">
+          <field name="partner_shipping_id" position="after">
+              <field name="kid_id"/>
+              <field name="kid_ids" groups="base.group_no_one" widget="many2many_tags"/>
+          </field>
+      </field>
+    </record>
+
     <record model="ir.ui.view" id="school_lunch.allergy_list">
       <field name="name">Allergies</field>
       <field name="model">school_lunch.allergy</field>

@@ -9,6 +9,20 @@ class sale_order_line(models.Model):
 class sale_order(models.Model):
     _inherit = "sale.order"
 
+    kid_id = fields.Many2one('school_lunch.kid', string='Oldest Kid', compute="_get_first_kid", store=True)
+    kid_ids = fields.Many2many('school_lunch.kid', string='Kids', related="partner_id.kid_ids")
+
+    @api.depends('partner_id.kid_ids')
+    def _get_first_kid(self):
+        for order in self:
+            kids = order.partner_id.kid_ids
+            if order.partner_id.kid_ids:
+                kids = sorted(kids, key=lambda x: (x.class_id.name, x.name))
+                order.kid_id = kids[-1]
+            else:
+                order.kid_id = False
+        return True
+
     def _action_confirm(self):
         for order in self:
             for line in order.order_line:
