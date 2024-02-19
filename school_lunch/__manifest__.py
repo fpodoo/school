@@ -6,16 +6,16 @@
     "description": """
         Module to order lunch at school.
     """,
-    "author": "Fabien Pinckaers",
+    "author": "Fabien Pinckaers, Odoo PS",
     "website": "https://www.odoo.com",
     # Categories can be used to filter modules in modules listing
     # Check https://github.com/odoo/odoo/blob/14.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
     "category": "Uncategorized",
-    "version": "0.36",
+    "version": "17.0.1.0.0",
     # any module necessary for this one to work correctly
     "depends": ["website_sale", "website_sale_gift_card"],
-    "license": "LGPL-3",
+    "license": "OEEL-1",
     # always loaded
     "data": [
         "security/ir.model.access.csv",

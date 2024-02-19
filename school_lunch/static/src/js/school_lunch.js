@@ -1,14 +1,6 @@
 /** @odoo-module **/
 
-var ajax = require("web.ajax");
-var core = require("web.core");
-
-var _t = core._t;
-
-const {Component, Store, mount, QWeb, xml} = owl;
-const {useDispatch, useStore, useGetters, useRef, useState} = owl.hooks;
-const {Router, RouteComponent} = owl.router;
-const {whenReady} = owl.utils;
+import {Component, loadFile, mount, useState, whenReady} from "@odoo/owl";
 
 import {env} from "root.widget";
 
@@ -93,7 +85,7 @@ class LunchMenuTable extends Component {
         }
     }
 
-    async orderSet(ev) {
+    async orderSet() {
         var orders = {};
         for (var menu of this.menus) {
             for (var meal of menu.meals) if (meal.kids.length) orders[meal.id] = meal.kids;
@@ -126,7 +118,7 @@ class LunchMenuTable extends Component {
 LunchMenuTable.template = "school_lunch.lunch_table";
 
 async function loadTemplates() {
-    const templates = await owl.utils.loadFile("/school_lunch/static/src/xml/lunch_menu.xml?uniq=" + Math.random());
+    const templates = await loadFile("/school_lunch/static/src/xml/lunch_menu.xml?uniq=" + Math.random());
     env.qweb.addTemplates(templates);
 }
 
