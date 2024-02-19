@@ -79,7 +79,7 @@ class SchoolLunch(http.Controller):
         )
 
     @http.route(["/school/kid/add"], auth="public", type="http", website=True, methods=["POST"])
-    def school_kid_add(self, kid_id=None, **kw):
+    def school_kid_add_id(self, kid_id=None, **kw):
         if request.env.company.lunch_signin:
             return request.redirect("/menu")
         if not kid_id:
@@ -97,7 +97,7 @@ class SchoolLunch(http.Controller):
         type="http",
         website=True,
     )
-    def school_kid_add(self, uuids, partner_id=None, **kw):
+    def school_kid_add_uuid(self, uuids, partner_id=None, **kw):
         kids = request.env["school_lunch.kid"].search([("uuid", "in", uuids.split(","))]).sudo()
         request.session["mykids"] = kids.mapped("id")
         for k in kids:
@@ -141,7 +141,7 @@ class SchoolLunch(http.Controller):
                 meals.setdefault(key, [])
                 meals[key].append((menu.id, kid))
 
-        for (meal_type, product, price), orders in meals.items():
+        for (_meal_type, product, price), orders in meals.items():
             so = sale_order.sudo()
             line_id = (
                 request.env["sale.order.line"]

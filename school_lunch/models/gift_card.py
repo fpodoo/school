@@ -1,7 +1,7 @@
-from odoo import api, fields, models
+from odoo import fields, models
 
 
-class gift_card(models.Model):
+class GiftCard(models.Model):
     _inherit = "gift.card"
 
     comment = fields.Text("Comment")
