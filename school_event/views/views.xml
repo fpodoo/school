@@ -1,7 +1,8 @@
+<!-- pylint:disable=dangerous-view-replace-wo-priority-->
 <odoo>
     <data>
 
-    <record model="ir.ui.view" id="school_event.registration_attendee_details_inherit">
+    <record model="ir.ui.view" id="registration_attendee_details_inherit">
       <field name="name">Registration Attendees</field>
       <field name="inherit_id" ref="website_event.registration_attendee_details"/>
       <field name="arch" type="xml">
@@ -19,7 +20,7 @@
       </field>
     </record>
 
-    <record model="ir.ui.view" id="school_event.registration_attendee_tree_inherit">
+    <record model="ir.ui.view" id="registration_attendee_tree_inherit">
       <field name="name">Questions on Attendees</field>
       <field name="inherit_id" ref="event.view_event_registration_tree"/>
       <field name="model">event.registration</field>

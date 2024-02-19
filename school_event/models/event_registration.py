@@ -2,7 +2,8 @@
 
 # This module can be removed when upgrading to v16
 
-from odoo import fields, models
+from odoo import models
+
 
 
 class EventRegistrationAnswer(models.Model):

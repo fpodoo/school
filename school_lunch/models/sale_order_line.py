@@ -1,19 +1,19 @@
 from odoo import api, fields, models
 
 
-class sale_order_line(models.Model):
+class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
     lunch_ids = fields.One2many("school_lunch.order", "sale_line_id", "Lunch Orders")
 
 
-class sale_order(models.Model):
+class SaleOrder(models.Model):
     _inherit = "sale.order"
 
-    kid_id = fields.Many2one("school_lunch.kid", string="Oldest Kid", compute="_get_first_kid", store=True)
+    kid_id = fields.Many2one("school_lunch.kid", string="Oldest Kid", compute="_compute_get_first_kid", store=True)
     kid_ids = fields.Many2many("school_lunch.kid", string="Kids", related="partner_id.kid_ids")
 
     @api.depends("partner_id.kid_ids")
-    def _get_first_kid(self):
+    def _compute_get_first_kid(self):
         for order in self:
             kids = order.partner_id.kid_ids
             if order.partner_id.kid_ids:
@@ -32,13 +32,13 @@ class sale_order(models.Model):
                     qty = int(line.product_uom_qty)
                     line.lunch_ids[:qty].write({"state": "confirmed"})
                     line.lunch_ids[qty:].write({"sale_line_id": False})
-        return super(sale_order, self)._action_confirm()
+        return super(SaleOrder, self)._action_confirm()
 
     def _action_cancel(self):
         for order in self:
             for line in order.order_line:
                 line.lunch_ids.unlink()
-        return super(sale_order, self)._action_cancel()
+        return super(SaleOrder, self)._action_cancel()
 
     def _cart_update(self, product_id=None, line_id=None, add_qty=0, set_qty=0, *args, **kwargs):
         if line_id:
@@ -46,10 +46,10 @@ class sale_order(models.Model):
             if line.lunch_ids:
                 if set_qty or (add_qty is not None):
                     return {"line_id": line.id, "quantity": line.product_uom_qty, "option_ids": []}
-        return super(sale_order, self)._cart_update(product_id, line_id, add_qty, set_qty, *args, **kwargs)
+        return super(SaleOrder, self)._cart_update(product_id, line_id, add_qty, set_qty, *args, **kwargs)
 
 
-class product_product(models.Model):
+class ProductProduct(models.Model):
     _inherit = "product.product"
 
     def _is_add_to_cart_allowed(self):
@@ -57,4 +57,4 @@ class product_product(models.Model):
         for mt in ("soup", "meal"):
             if self.id == self.env.ref("school_lunch.product_" + mt).id:
                 return True
-        return super(product_product, self)._is_add_to_cart_allowed()
+        return super(ProductProduct, self)._is_add_to_cart_allowed()
