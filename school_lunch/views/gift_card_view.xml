@@ -3,7 +3,7 @@
     <record id="gift_card_comment_view_tree" model="ir.ui.view">
         <field name="name">gift.card.form Comment</field>
         <field name="model">gift.card</field>
-        <field name="inherit_id" ref="gift_card.gift_card_view_tree" />
+        <field name="inherit_id" ref="gift_card.gift_card_view_tree"/>
         <field name="arch" type="xml">
             <field name="code" position="after">
                 <field name="comment"/>
@@ -15,7 +15,7 @@
     <record id="gift_card_comment_view_form" model="ir.ui.view">
         <field name="name">gift.card.form Comment</field>
         <field name="model">gift.card</field>
-        <field name="inherit_id" ref="gift_card.gift_card_view_form" />
+        <field name="inherit_id" ref="gift_card.gift_card_view_form"/>
         <field name="arch" type="xml">
             <field name="partner_id" position="after">
                 <field name="is_sent"/>
@@ -28,13 +28,13 @@
     <record id="gift_card_comment_view_search" model="ir.ui.view">
         <field name="name">gift.card.comment.search</field>
         <field name="model">gift.card</field>
-        <field name="inherit_id" ref="gift_card.gift_card_view_search" />
+        <field name="inherit_id" ref="gift_card.gift_card_view_search"/>
         <field name="arch" type="xml">
             <filter name="valid" position="after">
                 <field name="comment"/>
                 <separator/>
-                <filter name="is_sent" string="Sent" domain="[('is_sent', '=', True)]" />
-                <filter name="is_sent" string="Not Sent" domain="[('is_sent', '=', False)]" />
+                <filter name="is_sent" string="Sent" domain="[('is_sent', '=', True)]"/>
+                <filter name="is_sent" string="Not Sent" domain="[('is_sent', '=', False)]"/>
             </filter>
         </field>
     </record>

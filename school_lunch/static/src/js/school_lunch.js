@@ -1,8 +1,7 @@
 /** @odoo-module **/
 
-
-var ajax = require('web.ajax');
-var core = require('web.core');
+var ajax = require("web.ajax");
+var core = require("web.core");
 
 var _t = core._t;
 
@@ -11,19 +10,18 @@ const {useDispatch, useStore, useGetters, useRef, useState} = owl.hooks;
 const {Router, RouteComponent} = owl.router;
 const {whenReady} = owl.utils;
 
-import { env } from "root.widget";
+import {env} from "root.widget";
 
 class LunchKids extends Component {
     async classChange() {
-        const el = document.getElementById('o-class-select');
+        const el = document.getElementById("o-class-select");
         const result = await this.env.services.rpc({
             route: `/school/classes_get`,
-            params: {class_id: el && el.value}
+            params: {class_id: el && el.value},
         });
         this.classes = result.classes;
         this.kids.length = 0;
-        for (var kid of result.kids)
-            this.kids.push(kid);
+        for (var kid of result.kids) this.kids.push(kid);
     }
     async willStart() {
         this.classes = [];
@@ -31,8 +29,7 @@ class LunchKids extends Component {
         await this.classChange();
     }
 }
-LunchKids.template = "school_lunch.lunch_kids_form"
-
+LunchKids.template = "school_lunch.lunch_kids_form";
 
 class LunchMenu extends Component {
     toggleMenu() {
@@ -40,29 +37,25 @@ class LunchMenu extends Component {
         const isset = this.props.menu.kids.includes(kid);
         for (var meal of this.props.meals) {
             var index = meal.kids.indexOf(kid);
-            if (index > -1)
-                meal.kids.splice(index, 1);
-        };
-        if (! isset)
-            this.props.menu.kids.push(kid);
-    };
+            if (index > -1) meal.kids.splice(index, 1);
+        }
+        if (!isset) this.props.menu.kids.push(kid);
+    }
     static props = ["menu", "kid", "meals"];
 }
-LunchMenu.template = "school_lunch.lunch_menu"
-
+LunchMenu.template = "school_lunch.lunch_menu";
 
 class LunchLine extends Component {
     static props = ["menu", "kids"];
-    static components = { LunchMenu };
+    static components = {LunchMenu};
 }
-LunchLine.template = "school_lunch.lunch_line"
-
+LunchLine.template = "school_lunch.lunch_line";
 
 class LunchMenuTable extends Component {
     async willStart() {
         const result = await this.env.services.rpc({
             route: `/school/order_prepare`,
-            params: {date: this.props.date}
+            params: {date: this.props.date},
         });
         this.dt_block = result.dt_block;
         this.dt_alert = result.dt_alert;
@@ -80,7 +73,7 @@ class LunchMenuTable extends Component {
         this.dt_block = useState(26);
         this.dt_alert = useState(20);
         this.readonly = useState(true);
-    };
+    }
 
     mealDisplay(menu, meal) {
         console.log(menu);
@@ -91,12 +84,10 @@ class LunchMenuTable extends Component {
         const allergy = parseInt(ev.srcElement.dataset.allergy);
         for (var menu of this.menus) {
             for (var meal of menu.meals) {
-                if (!allergy)
-                    meal.kids = [];
+                if (!allergy) meal.kids = [];
 
                 for (var al of meal.allergies) {
-                    if (al.id == allergy)
-                        meal.kids = [];
+                    if (al.id == allergy) meal.kids = [];
                 }
             }
         }
@@ -105,16 +96,13 @@ class LunchMenuTable extends Component {
     async orderSet(ev) {
         var orders = {};
         for (var menu of this.menus) {
-            for (var meal of menu.meals)
-                if (meal.kids.length)
-                    orders[meal.id] = meal.kids;
+            for (var meal of menu.meals) if (meal.kids.length) orders[meal.id] = meal.kids;
         }
         const result = await this.env.services.rpc({
             route: `/school/order_set`,
-            params: {orders}
+            params: {orders},
         });
-        if (result)
-            window.location.href = "/shop/checkout?express=1";
+        if (result) window.location.href = "/shop/checkout?express=1";
     }
 
     async selectMeal(ev) {
@@ -122,32 +110,29 @@ class LunchMenuTable extends Component {
         const meal_day = parseInt(ev.srcElement.dataset.day);
 
         for (var menu of this.menus) {
-            if (meal_day && meal_day != menu.day_of_week)
-                continue;
+            if (meal_day && meal_day != menu.day_of_week) continue;
             for (var meal of menu.meals) {
                 meal.kids.length = 0;
                 if (meal.meal_type == meal_type) {
                     for (var kid of this.kids) {
-                        if (! meal.kids_ordered.includes(kid.id))
-                            meal.kids.push(kid.id);
+                        if (!meal.kids_ordered.includes(kid.id)) meal.kids.push(kid.id);
                     }
                 }
             }
         }
-    };
-    static components = { LunchLine }
+    }
+    static components = {LunchLine};
 }
-LunchMenuTable.template = "school_lunch.lunch_table"
-
+LunchMenuTable.template = "school_lunch.lunch_table";
 
 async function loadTemplates() {
-    const templates = await owl.utils.loadFile('/school_lunch/static/src/xml/lunch_menu.xml?uniq=' + Math.random());
+    const templates = await owl.utils.loadFile("/school_lunch/static/src/xml/lunch_menu.xml?uniq=" + Math.random());
     env.qweb.addTemplates(templates);
 }
 
 async function setup() {
-    const elTable = document.getElementById('LunchMenu');
-    const elKids = document.getElementById('LunchKids');
+    const elTable = document.getElementById("LunchMenu");
+    const elKids = document.getElementById("LunchKids");
     await loadTemplates();
     if (elTable) {
         mount(LunchMenuTable, {target: elTable, env, props: {date: elTable.dataset.date}});

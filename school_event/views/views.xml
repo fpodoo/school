@@ -9,8 +9,12 @@
               <label>Email <small>(Optional)</small></label>
           </xpath>
           <xpath expr="//form//div[hasclass('row')]/div[2]/input" position="replace">
-                <input class="form-control" type="email" t-attf-name="#{counter}-email"
-                    t-att-value="default_first_attendee.get('email', '') if counter == 1 else ''"/>
+                <input
+                        class="form-control"
+                        type="email"
+                        t-attf-name="#{counter}-email"
+                        t-att-value="default_first_attendee.get('email', '') if counter == 1 else ''"
+                    />
           </xpath>
       </field>
     </record>
