@@ -11,22 +11,23 @@
     # Categories can be used to filter modules in modules listing
     # Check https://github.com/odoo/odoo/blob/14.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
-    "category": "Uncategorized",
+    "category": "Lunch",
     "version": "17.0.1.0.0",
     # any module necessary for this one to work correctly
-    "depends": ["website_sale", "website_sale_gift_card"],
+    "depends": ["website_sale_loyalty"],
     "license": "OEEL-1",
     # always loaded
     "data": [
         "security/ir.model.access.csv",
-        "views/views.xml",
         "data/school_lunch_email.xml",
-        "views/res_config_settings_views.xml",
         "data/school_lunch.allergy.csv",
         "data/school_lunch.xml",
-        "views/templates.xml",
+        "views/views.xml",
+        "views/loyalty_card_views.xml",
+        "views/res_config_settings_views.xml",
         "views/res_partner_views.xml",
-        "views/gift_card_view.xml",
+        "views/sale_order_views.xml",
+        "views/templates.xml",
     ],
     # only loaded in demonstration mode
     "demo": [
