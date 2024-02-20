@@ -51,12 +51,18 @@
               <a href="/menu" class="btn btn-link">
                       Order Now <i class="fa fa-arrow-right"/>
               </a>
-              <a t-attf-href="/menu/agenda/#{int((date+dmonth).timestamp())}" class="btn btn-outline-secondary float-right">
+              <a
+                            t-attf-href="/menu/agenda/#{int((date+dmonth).timestamp())}"
+                            class="btn btn-outline-secondary float-right"
+                        >
                   <i class="fa fa-arrow-right"/>
                   <t t-call="school_lunch.website_month_display"><t t-set="month" t-value="(date+dmonth).month"/></t>
                   <t t-esc="(date+dmonth).strftime('%Y')"/>
               </a>
-              <a t-attf-href="/menu/agenda/#{int((date-dmonth).timestamp())}" class="btn btn-outline-secondary float-right">
+              <a
+                            t-attf-href="/menu/agenda/#{int((date-dmonth).timestamp())}"
+                            class="btn btn-outline-secondary float-right"
+                        >
                   <i class="fa fa-arrow-left"/>
                   <t t-call="school_lunch.website_month_display"><t t-set="month" t-value="(date-dmonth).month"/></t>
                   <t t-esc="(date-dmonth).strftime('%Y')"/>
@@ -76,11 +82,17 @@
                                       <t t-set="number" t-value="number and number+1"/>
                                   </t>
                                   <b t-if="number and number &lt;= latest_day">
-                                      <t t-out="{0: 'Lundi', 1: 'Mardi', 2: 'Mercredi', 3: 'Jeudi', 4: 'Vendredi', 5: 'Samedi', 6: 'Dimanche'}[weekday]"/>
+                                      <t
+                                                    t-out="{0: 'Lundi', 1: 'Mardi', 2: 'Mercredi', 3: 'Jeudi', 4: 'Vendredi', 5: 'Samedi', 6: 'Dimanche'}[weekday]"
+                                                />
                                       <t t-out="number"/>
                                   </b>
                               </div>
-                              <div t-foreach="menus" t-as="menu" t-att-class="'mb8 o_cal_col_'+str(menu.color) + (menu.meal_type=='off' and ' o_day_off' or '')">
+                              <div
+                                            t-foreach="menus"
+                                            t-as="menu"
+                                            t-att-class="'mb8 o_cal_col_'+str(menu.color) + (menu.meal_type=='off' and ' o_day_off' or '')"
+                                        >
                                   <span t-out="menu.name"/>
                                   <br t-if="menu.description"/>
                                   <i t-out="menu.description"/>
@@ -118,7 +130,7 @@
       <div class="container">
           <h1 class="mb-4 mt-4">Add a Kid</h1>
           <form method="post" action="/school/kid/add">
-              <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+              <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
               <div class="o_kid_form" id="LunchKids"/>
           </form>
           <div t-if="len(my_kids)">
@@ -126,12 +138,12 @@
               <ul>
                   <li t-foreach="my_kids" t-as="kid">
                       <t t-out="kid.shortname"/>
-                      <a t-attf-href="/school/kid/remove/#{kid.id}" class="text-danger"><span class="fa fa-times"></span></a>
+                      <a t-attf-href="/school/kid/remove/#{kid.id}" class="text-danger"><span class="fa fa-times"/></a>
                   </li>
               </ul>
           </div>
           <div class="mb128 mt64">
-              <a href="/menu" class="btn btn-secondary"><i class="fa fa-arrow-right"></i> &amp;nbsp; Go to Menu</a>
+              <a href="/menu" class="btn btn-secondary"><i class="fa fa-arrow-right"/> &amp;nbsp; Go to Menu</a>
           </div>
       </div>
     </t>
