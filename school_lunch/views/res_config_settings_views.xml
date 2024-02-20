@@ -66,6 +66,11 @@
         <field name="target">inline</field>
         <field name="context">{'module' : 'lunch', 'bin_size': False}</field>
     </record>
-    <menuitem name="Settings" id="school_lunch.config_settings" parent="school_lunch.config" action="lunch_config_settings_action"/>
+    <menuitem
+        name="Settings"
+        id="school_lunch.config_settings"
+        parent="school_lunch.config"
+        action="lunch_config_settings_action"
+    />
 
 </odoo>
