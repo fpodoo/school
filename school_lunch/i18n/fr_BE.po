@@ -31,8 +31,8 @@ msgstr ""
 
 #. module: school_lunch
 #: model_terms:ir.ui.view,arch_db:school_lunch.menu_form
-msgid ", week"
-msgstr ", semaine"
+msgid "<span class=\"oe_inline\">, week </span>"
+msgstr "<span class=\"oe_inline\">, semaine </span>"
 
 #. module: school_lunch
 #: model_terms:ir.ui.view,arch_db:school_lunch.kids

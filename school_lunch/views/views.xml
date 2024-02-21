@@ -202,7 +202,9 @@
                       <div>
                           <field name="date"/>
                           <div>
-                              <field name="weekday"/>, week <field name="weekyear"/>
+                              <field name="weekday" class="oe_inline"/>
+                              <span class="oe_inline">, week </span>
+                              <field name="weekyear" class="oe_inline"/>
                           </div>
                       </div>
                       <field name="cook_id"/>
