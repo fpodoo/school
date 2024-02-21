@@ -9,7 +9,7 @@ from odoo.http import request
 
 
 class SchoolLunch(http.Controller):
-    @http.route(["/menu", "/menu/<int:date>"], auth="public", type="http", website=True)
+    @http.route(["/menu", "/menu/<int:date>"], auth="public", type="http", website=True, sitemap=False)
     def menu(self, date=None, **kw):
         kids = request.session.get("mykids", [])
         if not kids and request.env.user.sudo().partner_id.kid_ids:
@@ -29,7 +29,7 @@ class SchoolLunch(http.Controller):
             },
         )
 
-    @http.route(["/menu/agenda", "/menu/agenda/<int:date>"], auth="public", type="http", website=True)
+    @http.route(["/menu/agenda", "/menu/agenda/<int:date>"], auth="public", type="http", website=True, sitemap=False)
     def menu_agenda(self, date=None, **kw):
         dt = datetime.datetime.fromtimestamp(date or time.time())
         dt_from = dt + relativedelta(day=1)
@@ -61,7 +61,7 @@ class SchoolLunch(http.Controller):
             },
         )
 
-    @http.route(["/school/kids"], auth="public", type="http", website=True)
+    @http.route(["/school/kids"], auth="public", type="http", website=True, sitemap=False)
     def school_kids(self, date=None, **kw):
         if request.env.company.lunch_signin:
             return request.redirect("/menu")
@@ -78,7 +78,7 @@ class SchoolLunch(http.Controller):
             },
         )
 
-    @http.route(["/school/kid/add"], auth="public", type="http", website=True, methods=["POST"])
+    @http.route(["/school/kid/add"], auth="public", type="http", website=True, methods=["POST"], sitemap=False)
     def school_kid_add_id(self, kid_id=None, **kw):
         if request.env.company.lunch_signin:
             return request.redirect("/menu")
@@ -96,6 +96,7 @@ class SchoolLunch(http.Controller):
         auth="public",
         type="http",
         website=True,
+        sitemap=False,
     )
     def school_kid_add_uuid(self, uuids, partner_id=None, **kw):
         kids = request.env["school_lunch.kid"].search([("uuid", "in", uuids.split(","))]).sudo()
@@ -109,14 +110,14 @@ class SchoolLunch(http.Controller):
                     sale_order.partner_shipping_id = partner_id
         return request.redirect("/menu")
 
-    @http.route(["/school/kid/remove/<int:kid_id>"], auth="public", type="http", website=True)
+    @http.route(["/school/kid/remove/<int:kid_id>"], auth="public", type="http", website=True, sitemap=False)
     def school_kid_remove(self, kid_id, **kw):
         d = request.session.get("mykids", [])
         d.remove(int(kid_id))
         request.session["mykids"] = d
         return request.redirect("/school/kids")
 
-    @http.route(["/school/order_set"], type="json", auth="public", website=True, methods=["POST"])
+    @http.route(["/school/order_set"], type="json", auth="public", website=True, methods=["POST"], sitemap=False)
     def school_order_set(self, orders, **kwargs):
         if not orders:
             return False
@@ -165,7 +166,7 @@ class SchoolLunch(http.Controller):
 
         return True
 
-    @http.route(["/school/order_prepare"], type="json", auth="public", website=True, methods=["POST"])
+    @http.route(["/school/order_prepare"], type="json", auth="public", website=True, methods=["POST"], sitemap=False)
     def school_order_prepare(self, date=None, **kwargs):
         max_day = request.env.company.lunch_block
         cron = request.env.ref("school_lunch.school_menu_reminder")
@@ -236,7 +237,7 @@ class SchoolLunch(http.Controller):
             )
         return result
 
-    @http.route(["/school/classes_get"], type="json", auth="public", website=True, methods=["POST"])
+    @http.route(["/school/classes_get"], type="json", auth="public", website=True, methods=["POST"], sitemap=False)
     def school_classes_get(self, class_id=None, **kwargs):
         classes = request.env["school_lunch.class_name"].search([])
         if not class_id:
