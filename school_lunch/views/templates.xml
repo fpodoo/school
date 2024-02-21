@@ -1,156 +1,175 @@
 <odoo>
-<data>
+    <data>
 
-<template id="website_month_display">
-    <t t-if="month == 1">Janvier</t>
-    <t t-if="month == 2">Février</t>
-    <t t-if="month == 3">Mars</t>
-    <t t-if="month == 4">Avril</t>
-    <t t-if="month == 5">Mai</t>
-    <t t-if="month == 6">Juin</t>
-    <t t-if="month == 7">Juillet</t>
-    <t t-if="month == 8">Août</t>
-    <t t-if="month == 9">Septembre</t>
-    <t t-if="month == 10">Octobre</t>
-    <t t-if="month == 11">Novembre</t>
-    <t t-if="month == 12">Décembre</t>
-</template>
+        <template id="website_month_display">
+            <t t-if="month == 1">Janvier</t>
+            <t t-if="month == 2">Février</t>
+            <t t-if="month == 3">Mars</t>
+            <t t-if="month == 4">Avril</t>
+            <t t-if="month == 5">Mai</t>
+            <t t-if="month == 6">Juin</t>
+            <t t-if="month == 7">Juillet</t>
+            <t t-if="month == 8">Août</t>
+            <t t-if="month == 9">Septembre</t>
+            <t t-if="month == 10">Octobre</t>
+            <t t-if="month == 11">Novembre</t>
+            <t t-if="month == 12">Décembre</t>
+        </template>
 
 
-<template id="menu">
-    <t t-call="website.layout">
-      <div id="wrap"/>
-      <div class="container">
-          <h1 class="mt-4">
-              Lunch: <t t-call="school_lunch.website_month_display"><t t-set="month" t-value="date.month"/></t>
-              <t t-esc="date.strftime('%Y')"/>
-              <a t-attf-href="/menu/#{int((date+dmonth).timestamp())}" class="btn btn-outline-secondary float-right">
-                  <i class="fa fa-arrow-right"/>
-                  <t t-call="school_lunch.website_month_display"><t t-set="month" t-value="(date+dmonth).month"/></t>
-                  <t t-esc="(date+dmonth).strftime('%Y')"/>
-              </a>
-              <a t-attf-href="/menu/#{int((date-dmonth).timestamp())}" class="btn btn-outline-secondary float-right">
-                  <i class="fa fa-arrow-left"/>
-                  <t t-call="school_lunch.website_month_display"><t t-set="month" t-value="(date-dmonth).month"/></t>
-                  <t t-esc="(date-dmonth).strftime('%Y')"/>
-              </a>
-          </h1>
-          <div style="clear: both"/>
-          <div class="o_menu" id="LunchMenu" t-att-data-date="timestamp"/>
-      </div>
-    </t>
-</template>
+        <template id="menu">
+            <t t-call="website.layout">
+                <div id="wrap"/>
+                <div class="container">
+                    <h1 class="mt-4">
+                        Lunch: <t t-call="school_lunch.website_month_display">
+                            <t t-set="month" t-value="date.month"/>
+                        </t>
+                        <t t-esc="date.strftime('%Y')"/>
+                        <a
+                            t-attf-href="/menu/#{int((date+dmonth).timestamp())}"
+                            class="btn btn-outline-secondary float-right"
+                        >
+                            <i class="fa fa-arrow-right"/>
+                            <t t-call="school_lunch.website_month_display">
+                                <t t-set="month" t-value="(date+dmonth).month"/>
+                            </t>
+                            <t t-esc="(date+dmonth).strftime('%Y')"/>
+                        </a>
+                        <a
+                            t-attf-href="/menu/#{int((date-dmonth).timestamp())}"
+                            class="btn btn-outline-secondary float-right"
+                        >
+                            <i class="fa fa-arrow-left"/>
+                            <t t-call="school_lunch.website_month_display">
+                                <t t-set="month" t-value="(date-dmonth).month"/>
+                            </t>
+                            <t t-esc="(date-dmonth).strftime('%Y')"/>
+                        </a>
+                    </h1>
+                    <div style="clear: both"/>
+                    <div class="o_menu" id="LunchMenu" t-att-data-date="timestamp"/>
+                </div>
+            </t>
+        </template>
 
-<template id="website_menu_calendar">
-    <t t-call="website.layout">
-      <div id="wrap"/>
-      <div class="container">
-          <h1 class="mt-4">
-              Lunch: <t t-call="school_lunch.website_month_display"><t t-set="month" t-value="date.month"/></t>
-              <t t-esc="(date+dmonth).strftime('%Y')"/>
-              <a href="/menu" class="btn btn-link">
-                      Order Now <i class="fa fa-arrow-right"/>
-              </a>
-              <a
+        <template id="website_menu_calendar">
+            <t t-call="website.layout">
+                <div id="wrap"/>
+                <div class="container">
+                    <h1 class="mt-4">
+                        Lunch: <t t-call="school_lunch.website_month_display">
+                            <t t-set="month" t-value="date.month"/>
+                        </t>
+                        <t t-esc="(date+dmonth).strftime('%Y')"/>
+                        <a href="/menu" class="btn btn-link">
+                                Order Now <i class="fa fa-arrow-right"/>
+                        </a>
+                        <a
                             t-attf-href="/menu/agenda/#{int((date+dmonth).timestamp())}"
                             class="btn btn-outline-secondary float-right"
                         >
-                  <i class="fa fa-arrow-right"/>
-                  <t t-call="school_lunch.website_month_display"><t t-set="month" t-value="(date+dmonth).month"/></t>
-                  <t t-esc="(date+dmonth).strftime('%Y')"/>
-              </a>
-              <a
+                            <i class="fa fa-arrow-right"/>
+                            <t t-call="school_lunch.website_month_display">
+                                <t t-set="month" t-value="(date+dmonth).month"/>
+                            </t>
+                            <t t-esc="(date+dmonth).strftime('%Y')"/>
+                        </a>
+                        <a
                             t-attf-href="/menu/agenda/#{int((date-dmonth).timestamp())}"
                             class="btn btn-outline-secondary float-right"
                         >
-                  <i class="fa fa-arrow-left"/>
-                  <t t-call="school_lunch.website_month_display"><t t-set="month" t-value="(date-dmonth).month"/></t>
-                  <t t-esc="(date-dmonth).strftime('%Y')"/>
-              </a>
-          </h1>
-          <t t-set="number" t-value="0"/>
-          <div class="row mb-5 mt-5">
-              <div class="col-md-9">
-                  <table class="o_lunch_agenda">
-                      <tr t-foreach="calendar.keys()" t-as="week">
-                          <td t-foreach="weekdays" t-as="weekday" align="center">
-                              <t t-set="menus" t-value="calendar[week][weekday]"/>
-                              <div class="o_agenda_head">
-                                  <t t-if="menus">
-                                      <t t-set="number" t-value="menus[0].date.day"/>
-                                  </t><t t-else="">
-                                      <t t-set="number" t-value="number and number+1"/>
-                                  </t>
-                                  <b t-if="number and number &lt;= latest_day">
-                                      <t
+                            <i class="fa fa-arrow-left"/>
+                            <t t-call="school_lunch.website_month_display">
+                                <t t-set="month" t-value="(date-dmonth).month"/>
+                            </t>
+                            <t t-esc="(date-dmonth).strftime('%Y')"/>
+                        </a>
+                    </h1>
+                    <t t-set="number" t-value="0"/>
+                    <div class="row mb-5 mt-5">
+                        <div class="col-md-9">
+                            <table class="o_lunch_agenda">
+                                <tr t-foreach="calendar.keys()" t-as="week">
+                                    <td t-foreach="weekdays" t-as="weekday" align="center">
+                                        <t t-set="menus" t-value="calendar[week][weekday]"/>
+                                        <div class="o_agenda_head">
+                                            <t t-if="menus">
+                                                <t t-set="number" t-value="menus[0].date.day"/>
+                                            </t>
+                                            <t t-else="">
+                                                <t t-set="number" t-value="number and number+1"/>
+                                            </t>
+                                            <b t-if="number and number &lt;= latest_day">
+                                                <t
                                                     t-out="{0: 'Lundi', 1: 'Mardi', 2: 'Mercredi', 3: 'Jeudi', 4: 'Vendredi', 5: 'Samedi', 6: 'Dimanche'}[weekday]"
                                                 />
-                                      <t t-out="number"/>
-                                  </b>
-                              </div>
-                              <div
+                                                <t t-out="number"/>
+                                            </b>
+                                        </div>
+                                        <div
                                             t-foreach="menus"
                                             t-as="menu"
                                             t-att-class="'mb8 o_cal_col_'+str(menu.color) + (menu.meal_type=='off' and ' o_day_off' or '')"
                                         >
-                                  <span t-out="menu.name"/>
-                                  <br t-if="menu.description"/>
-                                  <i t-out="menu.description"/>
-                                  <t t-foreach="menu.allergy_ids" t-as="allergy">
-                                      <span class="badge badge-light" t-out="allergy.code"/>
-                                  </t>
-                              </div>
-                              <div t-if="number and number &lt;= latest_day and not menus" class="o_no_meal">
-                                  <div>
-                                      Pas de repas
-                                  </div>
-                              </div>
-                          </td>
-                      </tr>
-                  </table>
-
-              </div>
-              <div class="col-md-3">
-                  <h3 class="mt-0">Allergies</h3>
-                  <div t-foreach="allergies" t-as="allergy">
-                      <span class="badge badge-light" t-out="allergy.code"/> <t t-out="allergy.name"/>
-                  </div>
-              </div>
-          </div>
-
-      </div>
-    </t>
-</template>
-
-
-
-<template id="kids">
-    <t t-call="website.layout">
-      <div id="wrap"/>
-      <div class="container">
-          <h1 class="mb-4 mt-4">Add a Kid</h1>
-          <form method="post" action="/school/kid/add">
-              <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-              <div class="o_kid_form" id="LunchKids"/>
-          </form>
-          <div t-if="len(my_kids)">
-              <h1 class="mb-4 mt-4">Your Children</h1>
-              <ul>
-                  <li t-foreach="my_kids" t-as="kid">
-                      <t t-out="kid.shortname"/>
-                      <a t-attf-href="/school/kid/remove/#{kid.id}" class="text-danger"><span class="fa fa-times"/></a>
-                  </li>
-              </ul>
-          </div>
-          <div class="mb128 mt64">
-              <a href="/menu" class="btn btn-secondary"><i class="fa fa-arrow-right"/> &amp;nbsp; Go to Menu</a>
-          </div>
-      </div>
-    </t>
-</template>
+                                            <span t-out="menu.name"/>
+                                            <br t-if="menu.description"/>
+                                            <i t-out="menu.description"/>
+                                            <t t-foreach="menu.allergy_ids" t-as="allergy">
+                                                <span class="badge badge-light" t-out="allergy.code"/>
+                                            </t>
+                                        </div>
+                                        <div t-if="number and number &lt;= latest_day and not menus" class="o_no_meal">
+                                            <div>
+                                                Pas de repas
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-md-3">
+                            <h3 class="mt-0">Allergies</h3>
+                            <div t-foreach="allergies" t-as="allergy">
+                                <span class="badge badge-light" t-out="allergy.code"/>
+                                <t t-out="allergy.name"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
 
 
 
-
-</data>
+        <template id="kids">
+            <t t-call="website.layout">
+                <div id="wrap"/>
+                <div class="container">
+                    <h1 class="mb-4 mt-4">Add a Kid</h1>
+                    <form method="post" action="/school/kid/add">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <div class="o_kid_form" id="LunchKids"/>
+                    </form>
+                    <div t-if="len(my_kids)">
+                        <h1 class="mb-4 mt-4">Your Children</h1>
+                        <ul>
+                            <li t-foreach="my_kids" t-as="kid">
+                                <t t-out="kid.shortname"/>
+                                <a t-attf-href="/school/kid/remove/#{kid.id}" class="text-danger">
+                                    <span class="fa fa-times"/>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="mb128 mt64">
+                        <a href="/menu" class="btn btn-secondary">
+                            <i class="fa fa-arrow-right"/>
+                            &amp;nbsp; Go to Menu
+                        </a>
+                    </div>
+                </div>
+            </t>
+        </template>
+    </data>
 </odoo>

@@ -1,179 +1,204 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve" id="template">
 
-  <t t-name="school_lunch.lunch_kids_form" owl="1">
-      <div>
-          <div class="form-group row">
-            <label for="class_name" class="col-form-label col-sm-2">Class</label>
-            <div class="col-sm-4">
-                <select class="form-control" id="o-class-select" t-on-change="classChange" required="1">
-                    <option t-foreach="classes" t-as="classe" t-att-value="classe.id">
-                        <t t-esc="classe.name"/>
-                    </option>
-                </select>
+    <t t-name="school_lunch.lunch_kids_form" owl="1">
+        <div>
+            <div class="form-group row">
+                <label for="class_name" class="col-form-label col-sm-2">Class</label>
+                <div class="col-sm-4">
+                    <select class="form-control" id="o-class-select" t-on-change="classChange" required="1">
+                        <option t-foreach="classes" t-as="classe" t-att-value="classe.id">
+                            <t t-esc="classe.name"/>
+                        </option>
+                    </select>
+                </div>
             </div>
-          </div>
-          <div class="form-group row">
-            <label for="class_name" class="col-form-label col-sm-2">Kid</label>
-            <div class="col-sm-4">
-                <select class="form-control" name="kid_id" id="o-kid" required="1">
-                    <option value=""/>
-                    <option t-foreach="kids" t-as="kid" t-att-value="kid.id">
-                        <t t-esc="kid.shortname"/>
-                    </option>
-                </select>
+            <div class="form-group row">
+                <label for="class_name" class="col-form-label col-sm-2">Kid</label>
+                <div class="col-sm-4">
+                    <select class="form-control" name="kid_id" id="o-kid" required="1">
+                        <option value=""/>
+                        <option t-foreach="kids" t-as="kid" t-att-value="kid.id">
+                            <t t-esc="kid.shortname"/>
+                        </option>
+                    </select>
+                </div>
             </div>
-          </div>
-          <div class="form-group row">
-              <div class="col-sm-4 offset-sm-2">
-                  <button type="submit" class="btn btn-primary">Add Child</button>
-              </div>
-          </div>
-      </div>
-  </t>
+            <div class="form-group row">
+                <div class="col-sm-4 offset-sm-2">
+                    <button type="submit" class="btn btn-primary">Add Child</button>
+                </div>
+            </div>
+        </div>
+    </t>
 
 
-  <t t-name="school_lunch.lunch_menu" owl="1">
-      <t t-if="props.menu.kids_ordered.includes(props.kid.id)">
-          <div class="o_choice" t-att-class="props.menu.kids_ordered.includes(props.kid.id) ? 'o_ordered' : ''">
-              <t t-if="props.menu.meal_type == 'meal'">Meal</t>
-              <t t-else="">
-                  <t t-if="props.menu.meal_type == 'soup'">Soup</t>
-                  <t t-else="" t-esc="props.menu.meal_type"/>
-              </t>
-          </div>
-      </t>
-      <t t-else="">
-          <div
+    <t t-name="school_lunch.lunch_menu" owl="1">
+        <t t-if="props.menu.kids_ordered.includes(props.kid.id)">
+            <div class="o_choice" t-att-class="props.menu.kids_ordered.includes(props.kid.id) ? 'o_ordered' : ''">
+                <t t-if="props.menu.meal_type == 'meal'">Meal</t>
+                <t t-else="">
+                    <t t-if="props.menu.meal_type == 'soup'">Soup</t>
+                    <t t-else="" t-esc="props.menu.meal_type"/>
+                </t>
+            </div>
+        </t>
+        <t t-else="">
+            <div
                 class="o_choice"
                 t-att-class="props.menu.kids.includes(props.kid.id) ? 'active' : ''"
                 t-on-click="toggleMenu"
             >
-              <t t-if="props.menu.meal_type == 'meal'">Meal</t>
-              <t t-else="">
-                  <t t-if="props.menu.meal_type == 'soup'">Soup</t>
-                  <t t-else="" t-esc="props.menu.meal_type"/>
-              </t>
-          </div>
-      </t>
-  </t>
+                <t t-if="props.menu.meal_type == 'meal'">Meal</t>
+                <t t-else="">
+                    <t t-if="props.menu.meal_type == 'soup'">Soup</t>
+                    <t t-else="" t-esc="props.menu.meal_type"/>
+                </t>
+            </div>
+        </t>
+    </t>
 
-  <t t-name="school_lunch.lunch_line" owl="1">
-    <tr>
-      <td>
-          <b t-esc="props.menu.date"/><br/>
-          <div
+    <t t-name="school_lunch.lunch_line" owl="1">
+        <tr>
+            <td>
+                <b t-esc="props.menu.date"/>
+                <br/>
+                <div
                     t-foreach="props.menu.meals"
                     t-as="meal"
                     t-key="meal.id"
                     t-if="meal.kids.length || (meal.meal_type=='meal' &amp;&amp; ! props.menu.meals.reduce((prev, cur) => prev+cur.kids.length, 0))"
                     t-att-class="! meal.kids.length &amp;&amp; 'text-muted'"
                 >
-              <t>
-                  <t t-esc="meal.name"/>
-                  <span
+                    <t>
+                        <t t-esc="meal.name"/>
+                        <span
                             t-foreach="meal.allergies"
                             t-as="allergy"
                             class="badge badge-pill badge-light ml-2"
                             t-key="meal.id"
                         >
-                      <t t-esc="allergy.code"/>
-                  </span>
-                  <t t-if="meal.description">
-                      <br/><t t-esc="meal.description"/>
-                  </t>
-              </t>
-          </div>
-      </td>
-      <td t-foreach="props.kids" t-as="kid" class="text-center" t-key="kid.id">
-          <div class="o_lunch_choice">
-              <t t-foreach="props.menu.meals" t-as="menu" t-key="menu.id">
-                  <LunchMenu menu="menu" kid="kid" meals="props.menu.meals"/>
-              </t>
-          </div>
-      </td>
-    </tr>
-  </t>
+                            <t t-esc="allergy.code"/>
+                        </span>
+                        <t t-if="meal.description">
+                            <br/>
+                            <t t-esc="meal.description"/>
+                        </t>
+                    </t>
+                </div>
+            </td>
+            <td t-foreach="props.kids" t-as="kid" class="text-center" t-key="kid.id">
+                <div class="o_lunch_choice">
+                    <t t-foreach="props.menu.meals" t-as="menu" t-key="menu.id">
+                        <LunchMenu menu="menu" kid="kid" meals="props.menu.meals"/>
+                    </t>
+                </div>
+            </td>
+        </tr>
+    </t>
 
 
-  <t t-name="school_lunch.lunch_table" owl="1">
-      <div class="clearfix mb16"/>
-      <div class="row" t-if="menus.length">
-          <div class="col-md-9">
-              <div class="alert alert-warning" role="alert" t-if="! kids.length">
-                  <t t-if="signin">
+    <t t-name="school_lunch.lunch_table" owl="1">
+        <div class="clearfix mb16"/>
+        <div class="row" t-if="menus.length">
+            <div class="col-md-9">
+                <div class="alert alert-warning" role="alert" t-if="! kids.length">
+                    <t t-if="signin">
                       To order, use the link provided by email. Or, if you registered previously, you can <a
                             href="/web/login"
                         >sign in</a>.
-                  </t><t t-else="">
+                    </t>
+                    <t t-else="">
                       To order, start by <a href="/school/kids">adding your children</a>.
-                  </t>
-              </div>
-              <table class="table table-sm">
-                  <thead class="thead-light">
-                  <tr>
-                      <th/>
-                      <th class="table-danger text-center" t-foreach="kids" t-as="kid" t-key="kid.id">
-                          <t t-esc="kid.shortname"/>
-                      </th>
-                  </tr>
-                  </thead>
+                    </t>
+                </div>
+                <table class="table table-sm">
+                    <thead class="thead-light">
+                        <tr>
+                            <th/>
+                            <th class="table-danger text-center" t-foreach="kids" t-as="kid" t-key="kid.id">
+                                <t t-esc="kid.shortname"/>
+                            </th>
+                        </tr>
+                    </thead>
 
-                  <t t-foreach="menus" t-as="menu" t-key="menu.date">
-                      <LunchLine menu="menu" kids="kids"/>
-                  </t>
+                    <t t-foreach="menus" t-as="menu" t-key="menu.date">
+                        <LunchLine menu="menu" kids="kids"/>
+                    </t>
 
-              </table>
-              <div class="mb128 mt32" t-if="kids.length and ! readonly">
-                  <button href="#" t-on-click="orderSet" class="btn btn-primary">Validate Order</button>
-                  <button
+                </table>
+                <div class="mb128 mt32" t-if="kids.length and ! readonly">
+                    <button href="#" t-on-click="orderSet" class="btn btn-primary">Validate Order</button>
+                    <button
                         href="#"
                         t-on-click="unselectAllergy"
                         data-allergy="0"
                         class="btn btn-link"
                     >Clear Selection</button>
-              </div>
-          </div><div class="col-md-3 col-sm-invisible" t-if="kids.length and ! readonly">
-              <h4>Select Meals</h4>
-              <ul class="list-unstyled mb-4">
-                  <li><a href="#" t-on-click="selectMeal" data-meal="meal" data-day="0">Select All</a></li>
-                  <li><a href="#" t-on-click="selectMeal" data-meal="meal" data-day="1">Monday</a></li>
-                  <li><a href="#" t-on-click="selectMeal" data-meal="meal" data-day="2">Tuesday</a></li>
-                  <li><a href="#" t-on-click="selectMeal" data-meal="meal" data-day="4">Thursday</a></li>
-                  <li><a href="#" t-on-click="selectMeal" data-meal="meal" data-day="5">Friday</a></li>
-              </ul>
-              <h4>Select Soups</h4>
-              <ul class="list-unstyled mb-4">
-                  <li><a href="#" t-on-click="selectMeal" data-meal="soup" data-day="0">Select All</a></li>
-                  <li><a href="#" t-on-click="selectMeal" data-meal="soup" data-day="1">Monday</a></li>
-                  <li><a href="#" t-on-click="selectMeal" data-meal="soup" data-day="2">Tuesday</a></li>
-                  <li><a href="#" t-on-click="selectMeal" data-meal="soup" data-day="4">Thursday</a></li>
-                  <li><a href="#" t-on-click="selectMeal" data-meal="soup" data-day="5">Friday</a></li>
-              </ul>
-              <h4>Unselect Allergies</h4>
-              <ul class="list-unstyled">
-                  <li t-foreach="allergies" t-as="allergy" t-key="allergy.id">
-                      <a href="#" t-on-click="unselectAllergy" t-att-data-allergy="allergy.id">
-                          <span class="badge badge-pill badge-light"><t t-esc="allergy.code"/></span> <t
-                                t-esc="allergy.name"
-                            />
-                      </a>
-                  </li>
-              </ul>
-          </div>
-      </div>
-      <div t-if="! menus.length">
-          <div class="alert alert-warning mb128 mt64" role="alert">
-              <h4 class="alert-heading">Menu not available!</h4>
-              <p>
-                  Next month's menu is <b>published on the <span
-                            t-esc="dt_alert or 20"
-                        />th of the month</b>, and you have up to the <span t-esc="dt_block"/>th to order.
-              </p>
-              <hr/>
-              <p class="mb0">Come back in a few days.</p>
-          </div>
-      </div>
-  </t>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-invisible" t-if="kids.length and ! readonly">
+                <h4>Select Meals</h4>
+                <ul class="list-unstyled mb-4">
+                    <li>
+                        <a href="#" t-on-click="selectMeal" data-meal="meal" data-day="0">Select All</a>
+                    </li>
+                    <li>
+                        <a href="#" t-on-click="selectMeal" data-meal="meal" data-day="1">Monday</a>
+                    </li>
+                    <li>
+                        <a href="#" t-on-click="selectMeal" data-meal="meal" data-day="2">Tuesday</a>
+                    </li>
+                    <li>
+                        <a href="#" t-on-click="selectMeal" data-meal="meal" data-day="4">Thursday</a>
+                    </li>
+                    <li>
+                        <a href="#" t-on-click="selectMeal" data-meal="meal" data-day="5">Friday</a>
+                    </li>
+                </ul>
+                <h4>Select Soups</h4>
+                <ul class="list-unstyled mb-4">
+                    <li>
+                        <a href="#" t-on-click="selectMeal" data-meal="soup" data-day="0">Select All</a>
+                    </li>
+                    <li>
+                        <a href="#" t-on-click="selectMeal" data-meal="soup" data-day="1">Monday</a>
+                    </li>
+                    <li>
+                        <a href="#" t-on-click="selectMeal" data-meal="soup" data-day="2">Tuesday</a>
+                    </li>
+                    <li>
+                        <a href="#" t-on-click="selectMeal" data-meal="soup" data-day="4">Thursday</a>
+                    </li>
+                    <li>
+                        <a href="#" t-on-click="selectMeal" data-meal="soup" data-day="5">Friday</a>
+                    </li>
+                </ul>
+                <h4>Unselect Allergies</h4>
+                <ul class="list-unstyled">
+                    <li t-foreach="allergies" t-as="allergy" t-key="allergy.id">
+                        <a href="#" t-on-click="unselectAllergy" t-att-data-allergy="allergy.id">
+                            <span class="badge badge-pill badge-light">
+                                <t t-esc="allergy.code"/>
+                            </span>
+                            <t t-esc="allergy.name"/>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div t-if="! menus.length">
+            <div class="alert alert-warning mb128 mt64" role="alert">
+                <h4 class="alert-heading">Menu not available!</h4>
+                <p>
+                    Next month's menu is <b>published on the <span t-esc="dt_alert or 20"/>
+                    th of the month</b>, and you have up to the <span t-esc="dt_block"/>
+                    th to order.
+                </p>
+                <hr/>
+                <p class="mb0">Come back in a few days.</p>
+            </div>
+        </div>
+    </t>
 
 </templates>
