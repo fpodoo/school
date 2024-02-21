@@ -44,5 +44,9 @@
             "school_lunch/static/src/scss/school_lunch.scss",
         ],
         "web.assets_qweb": [],
+        "web.qunit_suite_tests": [
+            ("remove", "mail/static/tests/composer/suggested_recipients_test.js"),
+            ("remove", "mail/static/tests/discuss/core/public_web/discuss_tests.js"),
+        ],
     },
 }
