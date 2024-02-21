@@ -2,7 +2,7 @@ import uuid
 
 from dateutil.relativedelta import relativedelta
 
-from odoo import api, fields, models
+from odoo import _, api, fields, models
 
 
 class Allergy(models.Model):
@@ -70,15 +70,14 @@ class Menu(models.Model):
 
     @api.depends("name", "date")
     def _compute_display_name(self):
-        result = []
         for menu in self:
-            if self.env.context.get("display", "date") == "simple":
-                result.append((menu.id, menu.name))
-            elif self.env.context.get("display", "date") == "description":
-                result.append((menu.id, menu.name + (menu.description and (" - " + menu.description) or "")))
+            name = menu.name if menu.name else _("New Menu")
+            if self.env.context.get("display") == "simple":
+                menu.display_name = name
+            elif self.env.context.get("display") == "description":
+                menu.display_name = f"{name} - {menu.description}" if menu.description else name
             else:
-                result.append((menu.id, menu.date.strftime("%A, %d %b %Y") + ": " + menu.name))
-        return result
+                menu.display_name = f"{menu.date.strftime('%A, %d %b %Y')}: {name}"
 
     @api.depends("date")
     def _compute_weekday(self):
