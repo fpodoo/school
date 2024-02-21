@@ -14,7 +14,7 @@
     "category": "Lunch",
     "version": "17.0.1.0.0",
     # any module necessary for this one to work correctly
-    "depends": ["website_sale_loyalty"],
+    "depends": ["website_sale_loyalty", "stock"],
     "license": "OEEL-1",
     # always loaded
     "data": [
