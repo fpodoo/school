@@ -32,9 +32,9 @@ class Menu(models.Model):
             ("5", "Saturday"),
             ("6", "Sunday"),
         ],
-        compute="_compute_get_weekday",
+        compute="_compute_weekday",
     )
-    weekyear = fields.Integer("Week of Year", compute="_compute_get_weekday")
+    weekyear = fields.Integer("Week of Year", compute="_compute_weekday")
     order_ids = fields.One2many("school_lunch.order", "menu_id", string="Orders")
     date = fields.Date("Day", index=True, required=True, default=lambda self: self._default_date())
     color = fields.Integer()
@@ -42,9 +42,9 @@ class Menu(models.Model):
         [("soup", "Soup"), ("meal", "Meal"), ("off", "Day Off")], "Meal Type", default=lambda self: self._default_meal()
     )
     allergy_ids = fields.Many2many("school_lunch.allergy", string="Allergies")
-    order_count = fields.Integer("# of Orders", compute="_compute_count")
+    order_count = fields.Integer("# of Orders", compute="_compute_order_count")
     kid_meal_type = fields.Selection(
-        [("0", "Soup"), ("1", "Meal"), ("off", "Day Off")], "Kid Meal", compute="_compute_get_kid_meal", default=False
+        [("0", "Soup"), ("1", "Meal"), ("off", "Day Off")], "Kid Meal", compute="_compute_kid_meal_type", default=False
     )
 
     def _default_date(self):
@@ -64,12 +64,12 @@ class Menu(models.Model):
             return "meal"
 
     @api.depends("order_ids.menu_id")
-    def _compute_count(self):
+    def _compute_order_count(self):
         for record in self:
             record.order_count = len(record.order_ids)
 
     @api.depends("name", "date")
-    def name_get(self):
+    def _compute_display_name(self):
         result = []
         for menu in self:
             if self.env.context.get("display", "date") == "simple":
@@ -81,7 +81,7 @@ class Menu(models.Model):
         return result
 
     @api.depends("date")
-    def _compute_get_weekday(self):
+    def _compute_weekday(self):
         for record in self:
             if not record.date:
                 record.weekday = False
@@ -91,7 +91,7 @@ class Menu(models.Model):
             record.weekyear = record.date.isocalendar()[1]
 
     @api.depends_context("kid")
-    def _get_meal(self):
+    def _compute_kid_meal_type(self):
         if not self.context.get("kid"):
             self.kid_meal_id = False
         self.env["school_lunch.order"].read_group(
@@ -112,13 +112,13 @@ class Order(models.Model):
     menu_id = fields.Many2one("school_lunch.menu", "Menu", required=True)
     date = fields.Date("Day", related="menu_id.date", index=True, store=True)
     meal_type = fields.Selection(related="menu_id.meal_type", string="Meal Type", store=True)
-    color = fields.Integer("Color", compute="_compute_get_color")
+    color = fields.Integer("Color", compute="_compute_color")
     sale_line_id = fields.Many2one("sale.order.line", "Sale Order Line", ondelete="cascade")
     state = fields.Selection([("draft", "Draft"), ("confirmed", "Confirmed")], "State", default="draft")
     class_type = fields.Selection(related="class_id.class_type", string="Class Type", store=True)
 
     @api.depends("meal_type")
-    def _compute_get_color(self):
+    def _compute_color(self):
         for order in self:
             order.color = {
                 "meal": 2,
@@ -150,8 +150,8 @@ class Kid(models.Model):
 
     firstname = fields.Char("Firstname", required=True)
     lastname = fields.Char("Lastname", required=True)
-    name = fields.Char("Name", compute="_compute_fullname_get", store=True)
-    shortname = fields.Char("Short Name", compute="_compute_shortname_get")
+    name = fields.Char("Name", compute="_compute_fullname", store=True)
+    shortname = fields.Char("Short Name", compute="_compute_shortname")
     parent_ids = fields.Many2many("res.partner", "school_lunch_kid_partner_rel", "kid_id", "partner_id", "Parents")
     allergy_ids = fields.Many2many("school_lunch.allergy", string="Allergies")
     class_id = fields.Many2one("school_lunch.class_name", "Class", required=True)
@@ -165,7 +165,7 @@ class Kid(models.Model):
     ]
 
     @api.depends("firstname", "lastname", "class_id")
-    def _compute_shortname_get(self):
+    def _compute_shortname(self):
         for kid in self:
             letter_count = 0
             while (
@@ -193,7 +193,7 @@ class Kid(models.Model):
             )
 
     @api.depends("firstname", "lastname", "class_id")
-    def _compute_fullname_get(self):
+    def _compute_fullname(self):
         for kid in self:
             kid.name = kid.firstname + " " + kid.lastname
 
@@ -202,10 +202,10 @@ class Partner(models.Model):
     _inherit = "res.partner"
 
     kid_ids = fields.Many2many("school_lunch.kid", "school_lunch_kid_partner_rel", "partner_id", "kid_id", "Kids")
-    lunch_url = fields.Char("Lunch URL", compute="_compute_get_lunch_url")
+    lunch_url = fields.Char("Lunch URL", compute="_compute_lunch_url")
 
     @api.depends("kid_ids.uuid")
-    def _compute_get_lunch_url(self):
+    def _compute_lunch_url(self):
         for partner in self:
             if not partner.kid_ids:
                 partner.lunch_url = False

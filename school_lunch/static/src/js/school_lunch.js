@@ -1,13 +1,16 @@
 /** @odoo-module **/
 
-import {Component, loadFile, mount, useState, whenReady} from "@odoo/owl";
-
+import {Component, loadFile, useState, whenReady} from "@odoo/owl";
+import {useService} from "@web/core/utils/hooks";
 import {env} from "root.widget";
 
 class LunchKids extends Component {
+    setup() {
+        this.rpc = useService("rpc");
+    }
     async classChange() {
         const el = document.getElementById("o-class-select");
-        const result = await this.env.services.rpc({
+        const result = await this.rpc({
             route: `/school/classes_get`,
             params: {class_id: el && el.value},
         });
@@ -44,8 +47,16 @@ class LunchLine extends Component {
 LunchLine.template = "school_lunch.lunch_line";
 
 class LunchMenuTable extends Component {
-    async willStart() {
-        const result = await this.env.services.rpc({
+    setup() {
+        this.rpc = useService("rpc");
+        this.menus = useState([]);
+        this.dt_block = useState(26);
+        this.dt_alert = useState(20);
+        this.readonly = useState(true);
+        this.orderPrepare();
+    }
+    async orderPrepare() {
+        const result = await this.rpc({
             route: `/school/order_prepare`,
             params: {date: this.props.date},
         });
@@ -58,13 +69,6 @@ class LunchMenuTable extends Component {
         for (var menu of result.menus) {
             this.menus.push(menu);
         }
-    }
-
-    async setup() {
-        this.menus = useState([]);
-        this.dt_block = useState(26);
-        this.dt_alert = useState(20);
-        this.readonly = useState(true);
     }
 
     mealDisplay(menu, meal) {
@@ -90,7 +94,7 @@ class LunchMenuTable extends Component {
         for (var menu of this.menus) {
             for (var meal of menu.meals) if (meal.kids.length) orders[meal.id] = meal.kids;
         }
-        const result = await this.env.services.rpc({
+        const result = await this.rpc({
             route: `/school/order_set`,
             params: {orders},
         });
@@ -127,10 +131,10 @@ async function setup() {
     const elKids = document.getElementById("LunchKids");
     await loadTemplates();
     if (elTable) {
-        mount(LunchMenuTable, {target: elTable, env, props: {date: elTable.dataset.date}});
+        new LunchMenuTable(elTable, {env, props: {date: elTable.dataset.date}});
     }
     if (elKids) {
-        mount(LunchKids, {target: elKids, env});
+        new LunchKids(elKids, {env});
     }
 }
 

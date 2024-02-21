@@ -13,7 +13,7 @@
                 </field>
                 <notebook position="inside">
                     <page string="Kids">
-                        <field name="kid_ids" widget="many2many_list" colspan="2"/>
+                        <field name="kid_ids" widget="many2many" colspan="2"/>
                     </page>
                 </notebook>
             </data>
