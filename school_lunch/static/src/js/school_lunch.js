@@ -121,20 +121,16 @@ class LunchMenuTable extends Component {
 }
 LunchMenuTable.template = "school_lunch.lunch_table";
 
-async function loadTemplates() {
-    const templates = await loadFile("/school_lunch/static/src/xml/lunch_menu.xml?uniq=" + Math.random());
-    env.qweb.addTemplates(templates);
-}
-
 async function setup() {
     const elTable = document.getElementById("LunchMenu");
     const elKids = document.getElementById("LunchKids");
-    await loadTemplates();
+    const templates = await loadFile("/school_lunch/static/src/xml/lunch_menu.xml?uniq=" + Math.random());
+
     if (elTable) {
-        new LunchMenuTable(elTable, {env, props: {date: elTable.dataset.date}});
+        new LunchMenuTable(elTable, {env, templates, props: {date: elTable.dataset.date}});
     }
     if (elKids) {
-        new LunchKids(elKids, {env});
+        new LunchKids(elKids, {env, templates});
     }
 }
 
