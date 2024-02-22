@@ -1,0 +1,2 @@
+odoo_upgrade @ git+https://github.com/odoo/upgrade-util@master
+odoo_upgrade_custom_util @ git+https://github.com/odoo-ps/custom-util@master
