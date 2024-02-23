@@ -1,27 +1,25 @@
 /** @odoo-module **/
 
-import {Component, loadFile, useState, whenReady} from "@odoo/owl";
+import {Component, loadFile, onWillStart, useState, whenReady} from "@odoo/owl";
+import {templates} from "@web/core/assets";
 import {useService} from "@web/core/utils/hooks";
-import {env} from "root.widget";
+import {mountComponent} from "@web/env";
 
 class LunchKids extends Component {
     setup() {
         this.rpc = useService("rpc");
+        this.classes = [];
+        this.kids = useState([]);
+        onWillStart(async () => {
+            await this.classChange();
+        });
     }
     async classChange() {
         const el = document.getElementById("o-class-select");
-        const result = await this.rpc({
-            route: `/school/classes_get`,
-            params: {class_id: el && el.value},
-        });
+        const result = await this.rpc("/school/classes_get", {class_id: el && el.value});
         this.classes = result.classes;
         this.kids.length = 0;
         for (var kid of result.kids) this.kids.push(kid);
-    }
-    async willStart() {
-        this.classes = [];
-        this.kids = useState([]);
-        await this.classChange();
     }
 }
 LunchKids.template = "school_lunch.lunch_kids_form";
@@ -47,19 +45,16 @@ class LunchLine extends Component {
 LunchLine.template = "school_lunch.lunch_line";
 
 class LunchMenuTable extends Component {
-    setup() {
+    async setup() {
         this.rpc = useService("rpc");
         this.menus = useState([]);
-        this.dt_block = useState(26);
-        this.dt_alert = useState(20);
-        this.readonly = useState(true);
-        this.orderPrepare();
+        this.dt_block = useState([26]);
+        this.dt_alert = useState([20]);
+        this.readonly = useState([true]);
+        onWillStart(() => this.orderPrepare());
     }
     async orderPrepare() {
-        const result = await this.rpc({
-            route: `/school/order_prepare`,
-            params: {date: this.props.date},
-        });
+        const result = await this.rpc("/school/order_prepare", {date: this.props.date});
         this.dt_block = result.dt_block;
         this.dt_alert = result.dt_alert;
         this.kids = result.kids;
@@ -94,10 +89,7 @@ class LunchMenuTable extends Component {
         for (var menu of this.menus) {
             for (var meal of menu.meals) if (meal.kids.length) orders[meal.id] = meal.kids;
         }
-        const result = await this.rpc({
-            route: `/school/order_set`,
-            params: {orders},
-        });
+        const result = await this.rpc("/school/order_set", {orders});
         if (result) window.location.href = "/shop/checkout?express=1";
     }
 
@@ -121,16 +113,25 @@ class LunchMenuTable extends Component {
 }
 LunchMenuTable.template = "school_lunch.lunch_table";
 
+async function loadTemplates() {
+    const templates_to_add = await loadFile("/school_lunch/static/src/xml/lunch_menu.xml?uniq=" + Math.random());
+    const doc = new DOMParser().parseFromString(templates_to_add, "text/xml");
+    for (const element of doc.querySelectorAll("templates > [t-name]")) {
+        templates.documentElement.appendChild(element);
+    }
+}
+
 async function setup() {
     const elTable = document.getElementById("LunchMenu");
     const elKids = document.getElementById("LunchKids");
-    const templates = await loadFile("/school_lunch/static/src/xml/lunch_menu.xml?uniq=" + Math.random());
+
+    await loadTemplates();
 
     if (elTable) {
-        new LunchMenuTable(elTable, {env, templates, props: {date: elTable.dataset.date}});
+        mountComponent(LunchMenuTable, elTable, {props: {date: elTable.dataset.date}});
     }
     if (elKids) {
-        new LunchKids(elKids, {env, templates});
+        mountComponent(LunchKids, elKids);
     }
 }
 

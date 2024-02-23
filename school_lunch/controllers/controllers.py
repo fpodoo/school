@@ -136,7 +136,7 @@ class SchoolLunch(http.Controller):
                 kid_o = request.env["school_lunch.kid"].browse(kid).sudo()
                 pricelist = kid_o.pricelist_id or kid_o.class_id.pricelist_id
                 if pricelist:
-                    result = pricelist.get_product_price(product, 1, False)
+                    result = pricelist._get_product_price(product, 1, False)
                     price = result
                 key = (menu.meal_type, product, price)
                 meals.setdefault(key, [])
