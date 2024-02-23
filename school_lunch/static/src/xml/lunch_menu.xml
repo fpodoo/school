@@ -7,7 +7,7 @@
                 <label for="class_name" class="col-form-label col-sm-2">Class</label>
                 <div class="col-sm-4">
                     <select class="form-control" id="o-class-select" t-on-change="classChange" required="1">
-                        <option t-foreach="classes" t-as="classe" t-att-value="classe.id">
+                        <option t-foreach="classes" t-as="classe" t-key="classe.id" t-att-value="classe.id">
                             <t t-esc="classe.name"/>
                         </option>
                     </select>
@@ -18,7 +18,7 @@
                 <div class="col-sm-4">
                     <select class="form-control" name="kid_id" id="o-kid" required="1">
                         <option value=""/>
-                        <option t-foreach="kids" t-as="kid" t-att-value="kid.id">
+                        <option t-foreach="kids" t-as="kid" t-key="kid.id" t-att-value="kid.id">
                             <t t-esc="kid.shortname"/>
                         </option>
                     </select>
