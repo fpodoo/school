@@ -75,11 +75,10 @@
                         <span
                             t-foreach="meal.allergies"
                             t-as="allergy"
-                            class="badge badge-pill badge-light ml-2"
+                            class="badge rounded-pill text-bg-light ml-2"
                             t-key="meal.id"
-                        >
-                            <t t-esc="allergy.code"/>
-                        </span>
+                            t-out="allergy.code"
+                        />
                         <t t-if="meal.description">
                             <br/>
                             <t t-esc="meal.description"/>
@@ -178,9 +177,7 @@
                 <ul class="list-unstyled">
                     <li t-foreach="allergies" t-as="allergy" t-key="allergy.id">
                         <a href="#" t-on-click="unselectAllergy" t-att-data-allergy="allergy.id">
-                            <span class="badge badge-pill badge-light">
-                                <t t-esc="allergy.code"/>
-                            </span>
+                            <span class="badge rounded-pill text-bg-light" t-out="allergy.code"/>
                             <t t-esc="allergy.name"/>
                         </a>
                     </li>

@@ -116,7 +116,7 @@
                                             <br t-if="menu.description"/>
                                             <i t-out="menu.description"/>
                                             <t t-foreach="menu.allergy_ids" t-as="allergy">
-                                                <span class="badge badge-light" t-out="allergy.code"/>
+                                                <span class="badge text-bg-light" t-out="allergy.code"/>
                                             </t>
                                         </div>
                                         <div t-if="number and number &lt;= latest_day and not menus" class="o_no_meal">
@@ -131,7 +131,7 @@
                         <div class="col-md-3">
                             <h3 class="mt-0">Allergies</h3>
                             <div t-foreach="allergies" t-as="allergy">
-                                <span class="badge badge-light" t-out="allergy.code"/>
+                                <span class="badge text-bg-light" t-out="allergy.code"/>
                                 <t t-out="allergy.name"/>
                             </div>
                         </div>
