@@ -64,7 +64,7 @@
         <field name="view_id" ref="res_config_settings_school_lunch_form"/>
         <field name="view_mode">form</field>
         <field name="target">inline</field>
-        <field name="context">{'module' : 'lunch', 'bin_size': False}</field>
+        <field name="context">{'module' : 'school_lunch', 'bin_size': False}</field>
     </record>
     <menuitem
         name="Settings"
