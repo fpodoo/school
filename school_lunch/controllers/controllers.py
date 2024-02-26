@@ -11,8 +11,7 @@ from odoo.http import request
 class SchoolLunch(http.Controller):
     @http.route(["/menu", "/menu/<int:date>"], auth="public", type="http", website=True, sitemap=False)
     def menu(self, date=None, **kw):
-        kids = request.session.get("mykids", [])
-        if not kids and request.env.user.sudo().partner_id.kid_ids:
+        if request.env.user.sudo().partner_id.kid_ids:
             request.session["mykids"] = request.env.user.sudo().partner_id.kid_ids.mapped("id")
         dt = datetime.datetime.fromtimestamp(date or time.time())
         if not date:
@@ -65,6 +64,8 @@ class SchoolLunch(http.Controller):
     def school_kids(self, date=None, **kw):
         if request.env.company.lunch_signin:
             return request.redirect("/menu")
+        if request.env.user.sudo().partner_id.kid_ids:
+            request.session["mykids"] = request.env.user.sudo().partner_id.kid_ids.mapped("id")
         request.env["school_lunch.class_name"].search([])
         classes = request.env["school_lunch.class_name"].search([])
         kids = request.env["school_lunch.kid"].search([])
@@ -88,6 +89,8 @@ class SchoolLunch(http.Controller):
         d = request.session.get("mykids", [])
         if kid_id not in d:
             d.append(int(kid_id))
+            partner = request.env.user.sudo().partner_id
+            partner.write({"kid_ids": [(4, kid_id)]})
         request.session["mykids"] = d
         return request.redirect("/school/kids")
 
@@ -113,7 +116,10 @@ class SchoolLunch(http.Controller):
     @http.route(["/school/kid/remove/<int:kid_id>"], auth="public", type="http", website=True, sitemap=False)
     def school_kid_remove(self, kid_id, **kw):
         d = request.session.get("mykids", [])
-        d.remove(int(kid_id))
+        if int(kid_id) in d:
+            d.remove(int(kid_id))
+            partner = request.env.user.sudo().partner_id
+            partner.write({"kid_ids": [(3, kid_id)]})
         request.session["mykids"] = d
         return request.redirect("/school/kids")
 
