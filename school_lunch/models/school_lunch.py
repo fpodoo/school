@@ -194,4 +194,6 @@ class Kid(models.Model):
     @api.depends("firstname", "lastname", "class_id")
     def _compute_fullname(self):
         for kid in self:
-            kid.name = kid.firstname + " " + kid.lastname
+            firstname = kid.firstname if kid.firstname else _("New")
+            lastname = kid.lastname if kid.lastname else _("Kid")
+            kid.name = f"{firstname} {lastname}"
