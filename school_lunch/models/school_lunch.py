@@ -167,13 +167,16 @@ class Kid(models.Model):
     def _compute_shortname(self):
         for kid in self:
             letter_count = 0
+            firstname = kid.firstname if kid.firstname else _("New")
+            lastname = kid.lastname if kid.lastname else _("Kid")
+            class_name = kid.class_id.name if kid.class_id.name else _("New Class")
             while (
                 len(
                     self.search(
                         [
-                            ("firstname", "=", kid.firstname),
-                            ("class_id", "=", kid.class_id.id),
-                            ("lastname", "=like", kid.lastname[:letter_count] + "%"),
+                            ("firstname", "=", firstname),
+                            ("class_id", "=", class_name),
+                            ("lastname", "=like", lastname[:letter_count] + "%"),
                         ]
                     )
                 )
@@ -183,12 +186,9 @@ class Kid(models.Model):
                     break
                 letter_count += 1
             kid.shortname = (
-                kid.firstname
-                + " "
-                + (letter_count and (kid.lastname[:letter_count] + ". ") or "")
-                + "("
-                + kid.class_id.name
-                + ")"
+                f"{firstname} {lastname[:letter_count]}. ({class_name})"
+                if letter_count
+                else f"{firstname} ({class_name})"
             )
 
     @api.depends("firstname", "lastname", "class_id")
