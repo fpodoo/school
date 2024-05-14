@@ -27,16 +27,6 @@
                         </t>
                         <t t-esc="date.strftime('%Y')"/>
                         <a
-                            t-attf-href="/menu/#{int((date+dmonth).timestamp())}"
-                            class="btn btn-outline-secondary float-right"
-                        >
-                            <i class="fa fa-arrow-right"/>
-                            <t t-call="school_lunch.website_month_display">
-                                <t t-set="month" t-value="(date+dmonth).month"/>
-                            </t>
-                            <t t-esc="(date+dmonth).strftime('%Y')"/>
-                        </a>
-                        <a
                             t-attf-href="/menu/#{int((date-dmonth).timestamp())}"
                             class="btn btn-outline-secondary float-right"
                         >
@@ -45,6 +35,16 @@
                                 <t t-set="month" t-value="(date-dmonth).month"/>
                             </t>
                             <t t-esc="(date-dmonth).strftime('%Y')"/>
+                        </a>
+                        <a
+                            t-attf-href="/menu/#{int((date+dmonth).timestamp())}"
+                            class="btn btn-outline-secondary float-right"
+                        >
+                            <i class="fa fa-arrow-right"/>
+                            <t t-call="school_lunch.website_month_display">
+                                <t t-set="month" t-value="(date+dmonth).month"/>
+                            </t>
+                            <t t-esc="(date+dmonth).strftime('%Y')"/>
                         </a>
                     </h1>
                     <div style="clear: both"/>
@@ -66,16 +66,6 @@
                                 Order Now <i class="fa fa-arrow-right"/>
                         </a>
                         <a
-                            t-attf-href="/menu/agenda/#{int((date+dmonth).timestamp())}"
-                            class="btn btn-outline-secondary float-right"
-                        >
-                            <i class="fa fa-arrow-right"/>
-                            <t t-call="school_lunch.website_month_display">
-                                <t t-set="month" t-value="(date+dmonth).month"/>
-                            </t>
-                            <t t-esc="(date+dmonth).strftime('%Y')"/>
-                        </a>
-                        <a
                             t-attf-href="/menu/agenda/#{int((date-dmonth).timestamp())}"
                             class="btn btn-outline-secondary float-right"
                         >
@@ -84,6 +74,16 @@
                                 <t t-set="month" t-value="(date-dmonth).month"/>
                             </t>
                             <t t-esc="(date-dmonth).strftime('%Y')"/>
+                        </a>
+                        <a
+                            t-attf-href="/menu/agenda/#{int((date+dmonth).timestamp())}"
+                            class="btn btn-outline-secondary float-right"
+                        >
+                            <i class="fa fa-arrow-right"/>
+                            <t t-call="school_lunch.website_month_display">
+                                <t t-set="month" t-value="(date+dmonth).month"/>
+                            </t>
+                            <t t-esc="(date+dmonth).strftime('%Y')"/>
                         </a>
                     </h1>
                     <t t-set="number" t-value="0"/>
