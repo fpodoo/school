@@ -257,7 +257,7 @@
         <gantt
                     string="Kids Lunch"
                     date_start="date"
-                    date_stop="date"
+                    date_stop="date_end_gantt"
                     color="color"
                     default_group_by="kid_id"
                     default_scale="month"

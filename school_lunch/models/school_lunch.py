@@ -110,11 +110,16 @@ class Order(models.Model):
     class_id = fields.Many2one("school_lunch.class_name", string="Class", related="kid_id.class_id", store=True)
     menu_id = fields.Many2one("school_lunch.menu", "Menu", required=True)
     date = fields.Date("Day", related="menu_id.date", index=True, store=True)
+    date_end_gantt = fields.Datetime("Day End Gantt", compute="_compute_date_end_gantt", search=False, store=True)
     meal_type = fields.Selection(related="menu_id.meal_type", string="Meal Type", store=True)
     color = fields.Integer("Color", compute="_compute_color")
     sale_line_id = fields.Many2one("sale.order.line", "Sale Order Line", ondelete="cascade")
     state = fields.Selection([("draft", "Draft"), ("confirmed", "Confirmed")], "State", default="draft")
     class_type = fields.Selection(related="class_id.class_type", string="Class Type", store=True)
+
+    def _compute_date_end_gantt(self):
+        for order in self:
+            order.date_end_gantt = order.date + relativedelta(hours=1)
 
     @api.depends("meal_type")
     def _compute_color(self):
