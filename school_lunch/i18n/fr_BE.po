@@ -803,7 +803,7 @@ msgstr "Pour commander, commencez par"
 msgid ""
 "To order, use the link provided by email. Or, if you registered previously, "
 "you can"
-msgstr ""
+msgstr "Pour commander, utilisez le lien envoyé par email. Ou, si vous vous êtes enregistré, vous pouvez"
 
 #. module: school_lunch
 #. openerp-web
@@ -887,7 +887,7 @@ msgstr "Publié le"
 #: code:addons/school_lunch/static/src/xml/lunch_menu.xml:0
 #, python-format
 msgid "sign in"
-msgstr ""
+msgstr "vous connecter."
 
 #. module: school_lunch
 #: model_terms:ir.ui.view,arch_db:school_lunch.res_config_settings_school_lunch_form
