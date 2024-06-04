@@ -3,6 +3,7 @@ import uuid
 from dateutil.relativedelta import relativedelta
 
 from odoo import _, api, fields, models
+from odoo.tools import format_date
 
 
 class Allergy(models.Model):
@@ -77,7 +78,7 @@ class Menu(models.Model):
             elif self.env.context.get("display") == "description":
                 menu.display_name = f"{name} - {menu.description}" if menu.description else name
             else:
-                menu.display_name = f"{_(menu.date.strftime('%A, %d %b %Y'))}: {name}"
+                menu.display_name = f"{format_date(self.env, menu.date, date_format='EEEE, dd MMM yyyy')}: {name}"
 
     @api.depends("date")
     def _compute_weekday(self):
