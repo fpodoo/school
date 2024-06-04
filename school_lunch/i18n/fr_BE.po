@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 15.0+e\n"
+"Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-07 20:19+0000\n"
-"PO-Revision-Date: 2022-08-07 20:19+0000\n"
+"POT-Creation-Date: 2024-06-04 08:31+0000\n"
+"PO-Revision-Date: 2024-06-04 08:31+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -24,15 +24,13 @@ msgstr "Nb de commandes"
 #. openerp-web
 #: code:addons/school_lunch/static/src/xml/lunch_menu.xml:0
 #, python-format
-msgid ""
-",\n"
-"                  and you have up to the"
-msgstr ""
+msgid ", and you have up to the"
+msgstr ", et vous avez jusqu'au "
 
 #. module: school_lunch
 #: model_terms:ir.ui.view,arch_db:school_lunch.menu_form
-msgid "<span class=\"oe_inline\">, week </span>"
-msgstr "<span class=\"oe_inline\">, semaine </span>"
+msgid ", week"
+msgstr ", semaine"
 
 #. module: school_lunch
 #: model_terms:ir.ui.view,arch_db:school_lunch.kids
@@ -52,97 +50,7 @@ msgstr "<span class=\"o_form_label\">Date du rappel</span>"
 #. module: school_lunch
 #: model_terms:ir.ui.view,arch_db:school_lunch.res_config_settings_school_lunch_form
 msgid "<span class=\"o_form_label\">Reminder Template</span>"
-msgstr ""
-
-#. module: school_lunch
-#: model:mail.template,body_html:school_lunch.mail_template_school_lunch
-msgid ""
-"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;\"><tr><td align=\"center\">\n"
-"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"padding: 16px; background-color: white; color: #454748; border-collapse:separate;\">\n"
-"<tbody>\n"
-"    <!-- HEADER -->\n"
-"    <tr>\n"
-"        <td align=\"center\" style=\"min-width: 590px;\">\n"
-"            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
-"                <tr><td valign=\"middle\">\n"
-"                    <span style=\"font-size: 10px;\">Commande de Repas</span><br/>\n"
-"                    <span style=\"font-size: 20px; font-weight: bold;\" t-out=\"', '.join(object.mapped('kid_ids.firstname')) or ''\">Lena, Charlie</span>\n"
-"                </td><td valign=\"middle\" align=\"right\">\n"
-"                    <img t-attf-src=\"/logo.png?company={{ user.company_id.id }}\" style=\"padding: 0px; margin: 0px; height: auto; width: 80px;\" t-att-alt=\"user.company_id.name\"/>\n"
-"                </td></tr>\n"
-"                <tr><td colspan=\"2\" style=\"text-align:center;\">\n"
-"                  <hr width=\"100%\" style=\"background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;\"/>\n"
-"                </td></tr>\n"
-"            </table>\n"
-"        </td>\n"
-"    </tr>\n"
-"    <!-- CONTENT -->\n"
-"    <tr>\n"
-"        <td align=\"center\" style=\"min-width: 590px;\">\n"
-"            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
-"                <tr><td valign=\"top\" style=\"font-size: 13px;\">\n"
-"                    <t t-set=\"timesheet_hours\" t-value=\"ctx.get('timesheet_hours', 0)\"/>\n"
-"                    <t t-set=\"working_hours\" t-value=\"ctx.get('working_hours', 0)\"/>\n"
-"                    <div>\n"
-"                        Bonjour,\n"
-"                        <br/>\n"
-"                        <br/>\n"
-"                        Le menu du mois prochain est disponible en ligne, pour que vos enfants\n"
-"                        puissent profiter de nos <a t-att-href=\"object.lunch_url\">délicieux repas</a>.\n"
-"                        <p t-if=\"user.company_id.lunch_block\"><br/>\n"
-"                            La date limite pour commander est le <t t-out=\"user.company_id.lunch_block\"/> du mois.\n"
-"                        </p>\n"
-"                        <div style=\"margin: 32px 0px 16px 0px;\">\n"
-"                            <a t-att-href=\"object.lunch_url\" style=\"background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size: 13px;\">\n"
-"                                Commander en ligne\n"
-"                            </a>\n"
-"                        </div>\n"
-"                        <br/>Merci,<br/><br/>\n"
-"                        --<br/>\n"
-"                        La direction<br/>\n"
-"                        <br/>\n"
-"                        <i>PS: en cas de problèmes, n'hésitez pas à nous contacter en répondant à cet email.</i>\n"
-"                    </div>\n"
-"                </td></tr>\n"
-"                <tr><td style=\"text-align:center;\">\n"
-"                    <hr width=\"100%\" style=\"background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;\"/>\n"
-"                </td></tr>\n"
-"            </table>\n"
-"        </td>\n"
-"    </tr>\n"
-"    <!-- FOOTER -->\n"
-"    <tr>\n"
-"        <td align=\"center\" style=\"min-width: 590px;\">\n"
-"            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
-"                <tr><td valign=\"middle\" align=\"left\">\n"
-"                    <t t-out=\"user.company_id.name or ''\">YourCompany</t>\n"
-"                </td></tr>\n"
-"                <tr><td valign=\"middle\" align=\"left\" style=\"opacity: 0.7;\">\n"
-"                    <t t-out=\"user.company_id.phone or ''\">+1 650-123-4567</t>\n"
-"                    <t t-if=\"user.company_id.email\">\n"
-"                        | <a t-attf-href=\"'mailto:%s' % {{ user.company_id.email }}\" style=\"text-decoration:none; color: #454748;\" t-out=\"user.company_id.email or ''\">info@yourcompany.com</a>\n"
-"                    </t>\n"
-"                    <t t-if=\"user.company_id.website\">\n"
-"                        | <a t-attf-href=\"'%s' % {{ user.company_id.website }}\" style=\"text-decoration:none; color: #454748;\" t-out=\"user.company_id.website or ''\">http://www.example.com</a>\n"
-"                    </t>\n"
-"                </td></tr>\n"
-"            </table>\n"
-"        </td>\n"
-"    </tr>\n"
-"</tbody>\n"
-"</table>\n"
-"</td></tr>\n"
-"<!-- POWERED BY -->\n"
-"<tr><td align=\"center\" style=\"min-width: 590px;\">\n"
-"    <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;\">\n"
-"      <tr><td style=\"text-align: center; font-size: 13px;\">\n"
-"        Envoyé par <a target=\"_blank\" href=\"https://www.odoo.com?utm_source=db&amp;utm_medium=mail\" style=\"color: #875A7B;\">Odoo</a>\n"
-"      </td></tr>\n"
-"    </table>\n"
-"</td></tr>\n"
-"</table>\n"
-"        "
-msgstr ""
+msgstr "<span class=\"o_form_label\">Modèle de rappel</span>"
 
 #. module: school_lunch
 #: model:ir.model.fields,field_description:school_lunch.field_school_lunch_class_name__active
@@ -163,17 +71,15 @@ msgid "Add a Kid"
 msgstr "Ajouter un enfant"
 
 #. module: school_lunch
-#. openerp-web
-#: code:addons/school_lunch/static/src/xml/lunch_menu.xml:0
 #: model:ir.actions.act_window,name:school_lunch.allergy_act
 #: model:ir.model,name:school_lunch.model_school_lunch_allergy
 #: model:ir.model.fields,field_description:school_lunch.field_school_lunch_kid__allergy_ids
 #: model:ir.model.fields,field_description:school_lunch.field_school_lunch_menu__allergy_ids
 #: model:ir.ui.menu,name:school_lunch.allergy_menu
 #: model_terms:ir.ui.view,arch_db:school_lunch.allergy_list
-#, python-format
+#: model_terms:ir.ui.view,arch_db:school_lunch.website_menu_calendar
 msgid "Allergies"
-msgstr ""
+msgstr "Allergènes"
 
 #. module: school_lunch
 #: model:ir.model.fields,field_description:school_lunch.field_school_lunch_kid__unblock_date
@@ -199,15 +105,10 @@ msgstr "Classe"
 
 #. module: school_lunch
 #: model:ir.model.fields,field_description:school_lunch.field_school_lunch_class_name__class_type
+#: model:ir.model.fields,field_description:school_lunch.field_school_lunch_order__class_type
+#: model_terms:ir.ui.view,arch_db:school_lunch.view_school_lunch_order_search
 msgid "Class Type"
 msgstr "Type de classe"
-
-#. module: school_lunch
-#: model:ir.actions.act_window,name:school_lunch.class_name_act
-#: model:ir.ui.menu,name:school_lunch.class_name_menu
-#: model_terms:ir.ui.view,arch_db:school_lunch.view_school_lunch_kid_search
-msgid "Classes"
-msgstr ""
 
 #. module: school_lunch
 #. openerp-web
@@ -215,11 +116,6 @@ msgstr ""
 #, python-format
 msgid "Clear Selection"
 msgstr "Supprimer la sélection"
-
-#. module: school_lunch
-#: model:ir.model.fields,field_description:school_lunch.field_school_lunch_allergy__code
-msgid "Code"
-msgstr ""
 
 #. module: school_lunch
 #: model:ir.model.fields,field_description:school_lunch.field_school_lunch_menu__color
@@ -235,10 +131,9 @@ msgid "Come back in a few days."
 msgstr "Revenez dans quelques jours..."
 
 #. module: school_lunch
-#: model:mail.template,subject:school_lunch.mail_template_school_lunch
-msgid ""
-"Commande de repas pour {{ ', '.join(object.mapped('kid_ids.firstname')) }}"
-msgstr ""
+#: model:ir.model.fields,field_description:school_lunch.field_gift_card__comment
+msgid "Comment"
+msgstr "Commentaire"
 
 #. module: school_lunch
 #: model:ir.model,name:school_lunch.model_res_company
@@ -251,11 +146,6 @@ msgid "Config Settings"
 msgstr "Paramètres de config"
 
 #. module: school_lunch
-#: model:ir.ui.menu,name:school_lunch.config
-msgid "Configuration"
-msgstr ""
-
-#. module: school_lunch
 #: model:ir.model.fields.selection,name:school_lunch.selection__school_lunch_order__state__confirmed
 msgid "Confirmed"
 msgstr "Confirmé"
@@ -264,11 +154,6 @@ msgstr "Confirmé"
 #: model_terms:ir.ui.view,arch_db:school_lunch.view_school_lunch_order_search
 msgid "Confirmed Orders"
 msgstr "Commandes confirmées"
-
-#. module: school_lunch
-#: model:ir.model,name:school_lunch.model_res_partner
-msgid "Contact"
-msgstr ""
 
 #. module: school_lunch
 #: model_terms:ir.ui.view,arch_db:school_lunch.view_school_lunch_menu_search
@@ -294,19 +179,9 @@ msgid "Created on"
 msgstr "Créé le"
 
 #. module: school_lunch
-#: model:ir.model.fields,field_description:school_lunch.field_school_lunch_menu__cook_id
-msgid "Cuisinier"
-msgstr ""
-
-#. module: school_lunch
 #: model:ir.model,name:school_lunch.model_school_lunch_menu
 msgid "Daily Menu"
 msgstr "Menu quotidien"
-
-#. module: school_lunch
-#: model_terms:ir.ui.view,arch_db:school_lunch.view_school_lunch_menu_search
-msgid "Date"
-msgstr ""
 
 #. module: school_lunch
 #: model:ir.model.fields,field_description:school_lunch.field_school_lunch_menu__date
@@ -361,11 +236,6 @@ msgid "Draft Orders"
 msgstr "Projets de commandes"
 
 #. module: school_lunch
-#: model:ir.model.fields,field_description:school_lunch.field_res_config_settings__lunch_reminder_template_id
-msgid "Email Template"
-msgstr ""
-
-#. module: school_lunch
 #: code:addons/school_lunch/models/res_config_settings.py:0
 #, python-format
 msgid "Emails are scheduled to be sent in a few minutes"
@@ -391,12 +261,18 @@ msgstr ""
 
 #. module: school_lunch
 #. openerp-web
+#: code:addons/school_lunch/controllers/controllers.py:0
 #: code:addons/school_lunch/static/src/xml/lunch_menu.xml:0
 #: code:addons/school_lunch/static/src/xml/lunch_menu.xml:0
 #: model:ir.model.fields.selection,name:school_lunch.selection__school_lunch_menu__weekday__4
 #, python-format
 msgid "Friday"
 msgstr "Vendredi"
+
+#. module: school_lunch
+#: model:ir.model,name:school_lunch.model_gift_card
+msgid "Gift Card"
+msgstr "Cartes-cadeau"
 
 #. module: school_lunch
 #: model_terms:ir.ui.view,arch_db:school_lunch.view_school_lunch_kid_search
@@ -406,6 +282,11 @@ msgid "Group By"
 msgstr "Grouper par"
 
 #. module: school_lunch
+#: model:ir.model,name:school_lunch.model_ir_http
+msgid "HTTP Routing"
+msgstr "Routage HTTP"
+
+#. module: school_lunch
 #: model:ir.model.fields,field_description:school_lunch.field_school_lunch_allergy__id
 #: model:ir.model.fields,field_description:school_lunch.field_school_lunch_class_name__id
 #: model:ir.model.fields,field_description:school_lunch.field_school_lunch_kid__id
@@ -413,6 +294,11 @@ msgstr "Grouper par"
 #: model:ir.model.fields,field_description:school_lunch.field_school_lunch_order__id
 msgid "ID"
 msgstr "Identifiant"
+
+#. module: school_lunch
+#: model:ir.model.fields,field_description:school_lunch.field_gift_card__is_sent
+msgid "Is Sent"
+msgstr "Est envoyé"
 
 #. module: school_lunch
 #. openerp-web
@@ -438,6 +324,7 @@ msgstr "Nom de l'enfant"
 #: model:ir.actions.act_window,name:school_lunch.kid_name_act
 #: model:ir.model.fields,field_description:school_lunch.field_res_partner__kid_ids
 #: model:ir.model.fields,field_description:school_lunch.field_res_users__kid_ids
+#: model:ir.model.fields,field_description:school_lunch.field_sale_order__kid_ids
 #: model:ir.ui.menu,name:school_lunch.kid_name_menu
 #: model_terms:ir.ui.view,arch_db:school_lunch.kid_view_form
 #: model_terms:ir.ui.view,arch_db:school_lunch.kid_view_list
@@ -525,6 +412,7 @@ msgstr "Lien URL pour les repas"
 
 #. module: school_lunch
 #: model_terms:ir.ui.view,arch_db:school_lunch.menu
+#: model_terms:ir.ui.view,arch_db:school_lunch.website_menu_calendar
 msgid "Lunch:"
 msgstr "Repas :"
 
@@ -534,13 +422,12 @@ msgid "Lunch: Parent Reminder"
 msgstr "Repas : Rappel pour les parents"
 
 #. module: school_lunch
-#: model:ir.model.fields.selection,name:school_lunch.selection__school_lunch_class_name__class_type__0
-msgid "Maternelle"
-msgstr ""
-
-#. module: school_lunch
+#. openerp-web
+#: code:addons/school_lunch/static/src/xml/lunch_menu.xml:0
+#: code:addons/school_lunch/static/src/xml/lunch_menu.xml:0
 #: model:ir.model.fields.selection,name:school_lunch.selection__school_lunch_menu__kid_meal_type__1
 #: model:ir.model.fields.selection,name:school_lunch.selection__school_lunch_menu__meal_type__meal
+#, python-format
 msgid "Meal"
 msgstr "Repas chaud"
 
@@ -556,17 +443,6 @@ msgstr "Titre"
 #: model_terms:ir.ui.view,arch_db:school_lunch.view_school_lunch_order_search
 msgid "Meal Type"
 msgstr "Type de repas"
-
-#. module: school_lunch
-#: model:ir.model.fields,field_description:school_lunch.field_school_lunch_order__menu_id
-#: model:ir.ui.menu,name:school_lunch.menu_menu
-#: model:ir.ui.menu,name:school_lunch.menu_root
-#: model_terms:ir.ui.view,arch_db:school_lunch.menu_calendar
-#: model_terms:ir.ui.view,arch_db:school_lunch.menu_form
-#: model_terms:ir.ui.view,arch_db:school_lunch.menu_list
-#: model_terms:ir.ui.view,arch_db:school_lunch.view_school_lunch_menu_search
-msgid "Menu"
-msgstr ""
 
 #. module: school_lunch
 #: model:ir.actions.act_window,name:school_lunch.menu_cal_act
@@ -588,7 +464,14 @@ msgid "Menu not available!"
 msgstr "Menu non disponible!"
 
 #. module: school_lunch
+#: model:ir.actions.act_url,name:school_lunch.menu_act_url
+#: model:ir.ui.menu,name:school_lunch.menu_menu_calendar_print
+msgid "Menu to Print"
+msgstr "Menu QDN"
+
+#. module: school_lunch
 #. openerp-web
+#: code:addons/school_lunch/controllers/controllers.py:0
 #: code:addons/school_lunch/static/src/xml/lunch_menu.xml:0
 #: code:addons/school_lunch/static/src/xml/lunch_menu.xml:0
 #: model:ir.model.fields.selection,name:school_lunch.selection__school_lunch_menu__weekday__0
@@ -616,19 +499,32 @@ msgid "Next month's menu is"
 msgstr "Le menu du mois prochain est"
 
 #. module: school_lunch
+#: model_terms:ir.ui.view,arch_db:school_lunch.gift_card_comment_view_search
+msgid "Not Sent"
+msgstr "Pas envoyé"
+
+#. module: school_lunch
+#: model:ir.model.fields,field_description:school_lunch.field_sale_order__kid_id
+msgid "Oldest Kid"
+msgstr "Aîné"
+
+#. module: school_lunch
 #: model_terms:ir.ui.view,arch_db:school_lunch.view_school_lunch_menu_search
 #: model_terms:ir.ui.view,arch_db:school_lunch.view_school_lunch_order_search
 msgid "Order Date"
 msgstr "Date de la commande"
 
 #. module: school_lunch
+#: model_terms:ir.ui.view,arch_db:school_lunch.website_menu_calendar
+msgid "Order Now <i class=\"fa fa-arrow-right\"/>"
+msgstr "Commander maintenant <i class=\"fa fa-arrow-right\"/>"
+
+#. module: school_lunch
 #: model:ir.actions.act_window,name:school_lunch.action_list_orders
 #: model:ir.actions.act_window,name:school_lunch.order_act
-#: model:ir.actions.act_window,name:school_lunch.order_pivot_act
 #: model:ir.model,name:school_lunch.model_school_lunch_order
 #: model:ir.model.fields,field_description:school_lunch.field_school_lunch_menu__order_ids
 #: model:ir.ui.menu,name:school_lunch.menu_order
-#: model:ir.ui.menu,name:school_lunch.menu_order_pivot
 #: model_terms:ir.ui.view,arch_db:school_lunch.menu_form
 #: model_terms:ir.ui.view,arch_db:school_lunch.order_form
 #: model_terms:ir.ui.view,arch_db:school_lunch.order_list
@@ -636,15 +532,21 @@ msgid "Orders"
 msgstr "Commandes"
 
 #. module: school_lunch
+#: model:ir.actions.act_window,name:school_lunch.order_pivot_act
+#: model:ir.ui.menu,name:school_lunch.menu_order_pivot
+msgid "Orders Graph"
+msgstr "Graphique des commandes"
+
+#. module: school_lunch
+#: model:ir.actions.act_window,name:school_lunch.order_pivot_class_act
+#: model:ir.ui.menu,name:school_lunch.menu_order_pivot_class
+msgid "Orders Pivot"
+msgstr "Tableau des commandes"
+
+#. module: school_lunch
 #: model:ir.model.fields.selection,name:school_lunch.selection__school_lunch_class_name__class_type__3
 msgid "Other"
 msgstr "Autres"
-
-#. module: school_lunch
-#: model:ir.model.fields,field_description:school_lunch.field_school_lunch_kid__parent_ids
-#: model_terms:ir.ui.view,arch_db:school_lunch.kid_view_form
-msgid "Parents"
-msgstr ""
 
 #. module: school_lunch
 #: model:ir.model.fields,field_description:school_lunch.field_school_lunch_class_name__pricelist_id
@@ -653,14 +555,9 @@ msgid "Pricelist"
 msgstr "Liste de prix"
 
 #. module: school_lunch
-#: model:ir.model.fields.selection,name:school_lunch.selection__school_lunch_class_name__class_type__1
-msgid "Primaire"
-msgstr ""
-
-#. module: school_lunch
 #: model:ir.model,name:school_lunch.model_product_product
 msgid "Product"
-msgstr "Produit"
+msgstr "Article"
 
 #. module: school_lunch
 #: model:ir.ui.menu,name:school_lunch.menu_reporting
@@ -680,10 +577,12 @@ msgstr "Bon de commande"
 #. module: school_lunch
 #: model:ir.model,name:school_lunch.model_sale_order_line
 msgid "Sales Order Line"
-msgstr "Ligne du bon de commande"
+msgstr "Ligne de bons de commande"
 
 #. module: school_lunch
+#: code:addons/school_lunch/controllers/controllers.py:0
 #: model:ir.model.fields.selection,name:school_lunch.selection__school_lunch_menu__weekday__5
+#, python-format
 msgid "Saturday"
 msgstr "Samedi"
 
@@ -713,11 +612,6 @@ msgstr "Rechercher les menus"
 #: model_terms:ir.ui.view,arch_db:school_lunch.view_school_lunch_order_search
 msgid "Search Lunch Orders"
 msgstr "Rechercher les commandes de repas"
-
-#. module: school_lunch
-#: model:ir.model.fields.selection,name:school_lunch.selection__school_lunch_class_name__class_type__2
-msgid "Secondaire"
-msgstr ""
 
 #. module: school_lunch
 #. openerp-web
@@ -752,6 +646,11 @@ msgid "Send Now"
 msgstr "Envoyer maintenant"
 
 #. module: school_lunch
+#: model_terms:ir.ui.view,arch_db:school_lunch.gift_card_comment_view_search
+msgid "Sent"
+msgstr "Envoyé"
+
+#. module: school_lunch
 #: model:ir.actions.act_window,name:school_lunch.lunch_config_settings_action
 #: model:ir.ui.menu,name:school_lunch.config_settings
 msgid "Settings"
@@ -763,10 +662,14 @@ msgid "Short Name"
 msgstr "Nom court"
 
 #. module: school_lunch
+#. openerp-web
+#: code:addons/school_lunch/static/src/xml/lunch_menu.xml:0
+#: code:addons/school_lunch/static/src/xml/lunch_menu.xml:0
 #: model:ir.model.fields.selection,name:school_lunch.selection__school_lunch_menu__kid_meal_type__0
 #: model:ir.model.fields.selection,name:school_lunch.selection__school_lunch_menu__meal_type__soup
 #: model:product.product,name:school_lunch.product_soup
 #: model:product.template,name:school_lunch.product_soup_product_template
+#, python-format
 msgid "Soup"
 msgstr "Soupe"
 
@@ -776,12 +679,15 @@ msgid "State"
 msgstr "Etat"
 
 #. module: school_lunch
+#: code:addons/school_lunch/controllers/controllers.py:0
 #: model:ir.model.fields.selection,name:school_lunch.selection__school_lunch_menu__weekday__6
+#, python-format
 msgid "Sunday"
 msgstr "Dimanche"
 
 #. module: school_lunch
 #. openerp-web
+#: code:addons/school_lunch/controllers/controllers.py:0
 #: code:addons/school_lunch/static/src/xml/lunch_menu.xml:0
 #: code:addons/school_lunch/static/src/xml/lunch_menu.xml:0
 #: model:ir.model.fields.selection,name:school_lunch.selection__school_lunch_menu__weekday__3
@@ -804,25 +710,18 @@ msgid ""
 "To order, use the link provided by email. Or, if you registered previously, "
 "you can"
 msgstr ""
+"Pour commander, utilisez le lien envoyé par email. Ou, si vous vous êtes "
+"enregistré, vous pouvez"
 
 #. module: school_lunch
 #. openerp-web
+#: code:addons/school_lunch/controllers/controllers.py:0
 #: code:addons/school_lunch/static/src/xml/lunch_menu.xml:0
 #: code:addons/school_lunch/static/src/xml/lunch_menu.xml:0
 #: model:ir.model.fields.selection,name:school_lunch.selection__school_lunch_menu__weekday__1
 #, python-format
 msgid "Tuesday"
 msgstr "Mardi"
-
-#. module: school_lunch
-#: model:ir.model.fields,field_description:school_lunch.field_school_lunch_kid__uuid
-msgid "UUID"
-msgstr ""
-
-#. module: school_lunch
-#: model:ir.model.constraint,message:school_lunch.constraint_school_lunch_kid_uuid_uniq
-msgid "UUID field must be unique per kid!"
-msgstr ""
 
 #. module: school_lunch
 #: model:product.product,uom_name:school_lunch.product_meal
@@ -836,13 +735,18 @@ msgstr "Unités"
 #. openerp-web
 #: code:addons/school_lunch/static/src/xml/lunch_menu.xml:0
 #, python-format
-msgid "Validate Order"
-msgstr "Valider la commande"
+msgid "Unselect Allergies"
+msgstr "Désélection allergènes"
 
 #. module: school_lunch
 #. openerp-web
 #: code:addons/school_lunch/static/src/xml/lunch_menu.xml:0
-#: code:addons/school_lunch/static/src/xml/lunch_menu.xml:0
+#, python-format
+msgid "Validate Order"
+msgstr "Valider la commande"
+
+#. module: school_lunch
+#: code:addons/school_lunch/controllers/controllers.py:0
 #: model:ir.model.fields.selection,name:school_lunch.selection__school_lunch_menu__weekday__2
 #, python-format
 msgid "Wednesday"
@@ -887,7 +791,7 @@ msgstr "Publié le"
 #: code:addons/school_lunch/static/src/xml/lunch_menu.xml:0
 #, python-format
 msgid "sign in"
-msgstr ""
+msgstr "vous connecter"
 
 #. module: school_lunch
 #: model_terms:ir.ui.view,arch_db:school_lunch.res_config_settings_school_lunch_form
