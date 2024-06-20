@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="guest_reservation_wizard_form" model="ir.ui.view">
+        <field name="name">guest.reservation.wizard.form</field>
+        <field name="model">guest.reservation.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Guest Reservation">
+                <sheet>
+                    <group>
+                        <field name="guest_number" required="1"/>
+                        <field name="menu_id" required="1"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="process" string="Appliquer" type="object" class="btn-primary"/>
+                    <button string="Annuler" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+</odoo>

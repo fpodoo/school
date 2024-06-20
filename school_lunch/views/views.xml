@@ -342,6 +342,21 @@
       </field>
     </record>
 
+    <record model="ir.actions.server" id="action_open_guest_wizard">
+      <field name="name">Guest Reservation</field>
+      <field name="model_id" ref="school_lunch.model_guest_reservation_wizard"/>
+      <field name="state">code</field>
+      <field name="code">
+            action = model.open_guest_wizard()
+      </field>
+    </record>
+
+    <menuitem
+            id="school_lunch.menu_guest_reservation"
+            parent="school_lunch.menu_root"
+            action="action_open_guest_wizard"
+        />
+
     <record model="ir.actions.act_window" id="order_act">
       <field name="name">Orders</field>
       <field name="res_model">school_lunch.order</field>
