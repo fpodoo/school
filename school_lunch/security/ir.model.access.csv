@@ -4,6 +4,7 @@ access_school_lunch_menu,school_lunch.menu,model_school_lunch_menu,base.group_us
 access_school_lunch_class_name,school_lunch.class_name,model_school_lunch_class_name,base.group_user,1,1,1,1
 access_school_lunch_order,school_lunch.order,model_school_lunch_order,base.group_user,1,1,1,1
 access_school_lunch_kid,school_lunch.kid,model_school_lunch_kid,base.group_user,1,1,1,1
+access_guest_reservation_wizard,school_lunch.guest_reservation_wizard,model_guest_reservation_wizard,base.group_user,1,1,1,1
 access_school_lunch_allergy_portal,school_lunch.allergy,model_school_lunch_allergy,base.group_portal,1,0,0,0
 access_school_lunch_menu_portal,school_lunch.menu,model_school_lunch_menu,base.group_portal,1,0,0,0
 access_school_lunch_class_name_portal,school_lunch.class_name,model_school_lunch_class_name,base.group_portal,1,0,0,0
