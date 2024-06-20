@@ -52,5 +52,16 @@
             <field name="name">M3</field>
         </record>
 
+        <!-- Guests -->
+
+        <record id="class_name_guest" model="school_lunch.class_name">
+            <field name="class_type">3</field>
+            <field name="name">Invité</field>
+        </record>
+        <record id="kid_guest" model="school_lunch.kid">
+            <field name="firstname">Invité</field>
+            <field name="lastname">Externe</field>
+            <field name="class_id" ref="school_lunch.class_name_guest"/>
+        </record>
     </data>
 </odoo>
