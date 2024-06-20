@@ -282,6 +282,21 @@ msgid "Group By"
 msgstr "Grouper par"
 
 #. module: school_lunch
+#: model:ir.model.fields,field_description:school_lunch.field_guest_reservation_wizard__guest__number
+msgid "Guest Number"
+msgstr "Nombre d'invités"
+
+#. module: school_lunch
+#. odoo-python
+#: code:addons/school_lunch/wizards/guest_reservation.py:0
+#: model:ir.actions.server,name:school_lunch.action_open_guest_wizard
+#: model:ir.ui.menu,name:school_lunch.menu_guest_reservation
+#: model_terms:ir.ui.view,arch_db:school_lunch.guest_reservation_wizard_form
+#, python-format
+msgid "Guest Reservation"
+msgstr "Réservation pour les invités"
+
+#. module: school_lunch
 #: model:ir.model,name:school_lunch.model_ir_http
 msgid "HTTP Routing"
 msgstr "Routage HTTP"

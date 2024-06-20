@@ -132,9 +132,6 @@ class Order(models.Model):
                 "off": 4,
             }.get(order.meal_type, 1)
 
-    def order_create(self, data):
-        pass
-
 
 class ClassName(models.Model):
     _name = "school_lunch.class_name"
