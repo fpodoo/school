@@ -118,6 +118,7 @@ class Order(models.Model):
     state = fields.Selection([("draft", "Draft"), ("confirmed", "Confirmed")], "State", default="draft")
     class_type = fields.Selection(related="class_id.class_type", string="Class Type", store=True)
 
+    @api.depends("date")
     def _compute_date_end_gantt(self):
         for order in self:
             order.date_end_gantt = order.date + relativedelta(hours=1)
