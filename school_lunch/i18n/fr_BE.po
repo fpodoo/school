@@ -282,6 +282,16 @@ msgid "Group By"
 msgstr "Grouper par"
 
 #. module: school_lunch
+#: model:ir.model.fields,field_description:school_lunch.field_guest_reservation_wizard__guest__number
+msgid "Guest Number"
+msgstr "Nombre d'invités"
+
+#. module: school_lunch
+#: model:ir.actions.act_window,name:school_lunch.action_open_guest_wizard
+msgid "Guest Reservation"
+msgstr "Réservation pour les invités"
+
+#. module: school_lunch
 #: model:ir.model,name:school_lunch.model_ir_http
 msgid "HTTP Routing"
 msgstr "Routage HTTP"

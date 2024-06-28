@@ -132,16 +132,6 @@ class Order(models.Model):
                 "off": 4,
             }.get(order.meal_type, 1)
 
-    @api.model_create_multi
-    def create(self, vals_list):
-        orders = super().create(vals_list)
-        guest_id = self.env.ref("school_lunch.kid_guest").id
-        for order in orders:
-            if order.kid_id.id == guest_id:
-                order.state = "confirmed"
-        orders._compute_date_end_gantt()
-        return orders
-
 
 class ClassName(models.Model):
     _name = "school_lunch.class_name"
