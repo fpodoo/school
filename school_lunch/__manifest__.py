@@ -12,7 +12,7 @@
     # Check https://github.com/odoo/odoo/blob/14.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
     "category": "Lunch",
-    "version": "17.0.1.0.7",
+    "version": "17.0.1.0.8",
     # any module necessary for this one to work correctly
     "depends": ["website_sale_loyalty"],
     "license": "OEEL-1",
