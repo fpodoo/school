@@ -23,6 +23,10 @@ class SaleOrder(models.Model):
                 order.kid_id = False
         return True
 
+    def _get_update_prices_lines(self):
+        # Never recompute lunch lines (prices come from kid or class pricelist)
+        return super()._get_update_prices_lines().filtered(lambda line: not line.lunch_ids)
+
     def _action_confirm(self):
         for order in self:
             for line in order.order_line:
